@@ -1,4 +1,4 @@
-<script>
+
 
 /* =========================================================
    NAREHATE POSTAL SERVICE
@@ -2829,4 +2829,4 @@ function bindEnvironmentHotspots() {
    <Finish> ENVIRONMENT HOTSPOT EVENTS
    ========================================================= */
 
-</script>
+

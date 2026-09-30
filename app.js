@@ -1122,15 +1122,18 @@ function removeGoogleSignInButton() {
    ---------------------------------------------------------
    Setelah Google memberikan ID Token:
 
-   Google
+   Loading
       ↓
-   ID Token
+   THE POST OFFICE / LOGIN
       ↓
-   loadCurrentUser()
+   Google Authentication
       ↓
    Registered?
-      ├─ YES → Prepare Application → Door
+      ├─ YES → Central Office
       └─ NO  → Registration
+
+   Tidak ada Door kedua setelah login.
+   Halaman login itu sendiri adalah Door.
    ========================================================= */
 
 async function handleGoogleAuthentication() {
@@ -1147,10 +1150,9 @@ async function handleGoogleAuthentication() {
   updateDebugPanel();
 
 
-  /*
-   * Google berhasil authenticated,
-   * tetapi belum memiliki account Narehate.
-   */
+  /* -------------------------------------------------------
+     USER BARU
+     ------------------------------------------------------- */
 
   if (
     identity &&
@@ -1171,9 +1173,9 @@ async function handleGoogleAuthentication() {
   }
 
 
-  /*
-   * User sudah memiliki account Narehate.
-   */
+  /* -------------------------------------------------------
+     USER SUDAH TERDAFTAR
+     ------------------------------------------------------- */
 
   if (
     identity &&
@@ -1186,10 +1188,17 @@ async function handleGoogleAuthentication() {
     );
 
 
+    /*
+     * Login page / Door sudah selesai.
+     *
+     * Sekarang langsung siapkan Central Office
+     * dan buka Office.
+     */
+
     await prepareApplication();
 
 
-    showDoorEnvironment();
+    enterNarehate();
 
 
     return;
@@ -1197,10 +1206,9 @@ async function handleGoogleAuthentication() {
   }
 
 
-  /*
-   * Kalau sampai sini berarti authentication
-   * tidak menghasilkan identity yang valid.
-   */
+  /* -------------------------------------------------------
+     AUTHENTICATION TIDAK VALID
+     ------------------------------------------------------- */
 
   throw new Error(
     'Google authentication did not produce a valid correspondent identity.'

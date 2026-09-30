@@ -84,14 +84,10 @@
   >
 
 
-   <!-- ===================================================
+<!-- ===================================================
      <Start> LOADING SCREEN
      ---------------------------------------------------
      Initial arrival sequence.
-
-     Loading screen tidak melakukan authentication.
-     Authentication dimulai setelah user masuk ke
-     Correspondence Gate.
      =================================================== -->
 
 <section
@@ -99,31 +95,15 @@
   class="screen screen-loading"
 >
 
-  <!-- =================================================
-       <Start> LOADING ATMOSPHERE
-       ================================================= -->
-
   <div
     class="loading-atmosphere"
     aria-hidden="true"
   ></div>
 
-  <!-- =================================================
-       <Finish> LOADING ATMOSPHERE
-       ================================================= -->
-
-
-  <!-- =================================================
-       <Start> LOADING CONTENT
-       ================================================= -->
 
   <div
     class="loading-content"
   >
-
-    <!-- -----------------------------------------------
-         POSTAL SERVICE LOGO
-         ----------------------------------------------- -->
 
     <div
       class="loading-logo-wrap"
@@ -139,20 +119,12 @@
     </div>
 
 
-    <!-- -----------------------------------------------
-         MAIN HOOK TITLE
-         ----------------------------------------------- -->
-
     <div
       class="loading-title"
     >
       Royal Postal Service of Narehate
     </div>
 
-
-    <!-- -----------------------------------------------
-         LOADING PROCESS
-         ----------------------------------------------- -->
 
     <div
       class="loading-process"
@@ -200,16 +172,130 @@
 
   </div>
 
-  <!-- =================================================
-       <Finish> LOADING CONTENT
-       ================================================= -->
-
 </section>
 
 <!-- ===================================================
      <Finish> LOADING SCREEN
      =================================================== -->
 
+
+<!-- ===================================================
+     <Start> CORRESPONDENCE GATE
+     ---------------------------------------------------
+     Dedicated authentication environment.
+
+     Google authentication hanya dimulai setelah
+     halaman ini ditampilkan.
+     =================================================== -->
+
+<section
+  id="correspondence-gate"
+  class="screen screen-correspondence-gate is-hidden"
+>
+
+  <!-- =================================================
+       ATMOSPHERE
+       ================================================= -->
+
+  <div
+    class="gate-atmosphere"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- =================================================
+       GATE CONTENT
+       ================================================= -->
+
+  <div
+    class="gate-content"
+  >
+
+    <!-- -----------------------------------------------
+         EYEBROW
+         ----------------------------------------------- -->
+
+    <div
+      class="gate-eyebrow"
+    >
+      ROYAL POSTAL SERVICE
+    </div>
+
+
+    <!-- -----------------------------------------------
+         TITLE
+         ----------------------------------------------- -->
+
+    <h1
+      class="gate-title"
+    >
+      Correspondence Gate
+    </h1>
+
+
+    <!-- -----------------------------------------------
+         DESCRIPTION
+         ----------------------------------------------- -->
+
+    <p
+      class="gate-description"
+    >
+      Before entering Narehate,
+      your correspondence must be identified.
+    </p>
+
+
+    <!-- -----------------------------------------------
+         DIVIDER
+         ----------------------------------------------- -->
+
+    <div
+      class="gate-divider"
+      aria-hidden="true"
+    ></div>
+
+
+    <!-- -----------------------------------------------
+         GOOGLE AUTHENTICATION
+         ----------------------------------------------- -->
+
+    <div
+      class="gate-authentication"
+    >
+
+      <div
+        id="google-signin-container"
+        class="google-signin-container"
+      ></div>
+
+
+      <div
+        id="gate-auth-status"
+        class="gate-auth-status"
+      >
+        Awaiting correspondent identification...
+      </div>
+
+    </div>
+
+
+    <!-- -----------------------------------------------
+         FOOTER NOTE
+         ----------------------------------------------- -->
+
+    <div
+      class="gate-footer"
+    >
+      Narehate Postal Service
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     <Finish> CORRESPONDENCE GATE
+     =================================================== -->
 
     <!-- ===================================================
          <Start> MAIN APPLICATION

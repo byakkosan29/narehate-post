@@ -7,11 +7,20 @@
 
 /* =========================================================
    <Start> BACKEND CONFIGURATION
+   ---------------------------------------------------------
+   Apps Script Web App endpoint.
+
+   Browser
+      ↓
+   Cloudflare Worker
+      ↓
+   Apps Script
+      ↓
+   Google Sheets
    ========================================================= */
 
 const APPS_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbxPHt6-RFMyY1jsdSgDs2JId9LwcFQ8w--PbqZlVE230gGAl_Y2xp0InmC0vF6qINng/exec';
-
 
 /* =========================================================
    <Finish> BACKEND CONFIGURATION

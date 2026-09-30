@@ -1,39 +1,1024 @@
+<!-- =========================================================
+     NAREHATE POSTAL SERVICE
+     01_Index.html
+     Frontend Application Shell
+     ========================================================= -->
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Narehate Postal Service</title>
-  <meta name="description" content="Correspondence from somewhere that never existed.">
-  <style>
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      background: #17130f;
-      color: #eee7dc;
-      font-family: Georgia, "Times New Roman", serif;
-    }
-    body { display: grid; place-items: center; }
-    main { text-align: center; padding: 40px; }
-    .mark {
-      width: 64px; height: 64px; margin: 0 auto 24px;
-      display: grid; place-items: center;
-      border: 1px solid rgba(238,231,220,.35);
-      font-size: 28px;
-    }
-    h1 { margin: 0; letter-spacing: .28em; font-size: 18px; font-weight: 500; }
-    p {
-      margin-top: 12px; color: rgba(238,231,220,.55);
-      font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
-    }
-  </style>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Narehate Postal Service
+  </title>
+
+
+  <!-- =====================================================
+       <Start> APPLICATION META
+       ===================================================== -->
+
+  <meta
+    name="theme-color"
+    content="#17130f"
+  >
+
+  <meta
+    name="description"
+    content="Correspondence from somewhere that never existed."
+  >
+
+  <!-- =====================================================
+       <Finish> APPLICATION META
+       ===================================================== -->
+
+
+  <!-- =====================================================
+       <Start> CSS
+       ===================================================== -->
+
+  <?!= include('02_CSS'); ?>
+
+  <!-- =====================================================
+       <Finish> CSS
+       ===================================================== -->
+
+
+<!-- =====================================================
+     <Start> GOOGLE IDENTITY SERVICES
+     ===================================================== -->
+
+<script
+  src="https://accounts.google.com/gsi/client"
+  async
+  defer
+></script>
+
+<!-- =====================================================
+     <Finish> GOOGLE IDENTITY SERVICES
+     ===================================================== -->
+
 </head>
+
+
 <body>
-  <main>
-    <div class="mark">N</div>
-    <h1>NAREHATE</h1>
-    <p>Postal Service · Establishing Correspondence</p>
-  </main>
+
+
+  <!-- =====================================================
+       <Start> APPLICATION ROOT
+       -----------------------------------------------------
+       Semua tampilan aplikasi akan hidup di dalam root ini.
+       ===================================================== -->
+
+  <div
+    id="app"
+    class="app"
+  >
+
+
+    <!-- ===================================================
+         <Start> LOADING SCREEN
+         =================================================== -->
+
+    <section
+      id="loading-screen"
+      class="screen screen-loading"
+    >
+
+      <div class="loading-content">
+
+        <div class="loading-mark">
+          N
+        </div>
+
+        <div class="loading-title">
+          NAREHATE
+        </div>
+
+        <div class="loading-subtitle">
+          POSTAL SERVICE
+        </div>
+
+        <div
+          id="loading-status"
+          class="loading-status"
+        >
+          Establishing correspondence...
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================
+         <Finish> LOADING SCREEN
+         =================================================== -->
+
+
+    <!-- ===================================================
+         <Start> MAIN APPLICATION
+         =================================================== -->
+
+    <main
+      id="main-app"
+      class="main-app is-hidden"
+    >
+
+
+      <!-- ===============================================
+           <Start> APPLICATION HEADER
+           =============================================== -->
+
+      <header class="app-header">
+
+        <div class="brand">
+
+          <div class="brand-mark">
+            N
+          </div>
+
+          <div class="brand-copy">
+
+            <div class="brand-name">
+              Narehate Postal Service
+            </div>
+
+            <div class="brand-tagline">
+              Correspondence from somewhere that never existed.
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="header-status">
+
+          <span
+            class="status-dot"
+            id="server-status-dot"
+          ></span>
+
+          <span id="server-status">
+            Connecting
+          </span>
+
+        </div>
+
+      </header>
+
+      <!-- ===============================================
+           <Finish> APPLICATION HEADER
+           =============================================== -->
+
+
+      <!-- =====================================================
+     <Start> APPLICATION CONTENT
+     -----------------------------------------------------
+     Full-screen interactive environment.
+
+     Central Office sekarang merupakan satu environment
+     utuh. Navigasi dilakukan melalui invisible hotspots.
+     ===================================================== -->
+
+<section
+  id="application-content"
+  class="application-content"
+>
+
+
+  <Start>
+
+<!-- =====================================================
+     ENVIRONMENT SYSTEM
+     -----------------------------------------------------
+     Semua environment Narehate berada dalam satu layer.
+
+     Environment:
+     - door
+     - registration
+     - central-office
+     ===================================================== -->
+
+
+<!-- ===================================================
+     <Start> DOOR ENVIRONMENT
+     ---------------------------------------------------
+     Gateway sebelum memasuki Narehate.
+     Background akan dipasang setelah asset tersedia.
+     =================================================== -->
+
+<section
+  id="door-environment"
+  class="environment-view environment-door is-hidden"
+>
+
+  <!-- ===============================================
+       BACKGROUND ARTWORK
+       =============================================== -->
+
+  <div
+    id="door-background"
+    class="environment-background"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ===============================================
+       ATMOSPHERE
+       =============================================== -->
+
+  <div
+    class="environment-atmosphere"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ===============================================
+       DOOR CONTENT
+       =============================================== -->
+
+  <div
+    class="door-content"
+  >
+
+    <div
+      class="door-eyebrow"
+    >
+      NAREHATE POSTAL SERVICE
+    </div>
+
+
+    <div
+      class="door-title"
+    >
+      THE POST OFFICE
+    </div>
+
+
+    <div
+      class="door-description"
+    >
+      Correspondence from somewhere
+      that never existed.
+    </div>
+
+
+    <button
+      type="button"
+      id="enter-narehate"
+      class="door-enter-button"
+    >
+      ENTER
+    </button>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     <Finish> DOOR ENVIRONMENT
+     =================================================== -->
+
+
+<!-- ===================================================
+     <Start> REGISTRATION ENVIRONMENT
+     ---------------------------------------------------
+     Environment khusus untuk correspondent baru.
+     =================================================== -->
+
+<section
+  id="registration-environment"
+  class="environment-view environment-registration is-hidden"
+>
+
+  <!-- ===============================================
+       BACKGROUND ARTWORK
+       =============================================== -->
+
+  <div
+    id="registration-background"
+    class="environment-background"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ===============================================
+       ATMOSPHERE
+       =============================================== -->
+
+  <div
+    class="environment-atmosphere"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ===============================================
+       REGISTRATION CONTENT
+       =============================================== -->
+
+  <div
+    class="registration-content"
+  >
+
+    <div
+      class="registration-heading"
+    >
+
+      <div
+        class="registration-eyebrow"
+      >
+        CORRESPONDENT REGISTRY
+      </div>
+
+
+      <h1
+        class="registration-title"
+      >
+        Become a Correspondent
+      </h1>
+
+
+      <p
+        class="registration-description"
+      >
+        Narehate keeps a record of everyone
+        who receives its correspondence.
+      </p>
+
+    </div>
+
+
+    <!-- =============================================
+         REGISTRATION FORM
+         ============================================= -->
+
+    <form
+      id="registration-form"
+      class="registration-form"
+    >
+
+      <!-- -------------------------------------------
+           USERNAME
+           ------------------------------------------- -->
+
+      <div
+        class="registration-field"
+      >
+
+        <label
+          for="registration-username"
+        >
+          Correspondent Name
+        </label>
+
+        <input
+          type="text"
+          id="registration-username"
+          name="username"
+          autocomplete="username"
+          placeholder="yourname"
+          minlength="3"
+          maxlength="24"
+          pattern="[a-z0-9_.]{3,24}"
+          required
+        >
+
+        <div
+          class="registration-hint"
+        >
+          3–24 characters · lowercase letters,
+          numbers, underscore or period.
+        </div>
+
+      </div>
+
+
+      <!-- -------------------------------------------
+           DISPLAY NAME
+           ------------------------------------------- -->
+
+      <div
+        class="registration-field"
+      >
+
+        <label
+          for="registration-display-name"
+        >
+          Display Name
+        </label>
+
+        <input
+          type="text"
+          id="registration-display-name"
+          name="displayName"
+          maxlength="80"
+          autocomplete="name"
+          placeholder="Your name"
+          required
+        >
+
+      </div>
+
+
+      <!-- -------------------------------------------
+           POSTAL NAME
+           ------------------------------------------- -->
+
+      <div
+        class="registration-field"
+      >
+
+        <label
+          for="registration-postal-name"
+        >
+          Postal Name
+        </label>
+
+        <input
+          type="text"
+          id="registration-postal-name"
+          name="postalName"
+          maxlength="80"
+          placeholder="Name used for correspondence"
+          required
+        >
+
+      </div>
+
+
+      <!-- -------------------------------------------
+           COUNTRY
+           ------------------------------------------- -->
+
+      <div
+        class="registration-field"
+      >
+
+        <label
+          for="registration-country"
+        >
+          Country
+        </label>
+
+        <input
+          type="text"
+          id="registration-country"
+          name="country"
+          maxlength="80"
+          autocomplete="country-name"
+          placeholder="Country"
+        >
+
+      </div>
+
+
+      <!-- -------------------------------------------
+           ADDRESS
+           ------------------------------------------- -->
+
+      <div
+        class="registration-field"
+      >
+
+        <label
+          for="registration-address"
+        >
+          Postal Address
+        </label>
+
+        <textarea
+          id="registration-address"
+          name="address"
+          rows="3"
+          maxlength="300"
+          autocomplete="street-address"
+          placeholder="Where Narehate may send correspondence"
+        ></textarea>
+
+      </div>
+
+
+      <!-- -------------------------------------------
+           SUBMIT
+           ------------------------------------------- -->
+
+      <button
+        type="submit"
+        id="registration-submit"
+        class="registration-submit"
+      >
+        REGISTER AS CORRESPONDENT
+      </button>
+
+
+      <!-- -------------------------------------------
+           STATUS
+           ------------------------------------------- -->
+
+      <div
+        id="registration-status"
+        class="registration-status"
+        aria-live="polite"
+      ></div>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     <Finish> REGISTRATION ENVIRONMENT
+     =================================================== -->
+
+
+<!-- ===================================================
+     <Start> CENTRAL OFFICE ENVIRONMENT
+     ---------------------------------------------------
+     Central Office yang sudah dikalibrasi.
+
+     IMPORTANT:
+     Hotspot TIDAK DIUBAH.
+     =================================================== -->
+
+<section
+  id="environment-view"
+  class="environment-view"
+>
+
+  <!-- ===============================================
+       BACKGROUND ARTWORK
+       =============================================== -->
+
+  <div
+    id="environment-background"
+    class="environment-background"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ===============================================
+       ATMOSPHERE LAYER
+       =============================================== -->
+
+  <div
+    class="environment-atmosphere"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ===============================================
+       ENVIRONMENT HOTSPOTS
+       ------------------------------------------------
+       CALIBRATION LOCKED
+       Jangan ubah koordinat hotspot pada tahap ini.
+       =============================================== -->
+
+  <div
+    id="environment-hotspots"
+    class="environment-hotspots"
+  >
+
+
+    <!-- =================================================
+         MAP ROOM
+         ================================================= -->
+
+    <button
+      type="button"
+      class="environment-hotspot"
+      data-room="map"
+      aria-label="Map Room"
+
+      style="
+        left: 0%;
+        top: 47%;
+        width: 24%;
+        height: 29%;
+      "
+    >
+
+      <span class="hotspot-indicator"></span>
+
+      <span class="hotspot-label">
+        Map Room
+      </span>
+
+    </button>
+
+
+    <!-- =================================================
+         TELLER
+         ================================================= -->
+
+    <button
+      type="button"
+      class="environment-hotspot"
+      data-room="teller"
+      aria-label="Teller"
+
+      style="
+        left: 67%;
+        top: 47%;
+        width: 33%;
+        height: 28%;
+      "
+    >
+
+      <span class="hotspot-indicator"></span>
+
+      <span class="hotspot-label">
+        Teller
+      </span>
+
+    </button>
+
+
+    <!-- =================================================
+         ARCHIVES
+         ================================================= -->
+
+    <button
+      type="button"
+      class="environment-hotspot"
+      data-room="archives"
+      aria-label="Archives"
+
+      style="
+        left: 17%;
+        top: 20%;
+        width: 25%;
+        height: 31%;
+      "
+    >
+
+      <span class="hotspot-indicator"></span>
+
+      <span class="hotspot-label">
+        Archives
+      </span>
+
+    </button>
+
+
+    <!-- =================================================
+         NOTICE BOARD
+         ================================================= -->
+
+    <button
+      type="button"
+      class="environment-hotspot"
+      data-room="notices"
+      aria-label="Notice Board"
+
+      style="
+        left: 42%;
+        top: 14%;
+        width: 24%;
+        height: 22%;
+      "
+    >
+
+      <span class="hotspot-indicator"></span>
+
+      <span class="hotspot-label">
+        Notice Board
+      </span>
+
+    </button>
+
+
+    <!-- =================================================
+         POSTAL MUSEUM
+         ================================================= -->
+
+    <button
+      type="button"
+      class="environment-hotspot"
+      data-room="museum"
+      aria-label="Postal Museum"
+
+      style="
+        left: 42%;
+        top: 35%;
+        width: 24%;
+        height: 27%;
+      "
+    >
+
+      <span class="hotspot-indicator"></span>
+
+      <span class="hotspot-label">
+        Postal Museum
+      </span>
+
+    </button>
+
+
+    <!-- =================================================
+         CENTRAL DISPATCH
+         ================================================= -->
+
+    <button
+      type="button"
+      class="environment-hotspot"
+      data-room="dispatch"
+      aria-label="Central Dispatch"
+
+      style="
+        left: 36%;
+        top: 61%;
+        width: 31%;
+        height: 25%;
+      "
+    >
+
+      <span class="hotspot-indicator"></span>
+
+      <span class="hotspot-label">
+        Central Dispatch
+      </span>
+
+    </button>
+
+
+  </div>
+
+
+  <!-- ===============================================
+       ENVIRONMENT HEADER
+       =============================================== -->
+
+  <div
+    class="environment-header"
+  >
+
+    <div
+      class="environment-brand"
+    >
+
+      <div
+        class="environment-brand-name"
+      >
+        NAREHATE POSTAL SERVICE
+      </div>
+
+      <div
+        class="environment-brand-subtitle"
+      >
+        CENTRAL OFFICE
+      </div>
+
+    </div>
+
+
+    <div
+      id="environment-correspondent"
+      class="environment-correspondent"
+    >
+      VISITOR
+    </div>
+
+  </div>
+
+
+  <!-- ===============================================
+       ENVIRONMENT FOOTER
+       =============================================== -->
+
+  <div
+    class="environment-footer"
+  >
+
+    <span>
+      CENTRAL OFFICE
+    </span>
+
+    <span>
+      NAREHATE POSTAL SERVICE
+    </span>
+
+  </div>
+
+</section>
+
+<!-- ===================================================
+     <Finish> CENTRAL OFFICE ENVIRONMENT
+     =================================================== -->
+
+<Finish>
+
+
+  <!-- ===================================================
+       <Start> ROOM VIEW
+       ---------------------------------------------------
+       Room view tetap dipertahankan sebagai layer
+       transisi berikutnya.
+       =================================================== -->
+
+  <section
+    id="room-view"
+    class="room-view is-hidden"
+  >
+
+    <div class="room-topbar">
+
+      <button
+        type="button"
+        id="back-to-office"
+        class="back-button"
+      >
+        ← Central Office
+      </button>
+
+      <div
+        id="room-status"
+        class="room-status"
+      >
+        ROOM
+      </div>
+
+    </div>
+
+
+    <div class="room-content">
+
+      <div
+        id="room-number"
+        class="room-view-number"
+      >
+        00
+      </div>
+
+      <div
+        id="room-title"
+        class="room-view-title"
+      >
+        Room
+      </div>
+
+      <div
+        id="room-description"
+        class="room-view-description"
+      >
+        —
+      </div>
+
+
+      <div
+        id="room-placeholder"
+        class="room-placeholder"
+      >
+
+        <div class="placeholder-mark">
+          N
+        </div>
+
+        <div class="placeholder-label">
+          DEPARTMENT UNDER PREPARATION
+        </div>
+
+        <p>
+          The room exists.
+          Its correspondence has not yet arrived.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ===================================================
+       <Finish> ROOM VIEW
+       =================================================== -->
+
+
+  <!-- ===================================================
+       <Start> DEVELOPMENT PANEL
+       =================================================== -->
+
+  <div
+    id="development-panel"
+    class="development-panel"
+  >
+
+    <div class="development-title">
+      SYSTEM
+    </div>
+
+    <div class="development-row">
+
+      <span>
+        Application
+      </span>
+
+      <strong id="debug-app-name">
+        —
+      </strong>
+
+    </div>
+
+    <div class="development-row">
+
+      <span>
+        Version
+      </span>
+
+      <strong id="debug-app-version">
+        —
+      </strong>
+
+    </div>
+
+    <div class="development-row">
+
+      <span>
+        Server
+      </span>
+
+      <strong id="debug-server">
+        —
+      </strong>
+
+    </div>
+
+    <div class="development-row">
+
+      <span>
+        Identity
+      </span>
+
+      <strong id="debug-identity">
+        —
+      </strong>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     <Finish> APPLICATION CONTENT
+     ===================================================== -->
+
+
+      <!-- ===============================================
+           <Start> APPLICATION FOOTER
+           =============================================== -->
+
+      <footer class="app-footer">
+
+        <span>
+          Narehate Postal Service
+        </span>
+
+        <span>
+          EST. —
+        </span>
+
+      </footer>
+
+      <!-- ===============================================
+           <Finish> APPLICATION FOOTER
+           =============================================== -->
+
+
+    </main>
+
+    <!-- ===================================================
+         <Finish> MAIN APPLICATION
+         =================================================== -->
+
+
+  </div>
+
+  <!-- =====================================================
+       <Finish> APPLICATION ROOT
+       ===================================================== -->
+
+
+  <!-- =====================================================
+       <Start> JAVASCRIPT
+       ===================================================== -->
+
+  <?!= include('03_JS'); ?>
+
+  <!-- =====================================================
+       <Finish> JAVASCRIPT
+       ===================================================== -->
+
+
 </body>
+
 </html>

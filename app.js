@@ -926,7 +926,7 @@ function initializeGoogleIdentity() {
 
 
         /* -------------------------------------------------
-           INITIALIZE GIS
+           INITIALIZE GOOGLE IDENTITY SERVICES
            ------------------------------------------------- */
 
         google.accounts.id.initialize({
@@ -947,82 +947,27 @@ function initializeGoogleIdentity() {
 
 
         /* -------------------------------------------------
-           RENDER EXPLICIT GOOGLE BUTTON
+           RENDER EXPLICIT GOOGLE SIGN-IN BUTTON
            ------------------------------------------------- */
 
-        /* -------------------------------------------------
-   RENDER EXPLICIT GOOGLE BUTTON
-   ------------------------------------------------- */
-
-const buttonContainer =
-  createGoogleSignInContainer();
+        const buttonContainer =
+          createGoogleSignInContainer();
 
 
-if (!buttonContainer) {
+        if (!buttonContainer) {
 
-  reject(
-    new Error(
-      'Correspondence Gate authentication container is unavailable.'
-    )
-  );
+          reject(
+            new Error(
+              'Correspondence Gate authentication container is unavailable.'
+            )
+          );
 
-  return;
+          return;
 
-}
-
-
-google.accounts.id.renderButton(
-
-  buttonContainer,
-
-  {
-
-    type:
-      'standard',
-
-    theme:
-      'outline',
-
-    size:
-      'large',
-
-    text:
-      'signin_with',
-
-    shape:
-      'rectangular',
-
-    logo_alignment:
-      'left',
-
-    width:
-      320,
-
-    use_fedcm_for_button:
-      false
-
-  }
-
-);
+        }
 
 
-const gateStatus =
-  getElement(
-    'gate-auth-status'
-  );
-
-
-if (gateStatus) {
-
-  gateStatus.textContent =
-    'Awaiting correspondent identification...';
-
-}
-
-
-console.log(
-  '[NAREHATE] Google Sign-In button ready.'
-);
+        google.accounts.id.renderButton(
 
           buttonContainer,
 
@@ -1055,6 +1000,24 @@ console.log(
           }
 
         );
+
+
+        /* -------------------------------------------------
+           UPDATE GATE STATUS
+           ------------------------------------------------- */
+
+        const gateStatus =
+          getElement(
+            'gate-auth-status'
+          );
+
+
+        if (gateStatus) {
+
+          gateStatus.textContent =
+            'Awaiting correspondent identification...';
+
+        }
 
 
         console.log(
@@ -1153,7 +1116,6 @@ function removeGoogleSignInButton() {
 /* =========================================================
    <Finish> GOOGLE IDENTITY SERVICES
    ========================================================= */
-
 
 /* =========================================================
    <Start> GOOGLE AUTHENTICATION FLOW

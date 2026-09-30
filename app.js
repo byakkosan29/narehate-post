@@ -1464,25 +1464,50 @@ function showDoorEnvironment() {
 
 
 /* =========================================================
-   ENTER NAREHATE
+   <Start> ENTER NAREHATE
    ---------------------------------------------------------
-   Dari Door → Central Office.
+   Membuka Central Office setelah authentication berhasil.
+
+   Correspondence Gate adalah halaman login.
+   Setelah authentication selesai, Gate harus ditutup
+   agar Central Office menjadi satu-satunya view aktif.
    ========================================================= */
 
 function enterNarehate() {
 
   const loading =
-    getElement('loading-screen');
+    getElement(
+      'loading-screen'
+    );
+
+
+  const correspondenceGate =
+    getElement(
+      'correspondence-gate'
+    );
+
 
   const door =
-    getElement('door-environment');
+    getElement(
+      'door-environment'
+    );
+
 
   const registration =
-    getElement('registration-environment');
+    getElement(
+      'registration-environment'
+    );
+
 
   const office =
-    getElement('environment-view');
+    getElement(
+      'environment-view'
+    );
 
+
+  /* -------------------------------------------------------
+     HIDE LOADING
+     ------------------------------------------------------- */
 
   if (loading) {
 
@@ -1493,6 +1518,23 @@ function enterNarehate() {
   }
 
 
+  /* -------------------------------------------------------
+     HIDE CORRESPONDENCE GATE
+     ------------------------------------------------------- */
+
+  if (correspondenceGate) {
+
+    correspondenceGate.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     HIDE LEGACY DOOR
+     ------------------------------------------------------- */
+
   if (door) {
 
     door.classList.add(
@@ -1501,6 +1543,10 @@ function enterNarehate() {
 
   }
 
+
+  /* -------------------------------------------------------
+     HIDE REGISTRATION
+     ------------------------------------------------------- */
 
   if (registration) {
 
@@ -1511,6 +1557,10 @@ function enterNarehate() {
   }
 
 
+  /* -------------------------------------------------------
+     SHOW CENTRAL OFFICE
+     ------------------------------------------------------- */
+
   if (office) {
 
     office.classList.remove(
@@ -1519,6 +1569,10 @@ function enterNarehate() {
 
   }
 
+
+  /* -------------------------------------------------------
+     UPDATE APPLICATION STATE
+     ------------------------------------------------------- */
 
   APP.currentView =
     'office';
@@ -1536,6 +1590,10 @@ function enterNarehate() {
 
 }
 
+
+/* =========================================================
+   <Finish> ENTER NAREHATE
+   ========================================================= */
 
 /* =========================================================
    <Finish> ENVIRONMENT NAVIGATION

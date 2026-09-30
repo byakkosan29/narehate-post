@@ -84,43 +84,131 @@
   >
 
 
-    <!-- ===================================================
-         <Start> LOADING SCREEN
-         =================================================== -->
+   <!-- ===================================================
+     <Start> LOADING SCREEN
+     ---------------------------------------------------
+     Initial arrival sequence.
 
-    <section
-      id="loading-screen"
-      class="screen screen-loading"
+     Loading screen tidak melakukan authentication.
+     Authentication dimulai setelah user masuk ke
+     Correspondence Gate.
+     =================================================== -->
+
+<section
+  id="loading-screen"
+  class="screen screen-loading"
+>
+
+  <!-- =================================================
+       <Start> LOADING ATMOSPHERE
+       ================================================= -->
+
+  <div
+    class="loading-atmosphere"
+    aria-hidden="true"
+  ></div>
+
+  <!-- =================================================
+       <Finish> LOADING ATMOSPHERE
+       ================================================= -->
+
+
+  <!-- =================================================
+       <Start> LOADING CONTENT
+       ================================================= -->
+
+  <div
+    class="loading-content"
+  >
+
+    <!-- -----------------------------------------------
+         POSTAL SERVICE LOGO
+         ----------------------------------------------- -->
+
+    <div
+      class="loading-logo-wrap"
     >
 
-      <div class="loading-content">
+      <img
+        id="loading-logo"
+        class="loading-logo"
+        src="https://drive.google.com/uc?export=view&id=1JcJanRxt7NpOWMa7NUCJJ6K00w9hNMdJ"
+        alt="Royal Postal Service of Narehate"
+      >
 
-        <div class="loading-mark">
-          N
-        </div>
+    </div>
 
-        <div class="loading-title">
-          NAREHATE
-        </div>
 
-        <div class="loading-subtitle">
-          POSTAL SERVICE
-        </div>
+    <!-- -----------------------------------------------
+         MAIN HOOK TITLE
+         ----------------------------------------------- -->
+
+    <div
+      class="loading-title"
+    >
+      Royal Postal Service of Narehate
+    </div>
+
+
+    <!-- -----------------------------------------------
+         LOADING PROCESS
+         ----------------------------------------------- -->
+
+    <div
+      class="loading-process"
+    >
+
+      <div
+        id="loading-status"
+        class="loading-status"
+      >
+        Establishing correspondence...
+      </div>
+
+
+      <div
+        class="loading-progress"
+        aria-hidden="true"
+      >
 
         <div
-          id="loading-status"
-          class="loading-status"
+          class="loading-progress-track"
         >
-          Establishing correspondence...
+
+          <div
+            id="loading-progress-bar"
+            class="loading-progress-bar"
+          ></div>
+
+        </div>
+
+
+        <div
+          class="loading-progress-dots"
+          aria-hidden="true"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
         </div>
 
       </div>
 
-    </section>
+    </div>
 
-    <!-- ===================================================
-         <Finish> LOADING SCREEN
-         =================================================== -->
+  </div>
+
+  <!-- =================================================
+       <Finish> LOADING CONTENT
+       ================================================= -->
+
+</section>
+
+<!-- ===================================================
+     <Finish> LOADING SCREEN
+     =================================================== -->
 
 
     <!-- ===================================================

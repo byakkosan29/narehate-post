@@ -950,11 +950,79 @@ function initializeGoogleIdentity() {
            RENDER EXPLICIT GOOGLE BUTTON
            ------------------------------------------------- */
 
-        const buttonContainer =
-          createGoogleSignInContainer();
+        /* -------------------------------------------------
+   RENDER EXPLICIT GOOGLE BUTTON
+   ------------------------------------------------- */
+
+const buttonContainer =
+  createGoogleSignInContainer();
 
 
-        google.accounts.id.renderButton(
+if (!buttonContainer) {
+
+  reject(
+    new Error(
+      'Correspondence Gate authentication container is unavailable.'
+    )
+  );
+
+  return;
+
+}
+
+
+google.accounts.id.renderButton(
+
+  buttonContainer,
+
+  {
+
+    type:
+      'standard',
+
+    theme:
+      'outline',
+
+    size:
+      'large',
+
+    text:
+      'signin_with',
+
+    shape:
+      'rectangular',
+
+    logo_alignment:
+      'left',
+
+    width:
+      320,
+
+    use_fedcm_for_button:
+      false
+
+  }
+
+);
+
+
+const gateStatus =
+  getElement(
+    'gate-auth-status'
+  );
+
+
+if (gateStatus) {
+
+  gateStatus.textContent =
+    'Awaiting correspondent identification...';
+
+}
+
+
+console.log(
+  '[NAREHATE] Google Sign-In button ready.'
+);
 
           buttonContainer,
 
@@ -1008,67 +1076,38 @@ function initializeGoogleIdentity() {
 /* =========================================================
    <Start> CREATE GOOGLE SIGN-IN CONTAINER
    ---------------------------------------------------------
-   Membuat container sementara untuk tombol Google.
+   Menggunakan container yang sudah tersedia di
+   Correspondence Gate.
 
-   Container dibuat secara dinamis agar kita tidak perlu
-   mengubah 01_Index.html hanya untuk authentication.
+   Tidak membuat floating authentication button.
    ========================================================= */
 
 function createGoogleSignInContainer() {
 
-  removeGoogleSignInButton();
-
-
   const wrapper =
-    document.createElement(
-      'div'
+    getElement(
+      'google-signin-container'
     );
 
 
-  wrapper.id =
-    'narehate-google-signin-wrapper';
+  if (!wrapper) {
+
+    console.warn(
+      '[NAREHATE] Google Sign-In container not found.'
+    );
+
+    return null;
+
+  }
 
 
-  wrapper.style.position =
-    'fixed';
+  /*
+   * Pastikan container bersih sebelum
+   * Google Identity Services merender button.
+   */
 
-  wrapper.style.left =
-    '50%';
-
-  wrapper.style.bottom =
-    '48px';
-
-  wrapper.style.transform =
-    'translateX(-50%)';
-
-  wrapper.style.zIndex =
-    '99999';
-
-  wrapper.style.display =
-    'flex';
-
-  wrapper.style.justifyContent =
-    'center';
-
-  wrapper.style.alignItems =
-    'center';
-
-  wrapper.style.padding =
-    '8px';
-
-  wrapper.style.borderRadius =
-    '8px';
-
-  wrapper.style.background =
-    'rgba(20, 16, 14, 0.92)';
-
-  wrapper.style.boxShadow =
-    '0 8px 30px rgba(0, 0, 0, 0.35)';
-
-
-  document.body.appendChild(
-    wrapper
-  );
+  wrapper.innerHTML =
+    '';
 
 
   return wrapper;
@@ -1079,20 +1118,22 @@ function createGoogleSignInContainer() {
 /* =========================================================
    <Start> REMOVE GOOGLE SIGN-IN CONTAINER
    ---------------------------------------------------------
-   Menghapus tombol Google setelah autentikasi berhasil.
+   Setelah authentication berhasil, button dibersihkan
+   dari Correspondence Gate.
    ========================================================= */
 
 function removeGoogleSignInButton() {
 
   const wrapper =
-    document.getElementById(
-      'narehate-google-signin-wrapper'
+    getElement(
+      'google-signin-container'
     );
 
 
   if (wrapper) {
 
-    wrapper.remove();
+    wrapper.innerHTML =
+      '';
 
   }
 
@@ -2897,15 +2938,15 @@ function bindEvents() {
 /* =========================================================
    <Start> APPLICATION INITIALIZATION
    ---------------------------------------------------------
-   Urutan boot:
+   Initial boot sequence:
 
        1. Public config
        2. Server status
-       3. Google Identity Services
-       4. Google authentication
-       5. Correspondent registry
-       6. UI preparation
-       7. Application
+       3. Finish loading sequence
+       4. Correspondence Gate
+       5. Prepare explicit Google Sign-In
+
+   Authentication TIDAK dijalankan pada loading screen.
    ========================================================= */
 
 async function initializeApplication() {
@@ -2927,27 +2968,74 @@ async function initializeApplication() {
 
 
     setLoadingStatus(
-      'Preparing identity service...'
+      'Preparing correspondence routes...'
     );
+
+
+    /*
+     * Beri sedikit waktu agar loading animation
+     * selesai secara visual.
+     */
+
+    await new Promise(
+      function(resolve) {
+
+        setTimeout(
+          resolve,
+          900
+        );
+
+      }
+    );
+
+
+    setLoadingProgress(
+      100
+    );
+
+
+    setLoadingStatus(
+      'Postal service ready.'
+    );
+
+
+    await new Promise(
+      function(resolve) {
+
+        setTimeout(
+          resolve,
+          700
+        );
+
+      }
+    );
+
+
+    /*
+     * Loading selesai.
+     * Sekarang pindah ke Correspondence Gate.
+     */
+
+    showCorrespondenceGate();
+
+
+    /*
+     * Google Identity Services baru dipersiapkan
+     * setelah gate terlihat.
+     */
 
     await initializeGoogleIdentity();
 
 
-    /*
-     * Google callback akan mengisi:
-     *
-     * APP.googleIdToken
-     *
-     * dan kemudian melanjutkan
-     * authentication flow.
-     */
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
       'APPLICATION INITIALIZATION ERROR:',
       error
     );
+
 
     setLoadingStatus(
       'The postal service could not be reached.'
@@ -2957,9 +3045,100 @@ async function initializeApplication() {
 
 }
 
+
 /* =========================================================
    <Finish> APPLICATION INITIALIZATION
    ========================================================= */
+
+
+
+/* =========================================================
+   <Start> CORRESPONDENCE GATE NAVIGATION
+   ---------------------------------------------------------
+   Loading
+      ↓
+   Correspondence Gate
+   ========================================================= */
+
+function showCorrespondenceGate() {
+
+  const loading =
+    getElement(
+      'loading-screen'
+    );
+
+
+  const gate =
+    getElement(
+      'correspondence-gate'
+    );
+
+
+  const mainApp =
+    getElement(
+      'main-app'
+    );
+
+
+  /*
+   * Hide loading.
+   */
+
+  if (loading) {
+
+    loading.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /*
+   * Hide main application shell.
+   *
+   * Central Office belum boleh terlihat.
+   */
+
+  if (mainApp) {
+
+    mainApp.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /*
+   * Show Correspondence Gate.
+   */
+
+  if (gate) {
+
+    gate.classList.remove(
+      'is-hidden'
+    );
+
+  }
+
+
+  APP.currentView =
+    'correspondence-gate';
+
+
+  console.log(
+    '[NAREHATE] Correspondence Gate opened.'
+  );
+
+}
+
+
+/* =========================================================
+   <Finish> CORRESPONDENCE GATE NAVIGATION
+   ========================================================= */
+
+
+
+
 
 /* =========================================================
    <Start> APPLICATION BOOT

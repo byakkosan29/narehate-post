@@ -704,6 +704,516 @@ body {
    <Finish> LOADING SCREEN
    ========================================================= */
 
+/* =========================================================
+   <Start> CORRESPONDENCE GATE
+   ---------------------------------------------------------
+   Dedicated authentication environment.
+
+   Direction:
+   - quiet
+   - formal
+   - royal postal
+   - slightly mysterious
+   - no modern SaaS appearance
+   ========================================================= */
+
+.screen-correspondence-gate {
+
+  position: relative;
+
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #30251b 0%,
+      #211a14 45%,
+      #120f0c 100%
+    );
+
+}
+
+
+/* =========================================================
+   <Start> GATE ATMOSPHERE
+   ========================================================= */
+
+.gate-atmosphere {
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(
+        255,
+        225,
+        177,
+        0.055
+      ) 0%,
+      rgba(
+        255,
+        225,
+        177,
+        0.018
+      ) 38%,
+      transparent 72%
+    );
+
+}
+
+
+/* =========================================================
+   <Finish> GATE ATMOSPHERE
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> GATE CONTENT
+   ========================================================= */
+
+.gate-content {
+
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      90vw,
+      520px
+    );
+
+  padding:
+    42px
+    36px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  border:
+    1px solid
+    rgba(
+      238,
+      225,
+      206,
+      0.12
+    );
+
+  background:
+    rgba(
+      18,
+      15,
+      12,
+      0.28
+    );
+
+  box-shadow:
+    0 24px 80px
+    rgba(
+      0,
+      0,
+      0,
+      0.22
+    );
+
+  animation:
+    gate-content-arrival
+    800ms
+    ease-out
+    both;
+
+}
+
+
+/* =========================================================
+   <Start> EYEBROW
+   ========================================================= */
+
+.gate-eyebrow {
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.48
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  letter-spacing:
+    0.28em;
+
+  text-transform:
+    uppercase;
+
+}
+
+
+/* =========================================================
+   <Finish> EYEBROW
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> TITLE
+   ========================================================= */
+
+.gate-title {
+
+  margin:
+    14px
+    0
+    0;
+
+  color:
+    #eee1ce;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      26px,
+      4vw,
+      38px
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    1.15;
+
+  letter-spacing:
+    0.025em;
+
+}
+
+
+/* =========================================================
+   <Finish> TITLE
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> DESCRIPTION
+   ========================================================= */
+
+.gate-description {
+
+  width:
+    min(
+      100%,
+      360px
+    );
+
+  margin:
+    18px
+    0
+    0;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.58
+    );
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.7;
+
+}
+
+
+/* =========================================================
+   <Finish> DESCRIPTION
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> DIVIDER
+   ========================================================= */
+
+.gate-divider {
+
+  width:
+    80px;
+
+  height:
+    1px;
+
+  margin:
+    30px
+    0;
+
+  background:
+    rgba(
+      238,
+      225,
+      206,
+      0.22
+    );
+
+}
+
+
+/* =========================================================
+   <Finish> DIVIDER
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> AUTHENTICATION
+   ========================================================= */
+
+.gate-authentication {
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+}
+
+
+.google-signin-container {
+
+  min-height:
+    44px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+}
+
+
+/*
+ * Google menyediakan button-nya sendiri.
+ *
+ * Kita tidak memalsukan Google button.
+ * GIS tetap menjadi source authentication.
+ */
+
+.google-signin-container > div {
+
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+}
+
+
+.gate-auth-status {
+
+  min-height:
+    16px;
+
+  margin-top:
+    16px;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.38
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  letter-spacing:
+    0.12em;
+
+  text-transform:
+    uppercase;
+
+  transition:
+    opacity
+    240ms
+    ease;
+
+}
+
+
+/* =========================================================
+   <Finish> AUTHENTICATION
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> FOOTER
+   ========================================================= */
+
+.gate-footer {
+
+  margin-top:
+    38px;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.22
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    0.2em;
+
+  text-transform:
+    uppercase;
+
+}
+
+
+/* =========================================================
+   <Finish> FOOTER
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> GATE ANIMATION
+   ========================================================= */
+
+@keyframes gate-content-arrival {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      translateY(12px);
+
+  }
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+
+/* =========================================================
+   <Finish> GATE ANIMATION
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> GATE RESPONSIVE
+   ========================================================= */
+
+@media (
+  max-width: 600px
+) {
+
+  .gate-content {
+
+    width:
+      calc(
+        100vw - 32px
+      );
+
+    padding:
+      34px
+      22px;
+
+  }
+
+
+  .gate-title {
+
+    font-size:
+      27px;
+
+  }
+
+
+  .gate-description {
+
+    font-size:
+      12px;
+
+  }
+
+}
+
+
+/* =========================================================
+   <Finish> GATE RESPONSIVE
+   ========================================================= */
+
+
+/* =========================================================
+   <Finish> CORRESPONDENCE GATE
+   ========================================================= */
+
 
 /* =========================================================
    <Start> MAIN APPLICATION

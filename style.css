@@ -3081,9 +3081,12 @@ body {
 }
 
 
-/* ---------------------------------------------------------
-   DOOR BACKGROUND ARTWORK
-   --------------------------------------------------------- */
+/* =========================================================
+   <Start> DOOR BACKGROUND
+   ---------------------------------------------------------
+   Artwork utama untuk Door / entrance Narehate.
+   Asset disimpan di GitHub repository.
+   ========================================================= */
 
 #door-background {
 
@@ -3093,19 +3096,22 @@ body {
   inset:
     0;
 
+  z-index:
+    0;
+
   width:
     100%;
 
   height:
     100%;
 
-  z-index:
-    1;
-
   background-image:
     url(
       "/assets/environments/door.webp"
     );
+
+  background-size:
+    cover;
 
   background-position:
     center center;
@@ -3113,15 +3119,11 @@ body {
   background-repeat:
     no-repeat;
 
-  background-size:
-    cover;
-
-  transform:
-    scale(
-      1.001
-    );
-
 }
+
+/* =========================================================
+   <Finish> DOOR BACKGROUND
+   ========================================================= */
 
 
 /* ---------------------------------------------------------

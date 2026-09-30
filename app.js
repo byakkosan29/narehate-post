@@ -81,6 +81,140 @@ function getElement(id) {
 
 
 /* =========================================================
+   <Start> CLOUDFLARE API HELPER
+   ---------------------------------------------------------
+   Frontend sekarang berjalan sebagai website biasa.
+
+   Semua komunikasi dengan backend dilakukan melalui:
+   
+       Browser
+          ↓
+       /api/*
+          ↓
+       Cloudflare Worker
+          ↓
+       Apps Script
+
+   Tidak menggunakan google.script lagi.
+   ========================================================= */
+
+async function apiRequest(
+  action,
+  data = {},
+  options = {}
+) {
+
+  const method =
+    options.method ||
+    'POST';
+
+  let response;
+
+
+  try {
+
+    if (method === 'GET') {
+
+      response =
+        await fetch(
+          '/api/' +
+          encodeURIComponent(action),
+          {
+            method: 'GET',
+            headers: {
+              'Accept':
+                'application/json'
+            }
+          }
+        );
+
+    } else {
+
+      response =
+        await fetch(
+          '/api',
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json',
+
+              'Accept':
+                'application/json'
+            },
+
+            body:
+              JSON.stringify({
+
+                action:
+                  action,
+
+                ...data
+
+              })
+          }
+        );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      '[NAREHATE] API NETWORK ERROR:',
+      error
+    );
+
+    throw new Error(
+      'Unable to reach the postal service.'
+    );
+
+  }
+
+
+  let result;
+
+  try {
+
+    result =
+      await response.json();
+
+  } catch (error) {
+
+    console.error(
+      '[NAREHATE] API INVALID RESPONSE:',
+      error
+    );
+
+    throw new Error(
+      'The postal service returned an invalid response.'
+    );
+
+  }
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      result &&
+      result.error
+        ? result.error
+        : 'Postal service request failed.'
+    );
+
+  }
+
+
+  return result;
+
+}
+
+/* =========================================================
+   <Finish> CLOUDFLARE API HELPER
+   ========================================================= */
+
+
+/* =========================================================
    <Start> UPDATE LOADING STATUS
    ========================================================= */
 
@@ -144,36 +278,24 @@ function showMainApplication() {
    <Start> LOAD PUBLIC CONFIG
    ========================================================= */
 
-function loadPublicConfig() {
+async function loadPublicConfig() {
 
-  return new Promise(
-    function(resolve, reject) {
+  const result =
+    await apiRequest(
+      'config',
+      {},
+      {
+        method:
+          'GET'
+      }
+    );
 
-      google.script.run
 
-        .withSuccessHandler(
-          function(result) {
+  APP.config =
+    result;
 
-            APP.config =
-              result;
 
-            resolve(result);
-
-          }
-        )
-
-        .withFailureHandler(
-          function(error) {
-
-            reject(error);
-
-          }
-        )
-
-        .getPublicConfig();
-
-    }
-  );
+  return result;
 
 }
 
@@ -181,51 +303,38 @@ function loadPublicConfig() {
    <Finish> LOAD PUBLIC CONFIG
    ========================================================= */
 
-
 /* =========================================================
    <Start> LOAD CENTRAL OFFICE BACKGROUND
    ---------------------------------------------------------
-   Mengambil artwork Central Office dari Google Drive
-   melalui Apps Script.
+   Mengambil artwork Central Office melalui Cloudflare API.
 
-   Background kemudian disimpan di APP.environment.
+   Flow:
+
+   Browser
+      ↓
+   Cloudflare Worker
+      ↓
+   Apps Script
+      ↓
+   Google Drive
+      ↓
+   Base64 Image Data
    ========================================================= */
 
-function loadCentralOfficeBackground() {
+async function loadCentralOfficeBackground() {
 
-  return new Promise(
-    function(resolve, reject) {
+  const imageData =
+    await apiRequest(
+      'centralOfficeBackground'
+    );
 
-      google.script.run
 
-        .withSuccessHandler(
-          function(imageData) {
+  APP.environment
+    .centralOfficeBackground =
+    imageData;
 
-            APP.environment
-              .centralOfficeBackground =
-              imageData;
 
-            resolve(
-              imageData
-            );
-
-          }
-        )
-
-        .withFailureHandler(
-          function(error) {
-
-            reject(
-              error
-            );
-
-          }
-        )
-
-        .getCentralOfficeBackground();
-
-    }
-  );
+  return imageData;
 
 }
 
@@ -277,36 +386,24 @@ function applyCentralOfficeBackground() {
    <Start> LOAD SERVER STATUS
    ========================================================= */
 
-function loadServerStatus() {
+async function loadServerStatus() {
 
-  return new Promise(
-    function(resolve, reject) {
+  const result =
+    await apiRequest(
+      'status',
+      {},
+      {
+        method:
+          'GET'
+      }
+    );
 
-      google.script.run
 
-        .withSuccessHandler(
-          function(result) {
+  APP.status =
+    result;
 
-            APP.status =
-              result;
 
-            resolve(result);
-
-          }
-        )
-
-        .withFailureHandler(
-          function(error) {
-
-            reject(error);
-
-          }
-        )
-
-        .getAppStatus();
-
-    }
-  );
+  return result;
 
 }
 
@@ -316,17 +413,18 @@ function loadServerStatus() {
 
 
 
-
 /* =========================================================
-   LOAD CURRENT USER
+   <Start> LOAD CURRENT USER
    ---------------------------------------------------------
-   User identity sekarang menggunakan Google ID Token.
+   User identity menggunakan Google ID Token.
 
    Flow:
 
    Google
       ↓
    ID Token
+      ↓
+   Cloudflare API
       ↓
    Apps Script
       ↓
@@ -335,98 +433,75 @@ function loadServerStatus() {
    USERS / GOOGLE_SUB
    ========================================================= */
 
-function loadCurrentUser() {
+async function loadCurrentUser() {
 
-  return new Promise(
-    function(resolve, reject) {
+  /*
+   * Tidak ada Google identity berarti belum
+   * mendapatkan authentication token.
+   */
 
-      /*
-       * Tidak ada Google identity berarti belum
-       * mendapatkan authentication token.
-       */
+  if (!APP.googleIdToken) {
 
-      if (!APP.googleIdToken) {
+    APP.identity = {
 
-        APP.identity = {
+      authenticated:
+        false,
 
-          authenticated:
-            false,
+      registered:
+        false,
 
-          registered:
-            false,
+      user:
+        null
 
-          user:
-            null
-
-        };
-
-        APP.user =
-          null;
-
-        resolve(
-          APP.identity
-        );
-
-        return;
-
-      }
+    };
 
 
-      google.script.run
-
-        .withSuccessHandler(
-          function(result) {
-
-            APP.identity =
-              result;
+    APP.user =
+      null;
 
 
-            if (
-              result &&
-              result.user
-            ) {
+    return APP.identity;
 
-              APP.user =
-                result.user;
-
-            } else {
-
-              APP.user =
-                null;
-
-            }
+  }
 
 
-            resolve(
-              result
-            );
-
-          }
-        )
-
-        .withFailureHandler(
-          function(error) {
-
-            reject(
-              error
-            );
-
-          }
-        )
-
-        .getAuthenticatedIdentity(
+  const result =
+    await apiRequest(
+      'auth',
+      {
+        idToken:
           APP.googleIdToken
-        );
+      }
+    );
 
-    }
-  );
+
+  APP.identity =
+    result;
+
+
+  if (
+    result &&
+    result.user
+  ) {
+
+    APP.user =
+      result.user;
+
+  } else {
+
+    APP.user =
+      null;
+
+  }
+
+
+  return result;
 
 }
 
 /* =========================================================
    <Finish> LOAD CURRENT USER
    ========================================================= */
-
 
 /* =========================================================
    <Start> GOOGLE IDENTITY SERVICES
@@ -1614,75 +1689,68 @@ function bindRegistrationEvents() {
 /* =========================================================
    <Start> REGISTRATION SERVER CALL
    ---------------------------------------------------------
-   Wrapper frontend untuk Apps Script.
+   Wrapper frontend untuk Cloudflare API.
 
-   Server:
-       registerCorrespondent(data)
+   Cloudflare:
+       POST /api
+
+   Apps Script:
+       registerCorrespondent(
+         idToken,
+         data
+       )
    ========================================================= */
 
-function registerCorrespondentFromServer(data) {
+async function registerCorrespondentFromServer(
+  data
+) {
 
-  return new Promise(function(resolve, reject) {
+  if (!APP.googleIdToken) {
 
-    if (!APP.googleIdToken) {
-      reject(
-        new Error(
-          'Google authentication belum tersedia.'
-        )
-      );
+    throw new Error(
+      'Google authentication belum tersedia.'
+    );
 
-      return;
-    }
+  }
 
 
-    google.script.run
-      .withSuccessHandler(function(response) {
+  const response =
+    await apiRequest(
+      'register',
+      {
 
-        if (!response) {
-          reject(
-            new Error(
-              'Server tidak memberikan response.'
-            )
-          );
+        idToken:
+          APP.googleIdToken,
 
-          return;
-        }
+        data:
+          data
 
-
-        if (!response.success) {
-          reject(
-            new Error(
-              'Registrasi gagal.'
-            )
-          );
-
-          return;
-        }
+      }
+    );
 
 
-        resolve(response);
+  if (!response) {
 
-      })
-      .withFailureHandler(function(error) {
+    throw new Error(
+      'Server tidak memberikan response.'
+    );
 
-        reject(
-          new Error(
-            error && error.message
-              ? error.message
-              : 'Registrasi gagal.'
-          )
-        );
+  }
 
-      })
-      .registerCorrespondent(
-        APP.googleIdToken,
-        data
-      );
 
-  });
+  if (!response.success) {
+
+    throw new Error(
+      response.error ||
+      'Registrasi gagal.'
+    );
+
+  }
+
+
+  return response;
 
 }
-
 
 /* =========================================================
    <Finish> REGISTRATION SERVER CALL

@@ -431,6 +431,9 @@ async function loadServerStatus() {
    verifyGoogleIdToken()
       ↓
    USERS / GOOGLE_SUB
+
+   Jika backend gagal, error asli dari server
+   diteruskan ke frontend agar mudah didiagnosis.
    ========================================================= */
 
 async function loadCurrentUser() {
@@ -455,15 +458,17 @@ async function loadCurrentUser() {
 
     };
 
-
     APP.user =
       null;
-
 
     return APP.identity;
 
   }
 
+
+  /*
+   * Kirim Google ID Token ke backend.
+   */
 
   const result =
     await apiRequest(
@@ -475,12 +480,60 @@ async function loadCurrentUser() {
     );
 
 
+  /*
+   * DEBUG:
+   * tampilkan response mentah dari backend.
+   */
+
+  console.log(
+    '[NAREHATE] AUTH RESPONSE:',
+    result
+  );
+
+
+  /*
+   * Kalau backend mengembalikan error,
+   * jangan lanjut dengan identity palsu.
+   *
+   * Teruskan pesan error asli supaya kita tahu
+   * apakah masalahnya:
+   *
+   * - token invalid
+   * - audience mismatch
+   * - token expired
+   * - Google verification gagal
+   * - Apps Script error
+   * - database error
+   */
+
+  if (
+    !result ||
+    result.success !== true
+  ) {
+
+    throw new Error(
+      result &&
+      result.error
+        ? result.error
+        : 'Authentication server returned an invalid response.'
+    );
+
+  }
+
+
+  /*
+   * Simpan identity hasil authentication.
+   */
+
   APP.identity =
     result;
 
 
+  /*
+   * Simpan user jika sudah terdaftar.
+   */
+
   if (
-    result &&
     result.user
   ) {
 
@@ -494,6 +547,10 @@ async function loadCurrentUser() {
 
   }
 
+
+  /*
+   * Return identity ke authentication flow.
+   */
 
   return result;
 

@@ -216,12 +216,74 @@ async function apiRequest(
 
 /* =========================================================
    <Start> UPDATE LOADING STATUS
+   ---------------------------------------------------------
+   Mengontrol text dan progress visual pada loading screen.
    ========================================================= */
 
-function setLoadingStatus(message) {
+const LOADING_STEPS = [
+
+  {
+    text:
+      'Initializing postal service...',
+    progress:
+      18
+  },
+
+  {
+    text:
+      'Establishing correspondence routes...',
+    progress:
+      36
+  },
+
+  {
+    text:
+      'Contacting the central office...',
+    progress:
+      54
+  },
+
+  {
+    text:
+      'Preparing the postal registry...',
+    progress:
+      72
+  },
+
+  {
+    text:
+      'Preparing your correspondence...',
+    progress:
+      88
+  },
+
+  {
+    text:
+      'Postal service ready.',
+    progress:
+      100
+  }
+
+];
+
+
+let loadingStepIndex =
+  0;
+
+
+let loadingStepTimer =
+  null;
+
+
+function setLoadingStatus(
+  message
+) {
 
   const element =
-    getElement('loading-status');
+    getElement(
+      'loading-status'
+    );
+
 
   if (element) {
 
@@ -231,6 +293,160 @@ function setLoadingStatus(message) {
   }
 
 }
+
+
+function setLoadingProgress(
+  progress
+) {
+
+  const element =
+    getElement(
+      'loading-progress-bar'
+    );
+
+
+  if (!element) {
+
+    return;
+
+  }
+
+
+  const safeProgress =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Number(progress) || 0
+      )
+    );
+
+
+  element.style.width =
+    safeProgress + '%';
+
+}
+
+
+function updateLoadingStep() {
+
+  const step =
+    LOADING_STEPS[
+      loadingStepIndex
+    ];
+
+
+  if (!step) {
+
+    return;
+
+  }
+
+
+  const status =
+    getElement(
+      'loading-status'
+    );
+
+
+  if (status) {
+
+    status.style.opacity =
+      '0';
+
+
+    window.setTimeout(
+      function() {
+
+        status.textContent =
+          step.text;
+
+        status.style.opacity =
+          '1';
+
+      },
+      180
+    );
+
+  }
+
+
+  setLoadingProgress(
+    step.progress
+  );
+
+
+  loadingStepIndex =
+    Math.min(
+      loadingStepIndex + 1,
+      LOADING_STEPS.length - 1
+    );
+
+}
+
+
+function startLoadingAnimation() {
+
+  if (
+    loadingStepTimer
+  ) {
+
+    return;
+
+  }
+
+
+  loadingStepIndex =
+    0;
+
+
+  updateLoadingStep();
+
+
+  loadingStepTimer =
+    window.setInterval(
+      function() {
+
+        if (
+          loadingStepIndex >=
+          LOADING_STEPS.length
+        ) {
+
+          return;
+
+        }
+
+
+        updateLoadingStep();
+
+      },
+      900
+    );
+
+}
+
+
+function stopLoadingAnimation() {
+
+  if (
+    !loadingStepTimer
+  ) {
+
+    return;
+
+  }
+
+
+  window.clearInterval(
+    loadingStepTimer
+  );
+
+
+  loadingStepTimer =
+    null;
+
+}
+
 
 /* =========================================================
    <Finish> UPDATE LOADING STATUS

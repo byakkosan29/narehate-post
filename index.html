@@ -87,8 +87,6 @@
 
 <!-- ===================================================
      <Start> LOADING SCREEN
-     ---------------------------------------------------
-     Initial arrival sequence.
      =================================================== -->
 
 <section
@@ -106,19 +104,26 @@
     class="loading-content"
   >
 
+    <!-- =============================================
+         LOGO
+         ============================================= -->
+
     <div
       class="loading-logo-wrap"
     >
 
       <img
-        id="loading-logo"
-        class="loading-logo"
-        src="https://drive.google.com/uc?export=view&id=1JcJanRxt7NpOWMa7NUCJJ6K00w9hNMdJ"
+        src="/main/assets/environments/Logo%20Narehate.webp"
         alt="Royal Postal Service of Narehate"
+        class="loading-logo"
       >
 
     </div>
 
+
+    <!-- =============================================
+         MAIN TITLE
+         ============================================= -->
 
     <div
       class="loading-title"
@@ -126,6 +131,10 @@
       Royal Postal Service of Narehate
     </div>
 
+
+    <!-- =============================================
+         LOADING PROCESS
+         ============================================= -->
 
     <div
       class="loading-process"
@@ -135,7 +144,7 @@
         id="loading-status"
         class="loading-status"
       >
-        Establishing correspondence...
+        Initializing postal service...
       </div>
 
 
@@ -145,27 +154,21 @@
       >
 
         <div
-          class="loading-progress-track"
-        >
+          id="loading-progress-bar"
+          class="loading-progress-bar"
+        ></div>
 
-          <div
-            id="loading-progress-bar"
-            class="loading-progress-bar"
-          ></div>
-
-        </div>
+      </div>
 
 
-        <div
-          class="loading-progress-dots"
-          aria-hidden="true"
-        >
+      <div
+        class="loading-dots"
+        aria-hidden="true"
+      >
 
-          <span></span>
-          <span></span>
-          <span></span>
-
-        </div>
+        <span></span>
+        <span></span>
+        <span></span>
 
       </div>
 

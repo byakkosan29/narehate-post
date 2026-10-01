@@ -195,163 +195,306 @@
     }
 
 
-    .registration-form {
+   /* <Start> BLOCK 25 — ARTWORK-LOCKED FORM CANVAS */
 
-      position:
-        absolute;
+.registration-form {
 
-      inset:
-        0;
+  position: fixed;
 
-      width:
-        100%;
+  top: 0;
+  left: 50%;
 
-      min-height:
-        100%;
+  transform: translateX(-50%);
 
-      margin:
-        0;
+  width: min(
+    100vw,
+    177.7777778vh
+  );
 
-      padding:
-        0;
+  aspect-ratio: 16 / 9;
 
-      pointer-events:
-        none;
+  height: auto;
 
-    }
+  margin: 0;
+  padding: 0;
 
+  z-index: 20;
 
-    /* =====================================================
-       FIELD
-       ===================================================== */
-
-    .registration-field {
-
-      position:
-        absolute;
-
-      pointer-events:
-        auto;
-
-    }
+  pointer-events: none;
+}
 
 
-    .registration-field label {
+/* -----------------------------------------------
+   GENERIC FIELD
+   ----------------------------------------------- */
 
-      position:
-        absolute;
+.registration-field {
 
-      width:
-        1px;
+  position: absolute;
 
-      height:
-        1px;
-
-      padding:
-        0;
-
-      margin:
-        -1px;
-
-      overflow:
-        hidden;
-
-      clip:
-        rect(
-          0,
-          0,
-          0,
-          0
-        );
-
-      white-space:
-        nowrap;
-
-      border:
-        0;
-
-    }
+  pointer-events: auto;
+}
 
 
-    .registration-field input,
-    .registration-field select {
+.registration-field input,
+.registration-field select {
 
-      width:
-        100%;
+  width: 100%;
+  height: 100%;
 
-      height:
-        100%;
+  box-sizing: border-box;
 
-      padding:
-        7px
-        10px;
+  padding:
+    0
+    10px;
 
-      border:
-        0;
+  border: 0;
+  outline: none;
 
-      outline:
-        none;
+  border-radius: 0;
 
-      border-radius:
-        0;
+  background: transparent;
 
-      background:
-        transparent;
+  color: var(--ink);
 
-      color:
-        var(--ink);
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+  font-size:
+    clamp(
+      12px,
+      1.05vw,
+      17px
+    );
 
-      font-size:
-        clamp(
-          12px,
-          1.1vw,
-          17px
-        );
-
-      letter-spacing:
-        0.15px;
-
-    }
+  letter-spacing: 0.15px;
+}
 
 
-    .registration-field input::placeholder {
+/* -----------------------------------------------
+   FOCUS
+   ----------------------------------------------- */
 
-      color:
-        rgba(
-          100,
-          35,
-          25,
-          0.24
-        );
+.registration-field input:focus,
+.registration-field select:focus {
 
-    }
+  background:
+    rgba(
+      255,
+      238,
+      204,
+      0.18
+    );
+
+  box-shadow:
+    inset
+    0
+    0
+    0
+    1px
+    rgba(
+      100,
+      35,
+      25,
+      0.18
+    );
+}
 
 
-    .registration-field input:focus,
-    .registration-field select:focus {
+/* -----------------------------------------------
+   DATE
+   ----------------------------------------------- */
 
-      background:
-        var(--paper-focus);
+.registration-field input[type="date"] {
 
-      box-shadow:
-        inset
-        0
-        0
-        0
-        1px
-        rgba(
-          100,
-          35,
-          25,
-          0.18
-        );
+  color: var(--ink);
 
-    }
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+
+/* -----------------------------------------------
+   SELECT
+   ----------------------------------------------- */
+
+.registration-field select {
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+}
+
+
+.registration-field select option {
+
+  color: #3f1b16;
+
+  background: #ead0a8;
+}
+
+
+/* <Finish> BLOCK 25 */
+
+
+/* <Start> BLOCK 26 — ARTWORK FIELD ALIGNMENT */
+
+/*
+   Semua koordinat sekarang dihitung terhadap
+   canvas artwork 16:9.
+
+   Jadi:
+   0% = sisi kiri artwork
+   100% = sisi kanan artwork
+*/
+
+
+/* =====================================================
+   LEFT COLUMN
+   ===================================================== */
+
+#registration-name-field {
+
+  left: 22.9%;
+  top: 54.5%;
+
+  width: 26.2%;
+  height: 4.4%;
+}
+
+
+#registration-username-field {
+
+  left: 22.9%;
+  top: 63.25%;
+
+  width: 26.2%;
+  height: 4.4%;
+}
+
+
+#registration-password-field {
+
+  left: 22.9%;
+  top: 71.75%;
+
+  width: 26.2%;
+  height: 4.4%;
+}
+
+
+#registration-email-field {
+
+  left: 22.9%;
+  top: 80.25%;
+
+  width: 26.2%;
+  height: 4.4%;
+}
+
+
+/* =====================================================
+   RIGHT COLUMN
+   ===================================================== */
+
+#registration-dob-field {
+
+  left: 57.1%;
+  top: 54.5%;
+
+  width: 25.6%;
+  height: 4.4%;
+}
+
+
+#registration-gender-field {
+
+  left: 57.1%;
+  top: 63.25%;
+
+  width: 25.6%;
+  height: 4.4%;
+}
+
+
+#registration-hobbies-field {
+
+  left: 57.1%;
+  top: 71.75%;
+
+  width: 25.6%;
+  height: 4.4%;
+}
+
+
+#registration-occupation-field {
+
+  left: 57.1%;
+  top: 80.25%;
+
+  width: 25.6%;
+  height: 4.4%;
+}
+
+
+/* =====================================================
+   ACCEPT
+   ===================================================== */
+
+#registration-submit {
+
+  position: absolute;
+
+  left: 40.5%;
+  top: 87.4%;
+
+  width: 19.0%;
+  height: 7.2%;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: transparent;
+
+  cursor: pointer;
+
+  pointer-events: auto;
+
+  z-index: 30;
+}
+
+
+#registration-submit:hover {
+
+  background:
+    rgba(
+      255,
+      230,
+      190,
+      0.08
+    );
+}
+
+
+#registration-submit:active {
+
+  background:
+    rgba(
+      90,
+      20,
+      10,
+      0.10
+    );
+}
+
+
+/* <Finish> BLOCK 26 */
 
 
     /* <Start> BLOCK 24 — NEW ARTWORK FIELD POSITIONS */

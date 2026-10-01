@@ -1,0 +1,1564 @@
+
+
+<!DOCTYPE html>
+
+<html
+  lang="id"
+>
+
+<head>
+
+  <meta
+    charset="UTF-8"
+  >
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Registration — Narehate Postal Service
+  </title>
+
+
+  <meta
+    name="description"
+    content="Register as a correspondent of Narehate Postal Service."
+  >
+
+
+  <style>
+
+    /* =====================================================
+       <Start> REGISTRATION PAGE
+       ===================================================== */
+
+    :root {
+
+      --ink:
+        #642319;
+
+      --ink-soft:
+        rgba(
+          100,
+          35,
+          25,
+          0.68
+        );
+
+      --paper:
+        rgba(
+          244,
+          218,
+          179,
+          0.24
+        );
+
+      --paper-focus:
+        rgba(
+          255,
+          238,
+          204,
+          0.42
+        );
+
+      --line:
+        rgba(
+          100,
+          35,
+          25,
+          0.42
+        );
+
+      --error:
+        #7b2418;
+
+    }
+
+
+    * {
+
+      box-sizing:
+        border-box;
+
+    }
+
+
+    html,
+    body {
+
+      width:
+        100%;
+
+      min-height:
+        100%;
+
+      margin:
+        0;
+
+      padding:
+        0;
+
+    }
+
+
+    body {
+
+      background:
+        #17100b;
+
+      color:
+        var(--ink);
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      overflow-x:
+        hidden;
+
+    }
+
+
+    /* =====================================================
+       BACKGROUND
+       ===================================================== */
+
+    .registration-page {
+
+      position:
+        relative;
+
+      width:
+        100%;
+
+      min-height:
+        100vh;
+
+      min-height:
+        100dvh;
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        flex-start;
+
+      overflow:
+        hidden;
+
+      background:
+        #17100b;
+
+    }
+
+
+    .registration-background {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      z-index:
+        0;
+
+      background-image:
+        url(
+          '/assets/registration-bg.webp'
+        );
+
+      background-repeat:
+        no-repeat;
+
+      background-position:
+        center
+        top;
+
+      background-size:
+        contain;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    /* =====================================================
+       FORM LAYER
+       ===================================================== */
+
+    .registration-layer {
+
+      position:
+        relative;
+
+      z-index:
+        10;
+
+      width:
+        100%;
+
+      min-height:
+        100vh;
+
+      min-height:
+        100dvh;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    .registration-form {
+
+      position:
+        absolute;
+
+      inset:
+        0;
+
+      width:
+        100%;
+
+      min-height:
+        100%;
+
+      margin:
+        0;
+
+      padding:
+        0;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    /* =====================================================
+       FIELD
+       ===================================================== */
+
+    .registration-field {
+
+      position:
+        absolute;
+
+      pointer-events:
+        auto;
+
+    }
+
+
+    .registration-field label {
+
+      position:
+        absolute;
+
+      width:
+        1px;
+
+      height:
+        1px;
+
+      padding:
+        0;
+
+      margin:
+        -1px;
+
+      overflow:
+        hidden;
+
+      clip:
+        rect(
+          0,
+          0,
+          0,
+          0
+        );
+
+      white-space:
+        nowrap;
+
+      border:
+        0;
+
+    }
+
+
+    .registration-field input,
+    .registration-field select {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      padding:
+        7px
+        10px;
+
+      border:
+        0;
+
+      outline:
+        none;
+
+      border-radius:
+        0;
+
+      background:
+        transparent;
+
+      color:
+        var(--ink);
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size:
+        clamp(
+          12px,
+          1.1vw,
+          17px
+        );
+
+      letter-spacing:
+        0.15px;
+
+    }
+
+
+    .registration-field input::placeholder {
+
+      color:
+        rgba(
+          100,
+          35,
+          25,
+          0.24
+        );
+
+    }
+
+
+    .registration-field input:focus,
+    .registration-field select:focus {
+
+      background:
+        var(--paper-focus);
+
+      box-shadow:
+        inset
+        0
+        0
+        0
+        1px
+        rgba(
+          100,
+          35,
+          25,
+          0.18
+        );
+
+    }
+
+
+    /* =====================================================
+       FIELD POSITIONS
+       -----------------------------------------------------
+       Coordinates mengikuti artwork 1024 × 1536.
+       ===================================================== */
+
+
+    /* NAME */
+
+    #registration-name-field {
+
+      left:
+        27.4%;
+
+      top:
+        40.55%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* USERNAME */
+
+    #registration-username-field {
+
+      left:
+        27.4%;
+
+      top:
+        46.0%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* PASSWORD */
+
+    #registration-password-field {
+
+      left:
+        27.4%;
+
+      top:
+        51.45%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* PHONE */
+
+    #registration-phone-field {
+
+      left:
+        27.4%;
+
+      top:
+        57.0%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* EMAIL */
+
+    #registration-email-field {
+
+      left:
+        27.4%;
+
+      top:
+        62.45%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* AGE */
+
+    #registration-age-field {
+
+      left:
+        27.4%;
+
+      top:
+        68.05%;
+
+      width:
+        20.0%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* GENDER */
+
+    #registration-gender-field {
+
+      left:
+        55.5%;
+
+      top:
+        68.05%;
+
+      width:
+        26.4%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* HOBBIES */
+
+    #registration-hobbies-field {
+
+      left:
+        27.4%;
+
+      top:
+        73.5%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* OCCUPATION */
+
+    #registration-occupation-field {
+
+      left:
+        27.4%;
+
+      top:
+        78.95%;
+
+      width:
+        54.5%;
+
+      height:
+        3.65%;
+
+    }
+
+
+    /* =====================================================
+       CONFIRM PASSWORD
+       -----------------------------------------------------
+       Belum ada pada artwork.
+
+       Untuk sementara kita buat area kecil di bawah
+       artwork sebagai development field.
+       ===================================================== */
+
+    .confirm-password-area {
+
+      position:
+        absolute;
+
+      left:
+        27.4%;
+
+      top:
+        84.0%;
+
+      width:
+        54.5%;
+
+      pointer-events:
+        auto;
+
+    }
+
+
+    .confirm-password-label {
+
+      display:
+        block;
+
+      margin-bottom:
+        4px;
+
+      color:
+        rgba(
+          100,
+          35,
+          25,
+          0.65
+        );
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      font-size:
+        8px;
+
+      letter-spacing:
+        1.4px;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    #registration-confirm-password {
+
+      width:
+        100%;
+
+      height:
+        34px;
+
+      padding:
+        7px
+        10px;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        0;
+
+      outline:
+        none;
+
+      background:
+        rgba(
+          255,
+          239,
+          210,
+          0.30
+        );
+
+      color:
+        var(--ink);
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size:
+        13px;
+
+    }
+
+
+    #registration-confirm-password:focus {
+
+      background:
+        var(--paper-focus);
+
+      border-color:
+        rgba(
+          100,
+          35,
+          25,
+          0.62
+        );
+
+    }
+
+
+    /* =====================================================
+       REGISTER BUTTON
+       ===================================================== */
+
+    #registration-submit {
+
+      position:
+        absolute;
+
+      left:
+        27.4%;
+
+      top:
+        89.5%;
+
+      width:
+        54.5%;
+
+      height:
+        42px;
+
+      pointer-events:
+        auto;
+
+      border:
+        1px solid
+        rgba(
+          100,
+          35,
+          25,
+          0.48
+        );
+
+      background:
+        rgba(
+          100,
+          35,
+          25,
+          0.08
+        );
+
+      color:
+        var(--ink);
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size:
+        11px;
+
+      letter-spacing:
+        2px;
+
+      cursor:
+        pointer;
+
+      transition:
+        background
+        180ms
+        ease,
+
+        border-color
+        180ms
+        ease;
+
+    }
+
+
+    #registration-submit:hover {
+
+      background:
+        rgba(
+          100,
+          35,
+          25,
+          0.16
+        );
+
+      border-color:
+        rgba(
+          100,
+          35,
+          25,
+          0.70
+        );
+
+    }
+
+
+    #registration-submit:disabled {
+
+      opacity:
+        0.45;
+
+      cursor:
+        wait;
+
+    }
+
+
+    /* =====================================================
+       STATUS
+       ===================================================== */
+
+    #registration-status {
+
+      position:
+        absolute;
+
+      left:
+        27.4%;
+
+      top:
+        93.0%;
+
+      width:
+        54.5%;
+
+      min-height:
+        20px;
+
+      color:
+        var(--ink-soft);
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      font-size:
+        9px;
+
+      line-height:
+        1.4;
+
+      text-align:
+        center;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    #registration-status.is-error {
+
+      color:
+        var(--error);
+
+    }
+
+
+    /* =====================================================
+       BACK BUTTON
+       ===================================================== */
+
+    .registration-back {
+
+      position:
+        fixed;
+
+      left:
+        18px;
+
+      bottom:
+        18px;
+
+      z-index:
+        50;
+
+      padding:
+        8px
+        12px;
+
+      border:
+        1px solid
+        rgba(
+          244,
+          218,
+          179,
+          0.30
+        );
+
+      background:
+        rgba(
+          23,
+          16,
+          11,
+          0.45
+        );
+
+      color:
+        #f4dab3;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      font-size:
+        8px;
+
+      letter-spacing:
+        1.5px;
+
+      cursor:
+        pointer;
+
+      backdrop-filter:
+        blur(
+          5px
+        );
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (
+      max-width: 700px
+    ) {
+
+      .registration-background {
+
+        background-size:
+          auto 100dvh;
+
+        background-position:
+          center
+          top;
+
+      }
+
+
+      .registration-field input,
+      .registration-field select {
+
+        font-size:
+          12px;
+
+      }
+
+
+      #registration-submit {
+
+        font-size:
+          9px;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       <Finish> REGISTRATION PAGE
+       ===================================================== */
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <main
+    class="registration-page"
+  >
+
+
+    <!-- ================================================
+         BACKGROUND
+         ================================================ -->
+
+    <div
+      class="registration-background"
+      aria-hidden="true"
+    ></div>
+
+
+    <!-- ================================================
+         FORM LAYER
+         ================================================ -->
+
+    <div
+      class="registration-layer"
+    >
+
+
+      <form
+        id="registration-form"
+        class="registration-form"
+        autocomplete="on"
+      >
+
+
+        <!-- ==========================================
+             NAME
+             ========================================== -->
+
+        <div
+          id="registration-name-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-name"
+          >
+            Nama
+          </label>
+
+          <input
+            type="text"
+            id="registration-name"
+            name="name"
+            autocomplete="name"
+            maxlength="100"
+            required
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             USERNAME
+             ========================================== -->
+
+        <div
+          id="registration-username-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-username"
+          >
+            Username
+          </label>
+
+          <input
+            type="text"
+            id="registration-username"
+            name="username"
+            autocomplete="username"
+            minlength="3"
+            maxlength="24"
+            pattern="[a-z0-9_.]{3,24}"
+            required
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             PASSWORD
+             ========================================== -->
+
+        <div
+          id="registration-password-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-password"
+          >
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="registration-password"
+            name="password"
+            autocomplete="new-password"
+            minlength="8"
+            required
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             PHONE
+             ========================================== -->
+
+        <div
+          id="registration-phone-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-phone"
+          >
+            Nomor Telepon
+          </label>
+
+          <input
+            type="tel"
+            id="registration-phone"
+            name="phone"
+            autocomplete="tel"
+            maxlength="30"
+            required
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             EMAIL
+             ========================================== -->
+
+        <div
+          id="registration-email-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-email"
+          >
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="registration-email"
+            name="email"
+            autocomplete="email"
+            maxlength="150"
+            required
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             AGE
+             ========================================== -->
+
+        <div
+          id="registration-age-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-age"
+          >
+            Usia
+          </label>
+
+          <input
+            type="number"
+            id="registration-age"
+            name="age"
+            min="1"
+            max="120"
+            inputmode="numeric"
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             GENDER
+             ========================================== -->
+
+        <div
+          id="registration-gender-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-gender"
+          >
+            Jenis Kelamin
+          </label>
+
+          <select
+            id="registration-gender"
+            name="gender"
+          >
+
+            <option
+              value=""
+            >
+              Pilih
+            </option>
+
+            <option
+              value="MALE"
+            >
+              Laki-laki
+            </option>
+
+            <option
+              value="FEMALE"
+            >
+              Perempuan
+            </option>
+
+            <option
+              value="OTHER"
+            >
+              Lainnya
+            </option>
+
+            <option
+              value="PREFER_NOT_TO_SAY"
+            >
+              Tidak ingin menyebutkan
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- ==========================================
+             HOBBIES
+             ========================================== -->
+
+        <div
+          id="registration-hobbies-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-hobbies"
+          >
+            Hobi
+          </label>
+
+          <input
+            type="text"
+            id="registration-hobbies"
+            name="hobbies"
+            maxlength="300"
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             OCCUPATION
+             ========================================== -->
+
+        <div
+          id="registration-occupation-field"
+          class="registration-field"
+        >
+
+          <label
+            for="registration-occupation"
+          >
+            Kesibukan
+          </label>
+
+          <input
+            type="text"
+            id="registration-occupation"
+            name="occupation"
+            maxlength="150"
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             CONFIRM PASSWORD
+             ========================================== -->
+
+        <div
+          class="confirm-password-area"
+        >
+
+          <label
+            for="registration-confirm-password"
+            class="confirm-password-label"
+          >
+            Confirm Password
+          </label>
+
+          <input
+            type="password"
+            id="registration-confirm-password"
+            name="confirmPassword"
+            autocomplete="new-password"
+            minlength="8"
+            required
+          >
+
+        </div>
+
+
+        <!-- ==========================================
+             SUBMIT
+             ========================================== -->
+
+        <button
+          type="submit"
+          id="registration-submit"
+        >
+          REGISTER AS CORRESPONDENT
+        </button>
+
+
+        <!-- ==========================================
+             STATUS
+             ========================================== -->
+
+        <div
+          id="registration-status"
+          aria-live="polite"
+        ></div>
+
+
+      </form>
+
+    </div>
+
+
+    <!-- ================================================
+         BACK
+         ================================================ -->
+
+    <button
+      type="button"
+      class="registration-back"
+      id="registration-back"
+    >
+      ← BACK
+    </button>
+
+
+  </main>
+
+
+  <script>
+
+    /* ===================================================
+       <Start> REGISTRATION PAGE TEST LOGIC
+       ---------------------------------------------------
+       DEVELOPMENT ONLY
+
+       Belum terhubung ke backend.
+
+       Tujuan tahap ini:
+       - memastikan artwork
+       - memastikan posisi field
+       - memastikan query identifier
+       - memastikan validation
+       =================================================== */
+
+
+    const form =
+      document.getElementById(
+        'registration-form'
+      );
+
+
+    const status =
+      document.getElementById(
+        'registration-status'
+      );
+
+
+    const username =
+      document.getElementById(
+        'registration-username'
+      );
+
+
+    const password =
+      document.getElementById(
+        'registration-password'
+      );
+
+
+    const confirmPassword =
+      document.getElementById(
+        'registration-confirm-password'
+      );
+
+
+    const submit =
+      document.getElementById(
+        'registration-submit'
+      );
+
+
+    const back =
+      document.getElementById(
+        'registration-back'
+      );
+
+
+    /* =================================================
+       PREFILL IDENTIFIER
+       -------------------------------------------------
+       Jika datang dari:
+
+       /registration.html?identifier=stefanus
+
+       username akan otomatis terisi.
+
+       Password TIDAK pernah diambil dari URL.
+       ================================================= */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const identifier =
+      params.get(
+        'identifier'
+      );
+
+
+    if (
+      identifier
+    ) {
+
+      username.value =
+        identifier
+          .trim()
+          .toLowerCase();
+
+    }
+
+
+    /* =================================================
+       SUBMIT TEST
+       ================================================= */
+
+    form.addEventListener(
+      'submit',
+      function(event) {
+
+        event.preventDefault();
+
+
+        status.classList.remove(
+          'is-error'
+        );
+
+
+        /* ---------------------------------------------
+           Password
+           --------------------------------------------- */
+
+        if (
+          password.value.length < 8
+        ) {
+
+          status.textContent =
+            'Password minimal 8 karakter.';
+
+          status.classList.add(
+            'is-error'
+          );
+
+          password.focus();
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------------
+           Confirm Password
+           --------------------------------------------- */
+
+        if (
+          password.value !==
+          confirmPassword.value
+        ) {
+
+          status.textContent =
+            'Password dan konfirmasi password tidak sama.';
+
+          status.classList.add(
+            'is-error'
+          );
+
+          confirmPassword.focus();
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------------
+           DEVELOPMENT STATUS
+           --------------------------------------------- */
+
+        status.textContent =
+          'Registration form ready — backend connection belum dipasang.';
+
+
+        console.log(
+          '[NAREHATE] Registration form TEST OK.',
+          {
+            name:
+              document
+                .getElementById(
+                  'registration-name'
+                )
+                .value,
+
+            username:
+              username.value,
+
+            phone:
+              document
+                .getElementById(
+                  'registration-phone'
+                )
+                .value,
+
+            email:
+              document
+                .getElementById(
+                  'registration-email'
+                )
+                .value,
+
+            age:
+              document
+                .getElementById(
+                  'registration-age'
+                )
+                .value,
+
+            gender:
+              document
+                .getElementById(
+                  'registration-gender'
+                )
+                .value,
+
+            hobbies:
+              document
+                .getElementById(
+                  'registration-hobbies'
+                )
+                .value,
+
+            occupation:
+              document
+                .getElementById(
+                  'registration-occupation'
+                )
+                .value
+          }
+        );
+
+      }
+    );
+
+
+    /* =================================================
+       BACK
+       ================================================= */
+
+    back.addEventListener(
+      'click',
+      function() {
+
+        window.location.href =
+          '/';
+
+      }
+    );
+
+
+    /* ===================================================
+       <Finish> REGISTRATION PAGE TEST LOGIC
+       =================================================== */
+
+  </script>
+
+
+</body>
+
+</html>

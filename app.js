@@ -776,26 +776,34 @@ async function loadCurrentUser() {
    <Finish> LOAD CURRENT USER
    ========================================================= */
 
+
+
 /* =========================================================
-   <Start> GOOGLE IDENTITY SERVICES
+   GOOGLE IDENTITY SERVICES
    ---------------------------------------------------------
-   Menyiapkan Google Identity Services.
+   Menyiapkan Google Sign-In.
 
-   Narehate menggunakan explicit "Sign in with Google"
-   button sebagai metode autentikasi utama.
+   IMPORTANT:
+   Function ini hanya bertugas menyiapkan Google.
 
-   One Tap / FedCM tidak dijadikan dependency karena
-   lingkungan Apps Script Web App dapat membatasi
-   credential prompt browser.
+   Function TIDAK menunggu user login.
 
-   Google ID Token baru diproses ketika Google benar-benar
-   mengembalikan credential.
+   Setelah Google button siap:
+       resolve()
+
+   Ketika user benar-benar login:
+       handleGoogleCredential()
+       ↓
+       handleGoogleAuthentication()
    ========================================================= */
 
 function initializeGoogleIdentity() {
 
   return new Promise(
-    function(resolve, reject) {
+    function(
+      resolve,
+      reject
+    ) {
 
       const maxAttempts =
         100;
@@ -809,9 +817,11 @@ function initializeGoogleIdentity() {
         attempts++;
 
 
-        /* -------------------------------------------------
-           TUNGGU GOOGLE IDENTITY SERVICES
-           ------------------------------------------------- */
+        /*
+         * -----------------------------------------
+         * WAIT FOR GOOGLE IDENTITY SERVICES
+         * -----------------------------------------
+         */
 
         if (
           !window.google ||
@@ -845,16 +855,20 @@ function initializeGoogleIdentity() {
         }
 
 
-        /* -------------------------------------------------
-           AMBIL CLIENT ID
-           ------------------------------------------------- */
+        /*
+         * -----------------------------------------
+         * CLIENT ID
+         * -----------------------------------------
+         */
 
         const clientId =
           APP.config &&
           APP.config.googleClientId;
 
 
-        if (!clientId) {
+        if (
+          !clientId
+        ) {
 
           reject(
             new Error(
@@ -867,9 +881,11 @@ function initializeGoogleIdentity() {
         }
 
 
-        /* -------------------------------------------------
-           CALLBACK GOOGLE
-           ------------------------------------------------- */
+        /*
+         * -----------------------------------------
+         * GOOGLE CALLBACK
+         * -----------------------------------------
+         */
 
         function handleGoogleCredential(
           response
@@ -889,23 +905,29 @@ function initializeGoogleIdentity() {
           }
 
 
+          /*
+           * Simpan ID Token sementara.
+           */
+
           APP.googleIdToken =
             response.credential;
 
 
+          /*
+           * Authentication berjalan
+           * setelah credential diterima.
+           */
+
           handleGoogleAuthentication()
+
             .then(
               function() {
 
                 removeGoogleSignInButton();
 
-
-                resolve(
-                  response.credential
-                );
-
               }
             )
+
             .catch(
               function(error) {
 
@@ -915,9 +937,25 @@ function initializeGoogleIdentity() {
                 );
 
 
-                reject(
-                  error
-                );
+                const status =
+                  getElement(
+                    'gate-auth-status'
+                  );
+
+
+                if (
+                  status
+                ) {
+
+                  status.textContent =
+                    error.message ||
+                    'Google authentication failed.';
+
+                  status.classList.add(
+                    'is-error'
+                  );
+
+                }
 
               }
             );
@@ -925,9 +963,11 @@ function initializeGoogleIdentity() {
         }
 
 
-        /* -------------------------------------------------
-           INITIALIZE GOOGLE IDENTITY SERVICES
-           ------------------------------------------------- */
+        /*
+         * -----------------------------------------
+         * INITIALIZE GOOGLE
+         * -----------------------------------------
+         */
 
         google.accounts.id.initialize({
 
@@ -946,19 +986,23 @@ function initializeGoogleIdentity() {
         });
 
 
-        /* -------------------------------------------------
-           RENDER EXPLICIT GOOGLE SIGN-IN BUTTON
-           ------------------------------------------------- */
+        /*
+         * -----------------------------------------
+         * GOOGLE BUTTON CONTAINER
+         * -----------------------------------------
+         */
 
         const buttonContainer =
           createGoogleSignInContainer();
 
 
-        if (!buttonContainer) {
+        if (
+          !buttonContainer
+        ) {
 
           reject(
             new Error(
-              'Correspondence Gate authentication container is unavailable.'
+              'Google Sign-In container could not be created.'
             )
           );
 
@@ -966,6 +1010,12 @@ function initializeGoogleIdentity() {
 
         }
 
+
+        /*
+         * -----------------------------------------
+         * RENDER GOOGLE BUTTON
+         * -----------------------------------------
+         */
 
         google.accounts.id.renderButton(
 
@@ -1002,38 +1052,41 @@ function initializeGoogleIdentity() {
         );
 
 
-        /* -------------------------------------------------
-           UPDATE GATE STATUS
-           ------------------------------------------------- */
-
-        const gateStatus =
-          getElement(
-            'gate-auth-status'
-          );
-
-
-        if (gateStatus) {
-
-          gateStatus.textContent =
-            'Awaiting correspondent identification...';
-
-        }
-
+        /*
+         * -----------------------------------------
+         * GOOGLE IS READY
+         * -----------------------------------------
+         *
+         * IMPORTANT:
+         * Resolve SEKARANG.
+         *
+         * Jangan menunggu Google credential.
+         */
 
         console.log(
           '[NAREHATE] Google Sign-In button ready.'
         );
 
+
+        resolve(
+          true
+        );
+
       }
 
+
+      /*
+       * Mulai initialization.
+       */
 
       tryInitialize();
 
     }
-
   );
 
 }
+
+
 
 
 /* =========================================================
@@ -2969,21 +3022,42 @@ function bindEvents() {
    ========================================================= */
 
 
+
+
 /* =========================================================
-   <Start> APPLICATION INITIALIZATION
+   APPLICATION INITIALIZATION
    ---------------------------------------------------------
-   Urutan boot:
+   Boot sequence:
 
        1. Public config
        2. Server status
-       3. Google Identity Services
-       4. Credential authentication events
-       5. Google authentication callback
+       3. Native credential events
+       4. Google Identity Services
+       5. Correspondence Gate
+
+   IMPORTANT:
+   Google authentication TIDAK boleh memblokir
+   Correspondence Gate.
+
+   User harus tetap bisa memilih:
+
+       Google
+          atau
+       Native Credential
+
+   Google callback akan menjalankan authentication
+   secara terpisah setelah user memilih account.
    ========================================================= */
 
 async function initializeApplication() {
 
   try {
+
+    /*
+     * -----------------------------------------
+     * PUBLIC CONFIG
+     * -----------------------------------------
+     */
 
     setLoadingStatus(
       'Reading postal configuration...'
@@ -2993,6 +3067,12 @@ async function initializeApplication() {
     await loadPublicConfig();
 
 
+    /*
+     * -----------------------------------------
+     * SERVER STATUS
+     * -----------------------------------------
+     */
+
     setLoadingStatus(
       'Contacting central office...'
     );
@@ -3001,39 +3081,77 @@ async function initializeApplication() {
     await loadServerStatus();
 
 
+    /*
+     * -----------------------------------------
+     * NATIVE CREDENTIAL EVENTS
+     * -----------------------------------------
+     *
+     * Bind sebelum Gate ditampilkan.
+     */
+
     setLoadingStatus(
-      'Preparing identity service...'
+      'Preparing correspondent registry...'
     );
 
-
-    /*
-     * Bind native credential authentication
-     * sebelum user mencapai Correspondence Gate.
-     */
 
     bindCredentialAuthenticationEvents();
 
 
     /*
-     * Persiapkan Google Identity Services.
+     * -----------------------------------------
+     * GOOGLE IDENTITY SERVICES
+     * -----------------------------------------
      *
-     * Google callback akan mengisi:
+     * Hanya initialize Google.
      *
-     * APP.googleIdToken
-     *
-     * kemudian melanjutkan authentication flow.
+     * Jangan menunggu user login.
      */
+
+    setLoadingStatus(
+      'Preparing identity service...'
+    );
+
 
     await initializeGoogleIdentity();
 
-  }
 
-  catch (
+    /*
+     * -----------------------------------------
+     * CORRESPONDENCE GATE
+     * -----------------------------------------
+     *
+     * Pada titik ini authentication service
+     * sudah siap.
+     *
+     * User sekarang memilih sendiri metode
+     * authentication.
+     */
+
+    showCorrespondenceGate();
+
+
+    /*
+     * -----------------------------------------
+     * FINAL STATUS
+     * -----------------------------------------
+     */
+
+    setLoadingStatus(
+      'Correspondence Gate ready.'
+    );
+
+
+    console.log(
+      '[NAREHATE] Application initialization complete.'
+    );
+
+
+  } catch (
     error
   ) {
 
     console.error(
-      'APPLICATION INITIALIZATION ERROR:',
+      '[NAREHATE] APPLICATION INITIALIZATION ERROR:',
       error
     );
 
@@ -3045,11 +3163,6 @@ async function initializeApplication() {
   }
 
 }
-
-
-/* =========================================================
-   <Finish> APPLICATION INITIALIZATION
-   ========================================================= */
 
 
 

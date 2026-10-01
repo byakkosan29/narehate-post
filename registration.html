@@ -28,107 +28,123 @@
   >
 
 
-  <style>
+<!-- <Start> BLOCK 28 — COMPLETE REGISTRATION CSS -->
 
-    /* =====================================================
-       <Start> REGISTRATION PAGE
-       ===================================================== */
-
-    :root {
-
-      --ink:
-        #642319;
-
-      --ink-soft:
-        rgba(
-          100,
-          35,
-          25,
-          0.68
-        );
-
-      --paper:
-        rgba(
-          244,
-          218,
-          179,
-          0.24
-        );
-
-      --paper-focus:
-        rgba(
-          255,
-          238,
-          204,
-          0.42
-        );
-
-      --line:
-        rgba(
-          100,
-          35,
-          25,
-          0.42
-        );
-
-      --error:
-        #7b2418;
-
-    }
-
-
-    * {
-
-      box-sizing:
-        border-box;
-
-    }
-
-
-    html,
-    body {
-
-      width:
-        100%;
-
-      min-height:
-        100%;
-
-      margin:
-        0;
-
-      padding:
-        0;
-
-    }
-
-
-    body {
-
-      background:
-        #17100b;
-
-      color:
-        var(--ink);
-
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-      overflow-x:
-        hidden;
-
-    }
-
-
-    
+<style>
 
 /* =====================================================
-   <Start> REGISTRATION BACKGROUND
+   NAREHATE POSTAL SERVICE
+   REGISTRATION PAGE
+   ===================================================== */
+
+
+/* =====================================================
+   ROOT
+   ===================================================== */
+
+:root {
+
+  --ink:
+    #642319;
+
+  --ink-soft:
+    rgba(
+      100,
+      35,
+      25,
+      0.68
+    );
+
+  --paper-focus:
+    rgba(
+      255,
+      238,
+      204,
+      0.18
+    );
+
+  --error:
+    #7b2418;
+}
+
+
+/* =====================================================
+   RESET
+   ===================================================== */
+
+* {
+
+  box-sizing:
+    border-box;
+}
+
+
+html,
+body {
+
+  width:
+    100%;
+
+  min-height:
+    100%;
+
+  margin:
+    0;
+
+  padding:
+    0;
+}
+
+
+body {
+
+  background:
+    #17100b;
+
+  color:
+    var(--ink);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  overflow:
+    hidden;
+}
+
+
+/* =====================================================
+   REGISTRATION PAGE
+   ===================================================== */
+
+.registration-page {
+
+  position:
+    relative;
+
+  width:
+    100vw;
+
+  height:
+    100vh;
+
+  min-height:
+    100dvh;
+
+  overflow:
+    hidden;
+}
+
+
+/* =====================================================
+   BACKGROUND ARTWORK
    -----------------------------------------------------
-   Existing environment asset:
-   /assets/environments/registration-bg.webp
+   Artwork ratio: 16 : 9
+
+   Kita sengaja memakai tinggi viewport sebagai acuan.
+   Dengan begitu artwork dan HTML overlay selalu
+   menggunakan canvas yang sama.
    ===================================================== */
 
 .registration-background {
@@ -136,11 +152,26 @@
   position:
     fixed;
 
-  inset:
+  top:
     0;
 
-  z-index:
-    0;
+  left:
+    50%;
+
+  transform:
+    translateX(-50%);
+
+  width:
+    min(
+      100vw,
+      177.7777778vh
+    );
+
+  height:
+    min(
+      100vh,
+      56.25vw
+    );
 
   background-image:
     url(
@@ -152,110 +183,189 @@
 
   background-position:
     center
-    top;
+    center;
 
   background-size:
-    contain;
+    100%
+    100%;
+
+  z-index:
+    0;
 
   pointer-events:
     none;
-
 }
 
 
 /* =====================================================
-   <Finish> REGISTRATION BACKGROUND
+   FORM LAYER
+   -----------------------------------------------------
+   IMPORTANT:
+   Form canvas harus memiliki ukuran yang sama persis
+   dengan artwork.
    ===================================================== */
 
+.registration-layer {
 
-    /* =====================================================
-       FORM LAYER
-       ===================================================== */
+  position:
+    fixed;
 
-    .registration-layer {
+  top:
+    0;
 
-      position:
-        relative;
+  left:
+    50%;
 
-      z-index:
-        10;
+  transform:
+    translateX(-50%);
 
-      width:
-        100%;
+  width:
+    min(
+      100vw,
+      177.7777778vh
+    );
 
-      min-height:
-        100vh;
+  height:
+    min(
+      100vh,
+      56.25vw
+    );
 
-      min-height:
-        100dvh;
+  z-index:
+    10;
 
-      pointer-events:
-        none;
+  pointer-events:
+    none;
+}
 
-    }
 
-
-   /* <Start> BLOCK 25 — ARTWORK-LOCKED FORM CANVAS */
+/* =====================================================
+   FORM
+   ===================================================== */
 
 .registration-form {
 
-  position: fixed;
+  position:
+    absolute;
 
-  top: 0;
-  left: 50%;
+  inset:
+    0;
 
-  transform: translateX(-50%);
+  width:
+    100%;
 
-  width: min(
-    100vw,
-    177.7777778vh
-  );
+  height:
+    100%;
 
-  aspect-ratio: 16 / 9;
+  margin:
+    0;
 
-  height: auto;
+  padding:
+    0;
 
-  margin: 0;
-  padding: 0;
-
-  z-index: 20;
-
-  pointer-events: none;
+  pointer-events:
+    none;
 }
 
 
-/* -----------------------------------------------
-   GENERIC FIELD
-   ----------------------------------------------- */
+/* =====================================================
+   FIELD CONTAINER
+   ===================================================== */
 
 .registration-field {
 
-  position: absolute;
+  position:
+    absolute;
 
-  pointer-events: auto;
+  pointer-events:
+    auto;
 }
 
+
+/* =====================================================
+   ACCESSIBILITY LABEL
+   -----------------------------------------------------
+   Label tetap ada di HTML untuk accessibility,
+   tetapi TIDAK BOLEH terlihat.
+
+   Judul field sudah tercetak di artwork.
+   ===================================================== */
+
+.registration-field label {
+
+  position:
+    absolute;
+
+  width:
+    1px;
+
+  height:
+    1px;
+
+  padding:
+    0;
+
+  margin:
+    -1px;
+
+  overflow:
+    hidden;
+
+  clip:
+    rect(
+      0,
+      0,
+      0,
+      0
+    );
+
+  clip-path:
+    inset(
+      50%
+    );
+
+  white-space:
+    nowrap;
+
+  border:
+    0;
+}
+
+
+/* =====================================================
+   INPUT & SELECT
+   ===================================================== */
 
 .registration-field input,
 .registration-field select {
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
 
-  box-sizing: border-box;
+  height:
+    100%;
+
+  margin:
+    0;
 
   padding:
     0
     10px;
 
-  border: 0;
-  outline: none;
+  border:
+    0;
 
-  border-radius: 0;
+  outline:
+    none;
 
-  background: transparent;
+  border-radius:
+    0;
 
-  color: var(--ink);
+  background:
+    transparent;
+
+  color:
+    var(--ink);
 
   font-family:
     Georgia,
@@ -269,24 +379,23 @@
       17px
     );
 
-  letter-spacing: 0.15px;
+  line-height:
+    1;
+
+  letter-spacing:
+    0.15px;
 }
 
 
-/* -----------------------------------------------
+/* =====================================================
    FOCUS
-   ----------------------------------------------- */
+   ===================================================== */
 
 .registration-field input:focus,
 .registration-field select:focus {
 
   background:
-    rgba(
-      255,
-      238,
-      204,
-      0.18
-    );
+    var(--paper-focus);
 
   box-shadow:
     inset
@@ -298,300 +407,238 @@
       100,
       35,
       25,
-      0.18
+      0.16
     );
 }
 
 
-/* -----------------------------------------------
-   DATE
-   ----------------------------------------------- */
+/* =====================================================
+   DATE INPUT
+   ===================================================== */
 
 .registration-field input[type="date"] {
 
-  color: var(--ink);
+  appearance:
+    none;
 
-  appearance: none;
-  -webkit-appearance: none;
+  -webkit-appearance:
+    none;
+
+  color:
+    var(--ink);
 }
 
 
-/* -----------------------------------------------
+/*
+   Chrome date picker icon dibuat transparan karena
+   artwork sudah memiliki icon kalender sendiri.
+*/
+
+.registration-field input[type="date"]::-webkit-calendar-picker-indicator {
+
+  opacity:
+    0;
+
+  cursor:
+    pointer;
+}
+
+
+/* =====================================================
    SELECT
-   ----------------------------------------------- */
+   ===================================================== */
 
 .registration-field select {
 
-  appearance: none;
-  -webkit-appearance: none;
+  appearance:
+    none;
 
-  cursor: pointer;
+  -webkit-appearance:
+    none;
+
+  cursor:
+    pointer;
 }
 
 
 .registration-field select option {
 
-  color: #3f1b16;
-
-  background: #ead0a8;
-}
-
-
-/* <Finish> BLOCK 25 */
-
-
-/* <Start> BLOCK 26 — ARTWORK FIELD ALIGNMENT */
-
-/*
-   Semua koordinat sekarang dihitung terhadap
-   canvas artwork 16:9.
-
-   Jadi:
-   0% = sisi kiri artwork
-   100% = sisi kanan artwork
-*/
-
-
-/* =====================================================
-   LEFT COLUMN
-   ===================================================== */
-
-#registration-name-field {
-
-  left: 22.9%;
-  top: 54.5%;
-
-  width: 26.2%;
-  height: 4.4%;
-}
-
-
-#registration-username-field {
-
-  left: 22.9%;
-  top: 63.25%;
-
-  width: 26.2%;
-  height: 4.4%;
-}
-
-
-#registration-password-field {
-
-  left: 22.9%;
-  top: 71.75%;
-
-  width: 26.2%;
-  height: 4.4%;
-}
-
-
-#registration-email-field {
-
-  left: 22.9%;
-  top: 80.25%;
-
-  width: 26.2%;
-  height: 4.4%;
-}
-
-
-/* =====================================================
-   RIGHT COLUMN
-   ===================================================== */
-
-#registration-dob-field {
-
-  left: 57.1%;
-  top: 54.5%;
-
-  width: 25.6%;
-  height: 4.4%;
-}
-
-
-#registration-gender-field {
-
-  left: 57.1%;
-  top: 63.25%;
-
-  width: 25.6%;
-  height: 4.4%;
-}
-
-
-#registration-hobbies-field {
-
-  left: 57.1%;
-  top: 71.75%;
-
-  width: 25.6%;
-  height: 4.4%;
-}
-
-
-#registration-occupation-field {
-
-  left: 57.1%;
-  top: 80.25%;
-
-  width: 25.6%;
-  height: 4.4%;
-}
-
-
-/* =====================================================
-   ACCEPT
-   ===================================================== */
-
-#registration-submit {
-
-  position: absolute;
-
-  left: 40.5%;
-  top: 87.4%;
-
-  width: 19.0%;
-  height: 7.2%;
-
-  padding: 0;
-
-  border: 0;
-
-  background: transparent;
-
-  color: transparent;
-
-  cursor: pointer;
-
-  pointer-events: auto;
-
-  z-index: 30;
-}
-
-
-#registration-submit:hover {
+  color:
+    #3f1b16;
 
   background:
-    rgba(
-      255,
-      230,
-      190,
-      0.08
-    );
+    #ead0a8;
 }
 
-
-#registration-submit:active {
-
-  background:
-    rgba(
-      90,
-      20,
-      10,
-      0.10
-    );
-}
-
-
-/* <Finish> BLOCK 26 */
-
-
-    /* <Start> BLOCK 24 — NEW ARTWORK FIELD POSITIONS */
 
 /* =====================================================
    FIELD POSITIONS
    -----------------------------------------------------
-   Mengikuti artwork registration baru.
-   Artwork ratio: 16 : 9
+   Semua koordinat berdasarkan canvas artwork 16:9.
+
+   IMPORTANT:
+   Jangan mengubah posisi berdasarkan ukuran browser.
+   Koordinat ini mengikuti artwork.
    ===================================================== */
 
 
-/* =========================
-   LEFT COLUMN
-   ========================= */
+/* =====================================================
+   LEFT — NAME
+   ===================================================== */
 
 #registration-name-field {
 
-  left: 22.55%;
-  top: 55.2%;
+  left:
+    22.85%;
 
-  width: 26.0%;
-  height: 4.2%;
+  top:
+    54.45%;
+
+  width:
+    26.25%;
+
+  height:
+    4.25%;
 }
 
+
+/* =====================================================
+   LEFT — USERNAME
+   ===================================================== */
 
 #registration-username-field {
 
-  left: 22.55%;
-  top: 64.0%;
+  left:
+    22.85%;
 
-  width: 26.0%;
-  height: 4.2%;
+  top:
+    63.15%;
+
+  width:
+    26.25%;
+
+  height:
+    4.25%;
 }
 
+
+/* =====================================================
+   LEFT — PASSWORD
+   ===================================================== */
 
 #registration-password-field {
 
-  left: 22.55%;
-  top: 72.5%;
+  left:
+    22.85%;
 
-  width: 26.0%;
-  height: 4.2%;
+  top:
+    71.65%;
+
+  width:
+    26.25%;
+
+  height:
+    4.25%;
 }
 
+
+/* =====================================================
+   LEFT — EMAIL
+   ===================================================== */
 
 #registration-email-field {
 
-  left: 22.55%;
-  top: 81.0%;
+  left:
+    22.85%;
 
-  width: 26.0%;
-  height: 4.2%;
+  top:
+    80.15%;
+
+  width:
+    26.25%;
+
+  height:
+    4.25%;
 }
 
 
-/* =========================
-   RIGHT COLUMN
-   ========================= */
+/* =====================================================
+   RIGHT — DATE OF BIRTH
+   ===================================================== */
 
 #registration-dob-field {
 
-  left: 56.55%;
-  top: 55.2%;
+  left:
+    57.05%;
 
-  width: 25.7%;
-  height: 4.2%;
+  top:
+    54.45%;
+
+  width:
+    25.65%;
+
+  height:
+    4.25%;
 }
 
+
+/* =====================================================
+   RIGHT — GENDER
+   ===================================================== */
 
 #registration-gender-field {
 
-  left: 56.55%;
-  top: 64.0%;
+  left:
+    57.05%;
 
-  width: 25.7%;
-  height: 4.2%;
+  top:
+    63.15%;
+
+  width:
+    25.65%;
+
+  height:
+    4.25%;
 }
 
+
+/* =====================================================
+   RIGHT — HOBBIES
+   ===================================================== */
 
 #registration-hobbies-field {
 
-  left: 56.55%;
-  top: 72.5%;
+  left:
+    57.05%;
 
-  width: 25.7%;
-  height: 4.2%;
+  top:
+    71.65%;
+
+  width:
+    25.65%;
+
+  height:
+    4.25%;
 }
 
 
+/* =====================================================
+   RIGHT — OCCUPATION
+   ===================================================== */
+
 #registration-occupation-field {
 
-  left: 56.55%;
-  top: 81.0%;
+  left:
+    57.05%;
 
-  width: 25.7%;
-  height: 4.2%;
+  top:
+    80.15%;
+
+  width:
+    25.65%;
+
+  height:
+    4.25%;
 }
 
 
@@ -599,34 +646,62 @@
    ACCEPT BUTTON
    -----------------------------------------------------
    Artwork sudah memiliki tombol Accept.
-   HTML button hanya menjadi invisible clickable area.
+
+   HTML button hanya menjadi invisible clickable
+   hitbox di atas tombol artwork.
    ===================================================== */
 
 #registration-submit {
 
-  position: absolute;
+  position:
+    absolute;
 
-  left: 39.5%;
-  top: 87.7%;
+  left:
+    40.35%;
 
-  width: 21.0%;
-  height: 7.5%;
+  top:
+    87.45%;
 
-  padding: 0;
+  width:
+    19.35%;
 
-  border: 0;
+  height:
+    7.25%;
 
-  background: transparent;
+  margin:
+    0;
 
-  color: transparent;
+  padding:
+    0;
 
-  cursor: pointer;
+  border:
+    0;
 
-  pointer-events: auto;
+  outline:
+    none;
 
-  z-index: 5;
+  background:
+    transparent;
+
+  color:
+    transparent;
+
+  cursor:
+    pointer;
+
+  pointer-events:
+    auto;
+
+  z-index:
+    30;
 }
 
+
+/* =====================================================
+   ACCEPT HOVER
+   -----------------------------------------------------
+   Sangat subtle supaya artwork tidak rusak.
+   ===================================================== */
 
 #registration-submit:hover {
 
@@ -635,10 +710,14 @@
       255,
       230,
       190,
-      0.08
+      0.06
     );
 }
 
+
+/* =====================================================
+   ACCEPT ACTIVE
+   ===================================================== */
 
 #registration-submit:active {
 
@@ -647,170 +726,204 @@
       90,
       20,
       10,
-      0.10
+      0.08
     );
 }
 
 
-/* <Finish> BLOCK 24 */
-    /* =====================================================
-       STATUS
-       ===================================================== */
+/* =====================================================
+   STATUS
+   -----------------------------------------------------
+   Development feedback saja.
 
-    #registration-status {
+   Tidak mengganggu artwork.
+   ===================================================== */
 
-      position:
-        absolute;
+#registration-status {
 
-      left:
-        27.4%;
+  position:
+    fixed;
 
-      top:
-        93.0%;
+  left:
+    50%;
 
-      width:
-        54.5%;
+  bottom:
+    12px;
 
-      min-height:
-        20px;
+  transform:
+    translateX(-50%);
 
-      color:
-        var(--ink-soft);
+  z-index:
+    100;
 
-      font-family:
-        Arial,
-        sans-serif;
+  min-width:
+    220px;
 
-      font-size:
-        9px;
+  max-width:
+    80vw;
 
-      line-height:
-        1.4;
+  padding:
+    5px
+    10px;
 
-      text-align:
-        center;
+  color:
+    var(--ink-soft);
 
-      pointer-events:
-        none;
+  font-family:
+    Arial,
+    sans-serif;
 
-    }
+  font-size:
+    9px;
 
+  line-height:
+    1.4;
 
-    #registration-status.is-error {
+  text-align:
+    center;
 
-      color:
-        var(--error);
-
-    }
-
-
-    /* =====================================================
-       BACK BUTTON
-       ===================================================== */
-
-    .registration-back {
-
-      position:
-        fixed;
-
-      left:
-        18px;
-
-      bottom:
-        18px;
-
-      z-index:
-        50;
-
-      padding:
-        8px
-        12px;
-
-      border:
-        1px solid
-        rgba(
-          244,
-          218,
-          179,
-          0.30
-        );
-
-      background:
-        rgba(
-          23,
-          16,
-          11,
-          0.45
-        );
-
-      color:
-        #f4dab3;
-
-      font-family:
-        Arial,
-        sans-serif;
-
-      font-size:
-        8px;
-
-      letter-spacing:
-        1.5px;
-
-      cursor:
-        pointer;
-
-      backdrop-filter:
-        blur(
-          5px
-        );
-
-    }
+  pointer-events:
+    none;
+}
 
 
-    /* =====================================================
-       MOBILE
-       ===================================================== */
+#registration-status.is-error {
 
-    @media (
-      max-width: 700px
-    ) {
-
-      .registration-background {
-
-        background-size:
-          auto 100dvh;
-
-        background-position:
-          center
-          top;
-
-      }
+  color:
+    var(--error);
+}
 
 
-      .registration-field input,
-      .registration-field select {
+/* =====================================================
+   BACK BUTTON
+   ===================================================== */
 
-        font-size:
-          12px;
+.registration-back {
 
-      }
+  position:
+    fixed;
+
+  left:
+    18px;
+
+  bottom:
+    18px;
+
+  z-index:
+    100;
+
+  padding:
+    8px
+    12px;
+
+  border:
+    1px solid
+    rgba(
+      244,
+      218,
+      179,
+      0.30
+    );
+
+  background:
+    rgba(
+      23,
+      16,
+      11,
+      0.45
+    );
+
+  color:
+    #f4dab3;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    1.5px;
+
+  cursor:
+    pointer;
+
+  backdrop-filter:
+    blur(
+      5px
+    );
+}
 
 
-      #registration-submit {
+/* =====================================================
+   MOBILE
+   ===================================================== */
 
-        font-size:
-          9px;
+@media (
+  max-width: 700px
+) {
 
-      }
+  .registration-background {
 
-    }
+    width:
+      auto;
+
+    height:
+      100dvh;
+
+    aspect-ratio:
+      16 / 9;
+
+    background-size:
+      100%
+      100%;
+  }
 
 
-    /* =====================================================
-       <Finish> REGISTRATION PAGE
-       ===================================================== */
+  .registration-layer {
 
-  </style>
+    width:
+      auto;
+
+    height:
+      100dvh;
+
+    aspect-ratio:
+      16 / 9;
+  }
+
+
+  .registration-field input,
+  .registration-field select {
+
+    font-size:
+      12px;
+
+    padding:
+      0
+      7px;
+  }
+
+
+  .registration-back {
+
+    left:
+      10px;
+
+    bottom:
+      10px;
+  }
+}
+
+
+/* =====================================================
+   <Finish> BLOCK 28
+   ===================================================== */
+
+</style>
+
+<!-- <Finish> BLOCK 28 — COMPLETE REGISTRATION CSS -->
 
 </head>
 

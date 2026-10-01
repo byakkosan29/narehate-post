@@ -1094,6 +1094,562 @@ body {
 
 /* =========================================================
    <Start> AUTHENTICATION
+   ---------------------------------------------------------
+   Correspondence credential interface.
+
+   Visual direction:
+   - transparent fields
+   - quiet underline
+   - text inside field
+   - no modern SaaS card appearance
+   - warm archival / royal postal atmosphere
+   ========================================================= */
+
+
+/* =========================================================
+   CREDENTIAL AREA
+   ========================================================= */
+
+.gate-credentials {
+
+  width:
+    min(
+      100%,
+      360px
+    );
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    stretch;
+
+}
+
+
+/* =========================================================
+   FIELD
+   ========================================================= */
+
+.gate-field {
+
+  width:
+    100%;
+
+  margin-bottom:
+    18px;
+
+}
+
+
+/* =========================================================
+   HIDE VISUAL LABEL
+   ---------------------------------------------------------
+   Label tetap ada untuk accessibility,
+   tetapi visual instruction berada di placeholder.
+   ========================================================= */
+
+.gate-field label {
+
+  position:
+    absolute;
+
+  width:
+    1px;
+
+  height:
+    1px;
+
+  padding:
+    0;
+
+  margin:
+    -1px;
+
+  overflow:
+    hidden;
+
+  clip:
+    rect(
+      0,
+      0,
+      0,
+      0
+    );
+
+  white-space:
+    nowrap;
+
+  border:
+    0;
+
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.gate-input {
+
+  width:
+    100%;
+
+  height:
+    46px;
+
+  padding:
+    0
+    4px;
+
+  border:
+    0;
+
+  border-bottom:
+    1px solid
+    rgba(
+      238,
+      225,
+      206,
+      0.26
+    );
+
+  outline:
+    none;
+
+  background:
+    transparent;
+
+  color:
+    #eee1ce;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    13px;
+
+  letter-spacing:
+    0.02em;
+
+  text-align:
+    left;
+
+  box-sizing:
+    border-box;
+
+  transition:
+    border-color
+    220ms
+    ease,
+    box-shadow
+    220ms
+    ease;
+
+}
+
+
+.gate-input::placeholder {
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.48
+    );
+
+  opacity:
+    1;
+
+}
+
+
+.gate-input:hover {
+
+  border-bottom-color:
+    rgba(
+      238,
+      225,
+      206,
+      0.42
+    );
+
+}
+
+
+.gate-input:focus {
+
+  border-bottom-color:
+    rgba(
+      238,
+      225,
+      206,
+      0.72
+    );
+
+  box-shadow:
+    0 6px 18px
+    rgba(
+      0,
+      0,
+      0,
+      0.12
+    );
+
+}
+
+
+/* =========================================================
+   FORGOT PASSWORD
+   ========================================================= */
+
+.gate-forgot {
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  justify-content:
+    flex-end;
+
+  margin-top:
+    -6px;
+
+  margin-bottom:
+    22px;
+
+}
+
+
+.gate-text-button {
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.46
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    10px;
+
+  letter-spacing:
+    0.04em;
+
+  cursor:
+    pointer;
+
+  transition:
+    color
+    180ms
+    ease;
+
+}
+
+
+.gate-text-button:hover {
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.82
+    );
+
+}
+
+
+/* =========================================================
+   LOGIN / REGISTER BUTTON
+   ========================================================= */
+
+.gate-login-register {
+
+  width:
+    100%;
+
+  height:
+    44px;
+
+  border:
+    1px solid
+    rgba(
+      238,
+      225,
+      206,
+      0.32
+    );
+
+  background:
+    rgba(
+      18,
+      15,
+      12,
+      0.22
+    );
+
+  color:
+    #eee1ce;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    10px;
+
+  font-weight:
+    500;
+
+  letter-spacing:
+    0.18em;
+
+  cursor:
+    pointer;
+
+  transition:
+    background
+    220ms
+    ease,
+    border-color
+    220ms
+    ease,
+    box-shadow
+    220ms
+    ease;
+
+}
+
+
+.gate-login-register:hover {
+
+  background:
+    rgba(
+      238,
+      225,
+      206,
+      0.08
+    );
+
+  border-color:
+    rgba(
+      238,
+      225,
+      206,
+      0.55
+    );
+
+  box-shadow:
+    0 8px 24px
+    rgba(
+      0,
+      0,
+      0,
+      0.16
+    );
+
+}
+
+
+.gate-login-register:active {
+
+  background:
+    rgba(
+      238,
+      225,
+      206,
+      0.12
+    );
+
+}
+
+
+/* =========================================================
+   CREDENTIAL STATUS
+   ========================================================= */
+
+.gate-credential-status {
+
+  min-height:
+    16px;
+
+  margin-top:
+    12px;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.48
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  line-height:
+    1.5;
+
+  letter-spacing:
+    0.08em;
+
+  text-align:
+    center;
+
+}
+
+
+/* =========================================================
+   REGISTRATION NOTE
+   ========================================================= */
+
+.gate-registration-note {
+
+  margin-top:
+    14px;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.34
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  line-height:
+    1.6;
+
+  letter-spacing:
+    0.04em;
+
+}
+
+
+.gate-registration-note span {
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.48
+    );
+
+}
+
+
+/* =========================================================
+   OR DIVIDER
+   ========================================================= */
+
+.gate-authentication-divider {
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    14px;
+
+  margin:
+    24px
+    0
+    20px;
+
+  color:
+    rgba(
+      238,
+      225,
+      206,
+      0.28
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    0.18em;
+
+}
+
+
+.gate-authentication-divider::before,
+.gate-authentication-divider::after {
+
+  content:
+    "";
+
+  flex:
+    1;
+
+  height:
+    1px;
+
+  background:
+    rgba(
+      238,
+      225,
+      206,
+      0.12
+    );
+
+}
+
+
+.gate-authentication-divider span {
+
+  flex:
+    0
+    0
+    auto;
+
+}
+
+
+/* =========================================================
+   GOOGLE AUTHENTICATION
    ========================================================= */
 
 .gate-authentication {
@@ -1154,14 +1710,14 @@ body {
     16px;
 
   margin-top:
-    16px;
+    12px;
 
   color:
     rgba(
       238,
       225,
       206,
-      0.38
+      0.32
     );
 
   font-family:
@@ -1169,7 +1725,7 @@ body {
     sans-serif;
 
   font-size:
-    9px;
+    8px;
 
   letter-spacing:
     0.12em;

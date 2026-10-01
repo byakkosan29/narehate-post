@@ -188,8 +188,12 @@
      ---------------------------------------------------
      Dedicated authentication environment.
 
-     Google authentication hanya dimulai setelah
-     halaman ini ditampilkan.
+     Authentication methods:
+     - Username / Email / Phone + Password
+     - Google Sign-In
+
+     Login dan Registration menggunakan satu
+     authentication action.
      =================================================== -->
 
 <section
@@ -259,9 +263,138 @@
     ></div>
 
 
-    <!-- -----------------------------------------------
-         GOOGLE AUTHENTICATION
-         ----------------------------------------------- -->
+    <!-- =================================================
+         CREDENTIAL AUTHENTICATION
+         ================================================= -->
+
+    <div
+      class="gate-credentials"
+    >
+
+      <!-- ---------------------------------------------
+           IDENTIFIER
+           --------------------------------------------- -->
+
+      <div
+        class="gate-field"
+      >
+
+        <label
+          for="gate-identifier"
+        >
+          Correspondent Identifier
+        </label>
+
+        <input
+          type="text"
+          id="gate-identifier"
+          name="identifier"
+          class="gate-input"
+          autocomplete="username"
+          placeholder="Username, email, or phone"
+          required
+        >
+
+      </div>
+
+
+      <!-- ---------------------------------------------
+           PASSWORD
+           --------------------------------------------- -->
+
+      <div
+        class="gate-field"
+      >
+
+        <label
+          for="gate-password"
+        >
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="gate-password"
+          name="password"
+          class="gate-input"
+          autocomplete="current-password"
+          placeholder="Enter your password"
+          required
+        >
+
+      </div>
+
+
+      <!-- ---------------------------------------------
+           FORGOT PASSWORD
+           --------------------------------------------- -->
+
+      <div
+        class="gate-forgot"
+      >
+
+        <button
+          type="button"
+          id="gate-forgot-password"
+          class="gate-text-button"
+        >
+          Forgot password?
+        </button>
+
+      </div>
+
+
+      <!-- ---------------------------------------------
+           LOGIN / REGISTER
+           --------------------------------------------- -->
+
+      <button
+        type="button"
+        id="gate-login-register"
+        class="gate-login-register"
+      >
+        LOGIN / REGISTER
+      </button>
+
+
+      <!-- ---------------------------------------------
+           AUTH STATUS
+           --------------------------------------------- -->
+
+      <div
+        id="gate-credential-status"
+        class="gate-credential-status"
+        aria-live="polite"
+      ></div>
+
+
+      <!-- ---------------------------------------------
+           REGISTRATION NOTE
+           --------------------------------------------- -->
+
+      <div
+        class="gate-registration-note"
+      >
+        New correspondent?
+        <span>
+          Use LOGIN / REGISTER to begin your registration.
+        </span>
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         ALTERNATIVE AUTHENTICATION
+         ================================================= -->
+
+    <div
+      class="gate-authentication-divider"
+      aria-hidden="true"
+    >
+      <span>OR</span>
+    </div>
+
 
     <div
       class="gate-authentication"

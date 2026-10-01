@@ -122,72 +122,50 @@
     }
 
 
-    /* =====================================================
-       BACKGROUND
-       ===================================================== */
+    
 
-    .registration-page {
+/* =====================================================
+   <Start> REGISTRATION BACKGROUND
+   -----------------------------------------------------
+   Existing environment asset:
+   /assets/environments/registration-bg.webp
+   ===================================================== */
 
-      position:
-        relative;
+.registration-background {
 
-      width:
-        100%;
+  position:
+    fixed;
 
-      min-height:
-        100vh;
+  inset:
+    0;
 
-      min-height:
-        100dvh;
+  z-index:
+    0;
 
-      display:
-        flex;
+  background-image:
+    url(
+      '/assets/environments/registration-bg.webp'
+    );
 
-      justify-content:
-        center;
+  background-repeat:
+    no-repeat;
 
-      align-items:
-        flex-start;
+  background-position:
+    center
+    top;
 
-      overflow:
-        hidden;
+  background-size:
+    contain;
 
-      background:
-        #17100b;
+  pointer-events:
+    none;
 
-    }
+}
 
 
-    .registration-background {
-
-      position:
-        fixed;
-
-      inset:
-        0;
-
-      z-index:
-        0;
-
-      background-image:
-        url(
-          "/assets/environments/registration-bg.webp"
-        );
-
-      background-repeat:
-        no-repeat;
-
-      background-position:
-        center
-        top;
-
-      background-size:
-        contain;
-
-      pointer-events:
-        none;
-
-    }
+/* =====================================================
+   <Finish> REGISTRATION BACKGROUND
+   ===================================================== */
 
 
     /* =====================================================

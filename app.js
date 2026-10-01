@@ -3397,18 +3397,20 @@ function bindEnvironmentHotspots() {
 
 
 
-/* =========================================================
-   <Start> CREDENTIAL AUTHENTICATION
-   ---------------------------------------------------------
-   Native Narehate authentication.
 
+
+/* =========================================================
+   CREDENTIAL LOGIN REQUEST
+   ---------------------------------------------------------
    Frontend
       ↓
    Cloudflare /api
       ↓
    Apps Script
       ↓
-   authenticateWithCredential()
+   case 'credentiallogin'
+      ↓
+   loginWithCredentials()
    ========================================================= */
 
 async function loginWithCredential(
@@ -3418,7 +3420,7 @@ async function loginWithCredential(
 
   const result =
     await apiRequest(
-      'credentialLogin',
+      'credentiallogin',
       {
         identifier:
           identifier,
@@ -3429,6 +3431,13 @@ async function loginWithCredential(
     );
 
 
+  /*
+   * Jangan pernah log password.
+   *
+   * Response user sudah disanitasi
+   * oleh backend.
+   */
+
   console.log(
     '[NAREHATE] CREDENTIAL LOGIN RESPONSE:',
     result
@@ -3438,6 +3447,7 @@ async function loginWithCredential(
   return result;
 
 }
+
 
 
 /* =========================================================

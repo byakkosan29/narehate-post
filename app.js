@@ -2950,13 +2950,19 @@ function bindRoomEvents() {
    <Start> EVENT BINDING
    ---------------------------------------------------------
    Menghubungkan seluruh interaction layer frontend.
+
+   - Room navigation
+   - Credential authentication
    ========================================================= */
 
 function bindEvents() {
 
   bindRoomEvents();
 
+  bindCredentialAuthenticationEvents();
+
 }
+
 
 /* =========================================================
    <Finish> EVENT BINDING
@@ -2966,15 +2972,13 @@ function bindEvents() {
 /* =========================================================
    <Start> APPLICATION INITIALIZATION
    ---------------------------------------------------------
-   Initial boot sequence:
+   Urutan boot:
 
        1. Public config
        2. Server status
-       3. Finish loading sequence
-       4. Correspondence Gate
-       5. Prepare explicit Google Sign-In
-
-   Authentication TIDAK dijalankan pada loading screen.
+       3. Google Identity Services
+       4. Credential authentication events
+       5. Google authentication callback
    ========================================================= */
 
 async function initializeApplication() {
@@ -2985,6 +2989,7 @@ async function initializeApplication() {
       'Reading postal configuration...'
     );
 
+
     await loadPublicConfig();
 
 
@@ -2992,72 +2997,40 @@ async function initializeApplication() {
       'Contacting central office...'
     );
 
+
     await loadServerStatus();
 
 
     setLoadingStatus(
-      'Preparing correspondence routes...'
+      'Preparing identity service...'
     );
 
 
     /*
-     * Beri sedikit waktu agar loading animation
-     * selesai secara visual.
+     * Bind native credential authentication
+     * sebelum user mencapai Correspondence Gate.
      */
 
-    await new Promise(
-      function(resolve) {
-
-        setTimeout(
-          resolve,
-          900
-        );
-
-      }
-    );
-
-
-    setLoadingProgress(
-      100
-    );
-
-
-    setLoadingStatus(
-      'Postal service ready.'
-    );
-
-
-    await new Promise(
-      function(resolve) {
-
-        setTimeout(
-          resolve,
-          700
-        );
-
-      }
-    );
+    bindCredentialAuthenticationEvents();
 
 
     /*
-     * Loading selesai.
-     * Sekarang pindah ke Correspondence Gate.
-     */
-
-    showCorrespondenceGate();
-
-
-    /*
-     * Google Identity Services baru dipersiapkan
-     * setelah gate terlihat.
+     * Persiapkan Google Identity Services.
+     *
+     * Google callback akan mengisi:
+     *
+     * APP.googleIdToken
+     *
+     * kemudian melanjutkan authentication flow.
      */
 
     await initializeGoogleIdentity();
 
-
   }
 
-  catch (error) {
+  catch (
+    error
+  ) {
 
     console.error(
       'APPLICATION INITIALIZATION ERROR:',
@@ -3522,5 +3495,353 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 /* =========================================================
    <Finish> CREDENTIAL AUTHENTICATION
+   ========================================================= */
+
+
+
+/* =========================================================
+   <Start> CREDENTIAL AUTHENTICATION EVENTS
+   ---------------------------------------------------------
+   Menghubungkan Correspondence Gate dengan native
+   Narehate credential authentication.
+
+   Flow:
+
+   USER
+     ↓
+   identifier + password
+     ↓
+   credentialLogin
+     ↓
+   ┌─────────────────────────────┐
+   │ Account ditemukan?          │
+   └─────────────────────────────┘
+       │
+       ├─ YES
+       │   ↓
+       │ authenticate
+       │   ↓
+       │ Central Office
+       │
+       └─ NO
+           ↓
+       Registration
+   ========================================================= */
+
+function bindCredentialAuthenticationEvents() {
+
+  const identifierInput =
+    getElement(
+      'gate-identifier'
+    );
+
+  const passwordInput =
+    getElement(
+      'gate-password'
+    );
+
+  const loginButton =
+    getElement(
+      'gate-login-register'
+    );
+
+  const status =
+    getElement(
+      'gate-credential-status'
+    );
+
+
+  /* -----------------------------------------
+     Pastikan element tersedia
+     ----------------------------------------- */
+
+  if (
+    !identifierInput ||
+    !passwordInput ||
+    !loginButton
+  ) {
+
+    console.warn(
+      '[NAREHATE] Credential authentication elements not found.'
+    );
+
+    return;
+
+  }
+
+
+  /* -----------------------------------------
+     Hindari binding dua kali
+     ----------------------------------------- */
+
+  if (
+    loginButton.dataset.credentialBound ===
+    'true'
+  ) {
+
+    return;
+
+  }
+
+
+  loginButton.dataset.credentialBound =
+    'true';
+
+
+  /* -----------------------------------------
+     STATUS HELPER
+     ----------------------------------------- */
+
+  function setCredentialStatus(
+    message,
+    isError
+  ) {
+
+    if (!status) {
+
+      return;
+
+    }
+
+
+    status.textContent =
+      message;
+
+
+    status.classList.toggle(
+      'is-error',
+      !!isError
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     LOGIN / REGISTER
+     ----------------------------------------- */
+
+  loginButton.addEventListener(
+    'click',
+    async function() {
+
+      const identifier =
+        identifierInput.value
+          .trim();
+
+      const password =
+        passwordInput.value;
+
+
+      /* -------------------------------------
+         Validasi identifier
+         ------------------------------------- */
+
+      if (!identifier) {
+
+        setCredentialStatus(
+          'Enter your username, email, or phone.',
+          true
+        );
+
+        identifierInput.focus();
+
+        return;
+
+      }
+
+
+      /* -------------------------------------
+         Validasi password
+         ------------------------------------- */
+
+      if (!password) {
+
+        setCredentialStatus(
+          'Enter your password.',
+          true
+        );
+
+        passwordInput.focus();
+
+        return;
+
+      }
+
+
+      /* -------------------------------------
+         Loading state
+         ------------------------------------- */
+
+      loginButton.disabled =
+        true;
+
+      loginButton.textContent =
+        'CHECKING...';
+
+
+      setCredentialStatus(
+        'Checking correspondent registry...',
+        false
+      );
+
+
+      try {
+
+        const result =
+          await loginWithCredential(
+            identifier,
+            password
+          );
+
+
+        /* ===================================
+           ACCOUNT BELUM TERDAFTAR
+           =================================== */
+
+        if (
+          result &&
+          result.needsRegistration === true
+        ) {
+
+          setCredentialStatus(
+            'Correspondent not found. Opening registration...',
+            false
+          );
+
+
+          openCredentialRegistration(
+            identifier
+          );
+
+
+          return;
+
+        }
+
+
+        /* ===================================
+           LOGIN BERHASIL
+           =================================== */
+
+        if (
+          result &&
+          result.success === true &&
+          result.authenticated === true &&
+          result.registered === true &&
+          result.user
+        ) {
+
+          APP.identity =
+            result;
+
+          APP.user =
+            result.user;
+
+
+          updateDebugPanel();
+
+
+          setCredentialStatus(
+            'Correspondence established.',
+            false
+          );
+
+
+          await enterCentralOfficeAfterCredentialLogin();
+
+
+          return;
+
+        }
+
+
+        /* ===================================
+           RESPONSE TIDAK VALID
+           =================================== */
+
+        throw new Error(
+          result &&
+          result.error
+            ? result.error
+            : 'Authentication failed.'
+        );
+
+      }
+
+      catch (
+        error
+      ) {
+
+        console.error(
+          '[NAREHATE] CREDENTIAL AUTHENTICATION ERROR:',
+          error
+        );
+
+
+        setCredentialStatus(
+          error.message ||
+            'Authentication failed.',
+          true
+        );
+
+      }
+
+      finally {
+
+        loginButton.disabled =
+          false;
+
+        loginButton.textContent =
+          'LOGIN / REGISTER';
+
+      }
+
+    }
+  );
+
+
+  /* -----------------------------------------
+     ENTER KEY
+     ----------------------------------------- */
+
+  function handleCredentialEnter(
+    event
+  ) {
+
+    if (
+      event.key ===
+      'Enter'
+    ) {
+
+      event.preventDefault();
+
+      loginButton.click();
+
+    }
+
+  }
+
+
+  identifierInput.addEventListener(
+    'keydown',
+    handleCredentialEnter
+  );
+
+
+  passwordInput.addEventListener(
+    'keydown',
+    handleCredentialEnter
+  );
+
+
+  console.log(
+    '[NAREHATE] Credential authentication events ONLINE.'
+  );
+
+}
+
+
+/* =========================================================
+   <Finish> CREDENTIAL AUTHENTICATION EVENTS
    ========================================================= */
 

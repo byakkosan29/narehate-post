@@ -3310,3 +3310,217 @@ function bindEnvironmentHotspots() {
    ========================================================= */
 
 
+
+/* =========================================================
+   <Start> CREDENTIAL AUTHENTICATION
+   ---------------------------------------------------------
+   Native Narehate authentication.
+
+   Frontend
+      ↓
+   Cloudflare /api
+      ↓
+   Apps Script
+      ↓
+   authenticateWithCredential()
+   ========================================================= */
+
+async function loginWithCredential(
+  identifier,
+  password
+) {
+
+  const result =
+    await apiRequest(
+      'credentialLogin',
+      {
+        identifier:
+          identifier,
+
+        password:
+          password
+      }
+    );
+
+
+  console.log(
+    '[NAREHATE] CREDENTIAL LOGIN RESPONSE:',
+    result
+  );
+
+
+  return result;
+
+}
+
+
+/* =========================================================
+   <Start> CREDENTIAL REGISTRATION REDIRECT
+   ---------------------------------------------------------
+   Jika credential belum ditemukan, user diarahkan
+   ke halaman registration.
+
+   Password TIDAK pernah dimasukkan ke URL.
+   ========================================================= */
+
+function openCredentialRegistration(
+  identifier
+) {
+
+  const query =
+    identifier
+      ? (
+          '?identifier=' +
+          encodeURIComponent(
+            identifier
+          )
+        )
+      : '';
+
+
+  window.location.href =
+    '/registration.html' +
+    query;
+
+}
+
+
+/* =========================================================
+   <Start> ENTER CENTRAL OFFICE AFTER CREDENTIAL LOGIN
+   ---------------------------------------------------------
+   Credential login yang berhasil tidak perlu melewati
+   Door karena user sudah authenticated + registered.
+
+   Flow:
+
+   Correspondence Gate
+          ↓
+   Credential Login
+          ↓
+   Central Office
+   ========================================================= */
+
+async function enterCentralOfficeAfterCredentialLogin() {
+
+  setLoadingStatus(
+    'Opening Central Office...'
+  );
+
+
+  /* -----------------------------------------
+     Persiapkan application
+     ----------------------------------------- */
+
+  await prepareApplication();
+
+
+  /* -----------------------------------------
+     Ambil environment
+     ----------------------------------------- */
+
+  const loading =
+    getElement(
+      'loading-screen'
+    );
+
+  const gate =
+    getElement(
+      'correspondence-gate'
+    );
+
+  const door =
+    getElement(
+      'door-environment'
+    );
+
+  const registration =
+    getElement(
+      'registration-environment'
+    );
+
+  const office =
+    getElement(
+      'environment-view'
+    );
+
+
+  /* -----------------------------------------
+     Sembunyikan loading
+     ----------------------------------------- */
+
+  if (loading) {
+
+    loading.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Sembunyikan Correspondence Gate
+     ----------------------------------------- */
+
+  if (gate) {
+
+    gate.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Sembunyikan Door
+     ----------------------------------------- */
+
+  if (door) {
+
+    door.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Sembunyikan Registration
+     ----------------------------------------- */
+
+  if (registration) {
+
+    registration.classList.add(
+      'is-hidden'
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Tampilkan Central Office
+     ----------------------------------------- */
+
+  if (office) {
+
+    office.classList.remove(
+      'is-hidden'
+    );
+
+  }
+
+
+  APP.currentView =
+    'office';
+
+
+  console.log(
+    '[NAREHATE] Credential correspondent entered Central Office.'
+  );
+
+}
+
+
+/* =========================================================
+   <Finish> CREDENTIAL AUTHENTICATION
+   ========================================================= */
+

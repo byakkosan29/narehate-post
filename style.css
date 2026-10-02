@@ -5199,3 +5199,44 @@ body {
 /* =========================================================
    <Finish> ENTRY ENVIRONMENTS
    ========================================================= */
+
+
+
+
+
+
+/* =========================================================
+   <Start> EXTERNAL ROOM FRAME
+   ---------------------------------------------------------
+   External room HTML mengisi seluruh area Room View.
+   ========================================================= */
+
+.room-content {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+}
+
+
+.room-frame {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+}
+
+/* =========================================================
+   <Finish> EXTERNAL ROOM FRAME
+   ========================================================= */

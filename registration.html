@@ -1583,12 +1583,13 @@ body {
        =================================================== */
 
 
-    /* <Start> BLOCK 38 — DOB CALENDAR BEHAVIOR */
+/* <Start> BLOCK 40 — FIX DOB CALENDAR BEHAVIOR */
 
 const dob =
   document.getElementById(
     'registration-dob'
   );
+
 
 const dobField =
   document.getElementById(
@@ -1596,38 +1597,45 @@ const dobField =
   );
 
 
+/* -----------------------------------------------------
+   UPDATE DOB VISUAL STATE
+   ----------------------------------------------------- */
+
 function updateDobState() {
 
   if (
     dob.value
   ) {
 
-    dob.classList.remove(
+    dobField.classList.remove(
       'is-empty'
+    );
+
+    dobField.classList.add(
+      'has-value'
     );
 
   } else {
 
-    dob.classList.add(
+    dobField.classList.remove(
+      'has-value'
+    );
+
+    dobField.classList.add(
       'is-empty'
     );
+
   }
 }
 
 
-/*
-   Klik di mana pun pada textbox DOB
-   langsung membuka calendar.
-*/
+/* -----------------------------------------------------
+   OPEN CALENDAR
+   ----------------------------------------------------- */
 
 dobField.addEventListener(
   'click',
-  function(event) {
-
-    /*
-       Jangan trigger dua kali kalau
-       user memang sedang klik native input.
-    */
+  function() {
 
     if (
       typeof dob.showPicker ===
@@ -1642,11 +1650,7 @@ dobField.addEventListener(
         error
       ) {
 
-        /*
-           Browser yang tidak mendukung
-           showPicker tetap akan menggunakan
-           native date behavior.
-        */
+        dob.focus();
 
       }
 
@@ -1660,24 +1664,28 @@ dobField.addEventListener(
 );
 
 
-/*
-   Update tampilan setelah tanggal dipilih.
-*/
+/* -----------------------------------------------------
+   DATE CHANGED
+   ----------------------------------------------------- */
 
 dob.addEventListener(
   'change',
-  updateDobState
+  function() {
+
+    updateDobState();
+
+  }
 );
 
 
-/*
-   Initial state.
-*/
+/* -----------------------------------------------------
+   INITIAL STATE
+   ----------------------------------------------------- */
 
 updateDobState();
 
 
-/* <Finish> BLOCK 38 */
+/* <Finish> BLOCK 40 */
 
   </script>
 

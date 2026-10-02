@@ -559,8 +559,15 @@ async function loadCentralOfficeBackground() {
    ========================================================= */
 
 
+/* <Start> BLOCK 60 — APPLY CENTRAL OFFICE BACKGROUND */
+
 /* =========================================================
-   <Start> APPLY CENTRAL OFFICE BACKGROUND
+   APPLY CENTRAL OFFICE BACKGROUND
+   ---------------------------------------------------------
+   Central Office artwork sekarang berasal langsung dari
+   Cloudflare Pages.
+
+   Tidak lagi bergantung pada Google Drive / Apps Script.
    ========================================================= */
 
 function applyCentralOfficeBackground() {
@@ -571,32 +578,35 @@ function applyCentralOfficeBackground() {
     );
 
 
-  const image =
-    APP.environment
-      .centralOfficeBackground;
+  if (!environment) {
 
-
-  if (
-    !environment ||
-    !image
-  ) {
+    console.warn(
+      '[NAREHATE] Central Office background element not found.'
+    );
 
     return;
 
   }
 
 
+  const backgroundUrl =
+    '/assets/environments/main_office.webp';
+
+
   environment.style.backgroundImage =
     'url("' +
-    image +
+    backgroundUrl +
     '")';
+
+
+  console.log(
+    '[NAREHATE] Central Office artwork applied:',
+    backgroundUrl
+  );
 
 }
 
-/* =========================================================
-   <Finish> APPLY CENTRAL OFFICE BACKGROUND
-   ========================================================= */
-
+/* <Finish> BLOCK 60 — APPLY CENTRAL OFFICE BACKGROUND */
 
 /* =========================================================
    <Start> LOAD SERVER STATUS

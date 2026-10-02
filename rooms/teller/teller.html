@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+>
+
+<head>
+
+  <meta
+    charset="UTF-8"
+  >
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <title>
+    Narehate Postal Service — Teller
+  </title>
+
+
+  <!-- =========================================================
+       <Start> TELLER STYLESHEET
+       ---------------------------------------------------------
+       Stylesheet khusus untuk Teller Room.
+       ========================================================= -->
+
+  <link
+    rel="stylesheet"
+    href="./teller.css"
+  >
+
+  <!-- =========================================================
+       <Finish> TELLER STYLESHEET
+       ========================================================= -->
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================================
+       <Start> TELLER ROOM
+       ---------------------------------------------------------
+       Root environment untuk Teller.
+
+       Background artwork:
+       /assets/environments/TELLER.webp
+
+       Room:
+       02 — Teller
+       ========================================================= -->
+
+  <main
+    id="teller-room"
+    class="teller-room"
+    aria-label="Narehate Postal Service Teller"
+  >
+
+
+    <!-- =======================================================
+         <Start> TELLER BACKGROUND
+         -------------------------------------------------------
+         Artwork utama Teller.
+
+         Asset berasal dari:
+         /assets/environments/TELLER.webp
+         ======================================================= -->
+
+    <img
+      id="teller-background"
+      class="teller-background"
+      src="/assets/environments/TELLER.webp"
+      alt=""
+      aria-hidden="true"
+    >
+
+    <!-- =======================================================
+         <Finish> TELLER BACKGROUND
+         ======================================================= -->
+
+
+    <!-- =======================================================
+         <Start> TELLER ATMOSPHERE
+         -------------------------------------------------------
+         Overlay tipis untuk mempertahankan readability
+         tanpa menghilangkan artwork.
+         ======================================================= -->
+
+    <div
+      class="teller-atmosphere"
+      aria-hidden="true"
+    ></div>
+
+    <!-- =======================================================
+         <Finish> TELLER ATMOSPHERE
+         ======================================================= -->
+
+
+    <!-- =======================================================
+         <Start> TELLER HEADER
+         -------------------------------------------------------
+         Identitas department dan nomor room.
+         ======================================================= -->
+
+    <header
+      class="teller-header"
+    >
+
+
+      <!-- =====================================================
+           <Start> TELLER IDENTITY
+           ===================================================== -->
+
+      <div
+        class="teller-identity"
+      >
+
+        <div
+          class="teller-eyebrow"
+        >
+          Narehate Postal Service
+        </div>
+
+
+        <h1
+          class="teller-title"
+        >
+          Teller
+        </h1>
+
+
+        <div
+          class="teller-department"
+        >
+          Correspondence Department
+        </div>
+
+      </div>
+
+      <!-- =====================================================
+           <Finish> TELLER IDENTITY
+           ===================================================== -->
+
+
+      <!-- =====================================================
+           <Start> ROOM MARK
+           ===================================================== -->
+
+      <div
+        class="room-mark"
+      >
+
+        <div
+          class="room-number"
+        >
+          02
+        </div>
+
+
+        <div
+          class="room-label"
+        >
+          Central Office
+        </div>
+
+      </div>
+
+      <!-- =====================================================
+           <Finish> ROOM MARK
+           ===================================================== -->
+
+    </header>
+
+    <!-- =======================================================
+         <Finish> TELLER HEADER
+         ======================================================= -->
+
+
+    <!-- =======================================================
+         <Start> TELLER CONTENT
+         -------------------------------------------------------
+         Main interaction area Teller.
+         ======================================================= -->
+
+    <section
+      class="teller-content"
+      aria-labelledby="counter-heading"
+    >
+
+
+      <!-- =====================================================
+           <Start> COUNTER INTRODUCTION
+           ===================================================== -->
+
+      <h2
+        id="counter-heading"
+        class="counter-heading"
+      >
+        How may we assist you?
+      </h2>
+
+
+      <p
+        class="counter-introduction"
+      >
+        The central teller receives correspondence,
+        keeps the registry, and helps letters find
+        their way through Narehate.
+      </p>
+
+      <!-- =====================================================
+           <Finish> COUNTER INTRODUCTION
+           ===================================================== -->
+
+
+      <!-- =====================================================
+           <Start> TELLER SERVICES
+           -----------------------------------------------------
+           Service window utama Teller.
+
+           Functional behavior akan disambungkan kemudian.
+           ===================================================== -->
+
+      <div
+        class="teller-services"
+        role="group"
+        aria-label="Teller services"
+      >
+
+
+        <!-- ===================================================
+             <Start> SERVICE — MY MAIL
+             =================================================== -->
+
+        <button
+          type="button"
+          class="teller-service"
+          data-service="mail"
+        >
+
+          <span
+            class="service-number"
+          >
+            SERVICE 01
+          </span>
+
+
+          <span
+            class="service-name"
+          >
+            My Mail
+          </span>
+
+
+          <span
+            class="service-description"
+          >
+            View correspondence connected to your registry.
+          </span>
+
+        </button>
+
+        <!-- ===================================================
+             <Finish> SERVICE — MY MAIL
+             =================================================== -->
+
+
+        <!-- ===================================================
+             <Start> SERVICE — SUBSCRIPTION
+             =================================================== -->
+
+        <button
+          type="button"
+          class="teller-service"
+          data-service="subscription"
+        >
+
+          <span
+            class="service-number"
+          >
+            SERVICE 02
+          </span>
+
+
+          <span
+            class="service-name"
+          >
+            Subscription
+          </span>
+
+
+          <span
+            class="service-description"
+          >
+            Information about your correspondence subscription.
+          </span>
+
+        </button>
+
+        <!-- ===================================================
+             <Finish> SERVICE — SUBSCRIPTION
+             =================================================== -->
+
+
+        <!-- ===================================================
+             <Start> SERVICE — DISPATCH
+             =================================================== -->
+
+        <button
+          type="button"
+          class="teller-service"
+          data-service="dispatch"
+        >
+
+          <span
+            class="service-number"
+          >
+            SERVICE 03
+          </span>
+
+
+          <span
+            class="service-name"
+          >
+            Dispatch
+          </span>
+
+
+          <span
+            class="service-description"
+          >
+            Follow a letter as it passes through the postal system.
+          </span>
+
+        </button>
+
+        <!-- ===================================================
+             <Finish> SERVICE — DISPATCH
+             =================================================== -->
+
+      </div>
+
+      <!-- =====================================================
+           <Finish> TELLER SERVICES
+           ===================================================== -->
+
+
+      <!-- =====================================================
+           <Start> TELLER NOTICE
+           ===================================================== -->
+
+      <div
+        class="teller-notice"
+      >
+        Some teller services are still being prepared.
+        Please ask at the counter when a service is marked unavailable.
+      </div>
+
+      <!-- =====================================================
+           <Finish> TELLER NOTICE
+           ===================================================== -->
+
+    </section>
+
+    <!-- =======================================================
+         <Finish> TELLER CONTENT
+         ======================================================= -->
+
+
+    <!-- =======================================================
+         <Start> TELLER FOOTER
+         ======================================================= -->
+
+    <footer
+      class="teller-footer"
+    >
+
+      <div
+        class="teller-footer-copy"
+      >
+        Narehate Postal Service · Correspondence Department
+      </div>
+
+
+      <button
+        type="button"
+        id="teller-back"
+        class="back-button"
+      >
+        ← Central Office
+      </button>
+
+    </footer>
+
+    <!-- =======================================================
+         <Finish> TELLER FOOTER
+         ======================================================= -->
+
+  </main>
+
+  <!-- =========================================================
+       <Finish> TELLER ROOM
+       ========================================================= -->
+
+
+  <!-- =========================================================
+       <Start> TELLER JAVASCRIPT
+       ---------------------------------------------------------
+       JavaScript khusus Teller.
+
+       Untuk tahap ini:
+       - back navigation disiapkan
+       - service buttons belum terhubung API
+       ========================================================= -->
+
+  <script>
+
+    /* =========================================================
+       <Start> TELLER NAVIGATION
+       ---------------------------------------------------------
+       Kembali ke Central Office.
+
+       Jika room dijalankan melalui parent application,
+       gunakan parent.closeRoom().
+
+       Jika dijalankan standalone,
+       gunakan browser history.
+       ========================================================= */
+
+    const tellerBack =
+      document.getElementById(
+        'teller-back'
+      );
+
+
+    if (
+      tellerBack
+    ) {
+
+      tellerBack.addEventListener(
+        'click',
+        function () {
+
+          if (
+            window.parent &&
+            window.parent !== window &&
+            typeof window.parent.closeRoom === 'function'
+          ) {
+
+            window.parent.closeRoom();
+
+            return;
+
+          }
+
+
+          if (
+            window.history.length > 1
+          ) {
+
+            window.history.back();
+
+          }
+
+        }
+      );
+
+    }
+
+    /* =========================================================
+       <Finish> TELLER NAVIGATION
+       ========================================================= */
+
+
+    /* =========================================================
+       <Start> TELLER SERVICE HANDLERS
+       ---------------------------------------------------------
+       Placeholder.
+
+       API/database belum disambungkan pada tahap ini.
+       ========================================================= */
+
+    const tellerServices =
+      document.querySelectorAll(
+        '[data-service]'
+      );
+
+
+    tellerServices.forEach(
+      function (button) {
+
+        button.addEventListener(
+          'click',
+          function () {
+
+            const service =
+              button.dataset.service;
+
+
+            console.log(
+              'Teller service selected:',
+              service
+            );
+
+          }
+        );
+
+      }
+    );
+
+    /* =========================================================
+       <Finish> TELLER SERVICE HANDLERS
+       ========================================================= */
+
+  </script>
+
+  <!-- =========================================================
+       <Finish> TELLER JAVASCRIPT
+       ========================================================= -->
+
+
+</body>
+
+</html>

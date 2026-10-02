@@ -1213,27 +1213,65 @@ async function handleGoogleAuthentication() {
   updateDebugPanel();
 
 
-  /* -------------------------------------------------------
-     USER BARU
-     ------------------------------------------------------- */
+   /* <Start> BLOCK 64 — GOOGLE NEW USER REGISTRATION REDIRECT */
+
+/* -------------------------------------------------------
+   USER BARU
+   -------------------------------------------------------
+   Google berhasil authenticated tetapi belum memiliki
+   account Narehate.
+
+   Registration sekarang merupakan halaman terpisah:
+   /registration.html
+
+   Google ID Token disimpan sementara di sessionStorage
+   agar tidak pernah masuk ke URL.
+   ------------------------------------------------------- */
+
+if (
+  identity &&
+  identity.authenticated &&
+  !identity.registered
+) {
+
+  console.log(
+    '[NAREHATE] Authenticated Google user is not registered.'
+  );
+
+
+  /*
+   * Simpan Google ID Token sementara.
+   *
+   * Token tidak dimasukkan ke URL karena URL dapat
+   * tersimpan di browser history, logs, analytics,
+   * atau referrer.
+   */
 
   if (
-    identity &&
-    identity.authenticated &&
-    !identity.registered
+    APP.googleIdToken
   ) {
 
-    console.log(
-      '[NAREHATE] Authenticated Google user is not registered.'
+    sessionStorage.setItem(
+      'NAREHATE_GOOGLE_ID_TOKEN',
+      APP.googleIdToken
     );
 
-
-    showRegistrationEnvironment();
-
-
-    return;
-
   }
+
+
+  /*
+   * Pindah ke halaman registration resmi.
+   */
+
+  window.location.href =
+    '/registration.html';
+
+
+  return;
+
+}
+
+/* <Finish> BLOCK 64 — GOOGLE NEW USER REGISTRATION REDIRECT */
 
 
   /* -------------------------------------------------------

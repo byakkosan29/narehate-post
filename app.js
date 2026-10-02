@@ -3076,7 +3076,7 @@ const ROOMS = {
       'CORRESPONDENCE DEPARTMENT',
 
     description:
-      'Where letters are received, registered and dispatched.'
+      'Where letters are received, registered and dispatched.',
        
    path:
   '/rooms/teller/teller.html'

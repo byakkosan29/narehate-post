@@ -2029,12 +2029,26 @@ if (
 }
 
 
+/* <Start> BLOCK 48 — NATIVE REGISTRATION SUBMIT */
+
 /* =========================================================
    FORM SUBMIT
    ---------------------------------------------------------
-   DEVELOPMENT ONLY.
+   Flow:
 
-   Belum mengirim data ke backend.
+   Registration Form
+        ↓
+   HTML Validation
+        ↓
+   Normalize Username
+        ↓
+   Validate Password
+        ↓
+   Build Registration Payload
+        ↓
+   API credentialregister
+        ↓
+   Account Created
    ========================================================= */
 
 if (
@@ -2043,7 +2057,7 @@ if (
 
   registrationForm.addEventListener(
     'submit',
-    function(event) {
+    async function(event) {
 
       event.preventDefault();
 
@@ -2130,55 +2144,222 @@ if (
 
 
       /* -----------------------------------------------
-         DEVELOPMENT SUCCESS
+         DOB VALIDATION
          ----------------------------------------------- */
 
+      if (
+        !registrationDob.value
+      ) {
+
+        showRegistrationStatus(
+          'Please tell us when your story began.',
+          true
+        );
+
+        registrationDob.focus();
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------
+         DISABLE SUBMIT
+         ----------------------------------------------- */
+
+      registrationSubmit.disabled =
+        true;
+
+
+      registrationSubmit.style.pointerEvents =
+        'none';
+
+
       showRegistrationStatus(
-        'Registration form ready.',
+        'Registering your correspondence...',
         false
       );
 
 
-      console.log(
-        '[NAREHATE] REGISTRATION FORM DATA:',
-        {
+      /* -----------------------------------------------
+         BUILD PAYLOAD
+         ----------------------------------------------- */
 
-          name:
-            registrationName.value
-              .trim(),
+      const registrationData = {
 
-          username:
-            usernameValue,
+        name:
+          registrationName.value
+            .trim(),
 
-          password:
-            '[HIDDEN]',
+        username:
+          usernameValue,
 
-          email:
-            registrationEmail.value
-              .trim(),
+        password:
+          registrationPassword.value,
 
-          dob:
-            registrationDob.value,
+        email:
+          registrationEmail.value
+            .trim()
+            .toLowerCase(),
 
-          gender:
-            registrationGender.value,
+        dob:
+          registrationDob.value,
 
-          hobbies:
-            registrationHobbies.value
-              .trim(),
+        gender:
+          registrationGender.value,
 
-          occupation:
-            registrationOccupation.value
-              .trim()
+        hobbies:
+          registrationHobbies.value
+            .trim(),
+
+        occupation:
+          registrationOccupation.value
+            .trim()
+
+      };
+
+
+      /* -----------------------------------------------
+         SEND TO BACKEND
+         ----------------------------------------------- */
+
+      try {
+
+        const response =
+          await fetch(
+            '/api',
+            {
+              method:
+                'POST',
+
+              headers: {
+                'Content-Type':
+                  'application/json'
+              },
+
+              body:
+                JSON.stringify({
+
+                  action:
+                    'credentialregister',
+
+                  data:
+                    registrationData
+
+                })
+
+            }
+          );
+
+
+        /* ---------------------------------------------
+           HTTP ERROR
+           --------------------------------------------- */
+
+        if (
+          !response.ok
+        ) {
+
+          throw new Error(
+            'Registration request failed.'
+          );
 
         }
-      );
+
+
+        const result =
+          await response.json();
+
+
+        console.log(
+          '[NAREHATE] REGISTRATION RESPONSE:',
+          result
+        );
+
+
+        /* ---------------------------------------------
+           BACKEND ERROR
+           --------------------------------------------- */
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+
+          throw new Error(
+            result &&
+            result.error
+              ? result.error
+              : 'Registration failed.'
+          );
+
+        }
+
+
+        /* ---------------------------------------------
+           REGISTRATION SUCCESS
+           --------------------------------------------- */
+
+        showRegistrationStatus(
+          'Your correspondence has been registered.',
+          false
+        );
+
+
+        console.log(
+          '[NAREHATE] NAREHATE ACCOUNT CREATED:',
+          result.user
+        );
+
+
+        /* ---------------------------------------------
+           NEXT STEP
+           ---------------------------------------------
+           Untuk sekarang kita belum redirect.
+
+           Kita pastikan dulu API registration benar-benar
+           berhasil dari browser.
+
+           Redirect ke Central Office akan kita pasang
+           setelah response ini tervalidasi.
+           --------------------------------------------- */
+
+
+      } catch (
+        error
+      ) {
+
+        console.error(
+          '[NAREHATE] REGISTRATION ERROR:',
+          error
+        );
+
+
+        showRegistrationStatus(
+          error.message ||
+          'Registration failed. Please try again.',
+          true
+        );
+
+
+      } finally {
+
+        registrationSubmit.disabled =
+          false;
+
+
+        registrationSubmit.style.pointerEvents =
+          'auto';
+
+      }
 
     }
   );
 
 }
 
+
+/* <Finish> BLOCK 48 — NATIVE REGISTRATION SUBMIT */
 
 /* =========================================================
    BACK BUTTON

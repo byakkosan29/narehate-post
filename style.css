@@ -3133,21 +3133,22 @@ body {
 }
 
 
+/* <Start> BLOCK 59 — CENTRAL OFFICE BACKGROUND */
+
 /* =========================================================
-   BACKGROUND ARTWORK
+   CENTRAL OFFICE ARTWORK
    ---------------------------------------------------------
-   Artwork menjadi seluruh halaman.
+   Main environment artwork.
+   Asset is served directly from Cloudflare Pages.
    ========================================================= */
 
-.environment-background {
-  position: absolute;
+#environment-view
+#environment-background {
 
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
+  background-image:
+    url(
+      "/assets/environments/main_office.webp"
+    );
 
   background-position:
     center center;
@@ -3158,13 +3159,9 @@ body {
   background-size:
     cover;
 
-  transform:
-    scale(1.001);
-
-  transition:
-    opacity 500ms ease,
-    transform 900ms ease;
 }
+
+/* <Finish> BLOCK 59 — CENTRAL OFFICE BACKGROUND */
 
 
 /* =========================================================

@@ -31,6 +31,12 @@ const APP = {
   googleIdToken:
     null,
 
+   sessionToken:
+  null,
+
+sessionExpiresAt:
+  null,
+
   initialized:
     false,
 
@@ -212,6 +218,304 @@ async function apiRequest(
 /* =========================================================
    <Finish> CLOUDFLARE API HELPER
    ========================================================= */
+
+
+
+/* =========================================================
+   <Start> NAREHATE SESSION MANAGEMENT
+   ---------------------------------------------------------
+   Server-side session berlangsung 1 jam.
+
+   Browser hanya menyimpan:
+      - sessionToken
+      - expiresAt
+
+   Password dan Google ID Token TIDAK disimpan sebagai
+   persistent login credential.
+   ========================================================= */
+
+const NAREHATE_SESSION_KEY =
+  'NAREHATE_SESSION';
+
+
+function saveNarehateSession(
+  sessionToken,
+  expiresAt
+) {
+
+  if (
+    !sessionToken
+  ) {
+
+    return false;
+
+  }
+
+
+  const session = {
+
+    sessionToken:
+      sessionToken,
+
+    expiresAt:
+      expiresAt || null
+
+  };
+
+
+  try {
+
+    localStorage.setItem(
+      NAREHATE_SESSION_KEY,
+      JSON.stringify(session)
+    );
+
+  } catch (
+    error
+  ) {
+
+    console.error(
+      '[NAREHATE] Could not save session.',
+      error
+    );
+
+    return false;
+
+  }
+
+
+  APP.sessionToken =
+    sessionToken;
+
+  APP.sessionExpiresAt =
+    expiresAt || null;
+
+
+  return true;
+
+}
+
+
+function loadNarehateSession() {
+
+  try {
+
+    const raw =
+      localStorage.getItem(
+        NAREHATE_SESSION_KEY
+      );
+
+
+    if (
+      !raw
+    ) {
+
+      return null;
+
+    }
+
+
+    const session =
+      JSON.parse(raw);
+
+
+    if (
+      !session ||
+      !session.sessionToken
+    ) {
+
+      localStorage.removeItem(
+        NAREHATE_SESSION_KEY
+      );
+
+      return null;
+
+    }
+
+
+    APP.sessionToken =
+      session.sessionToken;
+
+    APP.sessionExpiresAt =
+      session.expiresAt || null;
+
+
+    return session;
+
+  } catch (
+    error
+  ) {
+
+    console.warn(
+      '[NAREHATE] Invalid stored session.'
+    );
+
+
+    clearNarehateSession();
+
+    return null;
+
+  }
+
+}
+
+
+function clearNarehateSession() {
+
+  try {
+
+    localStorage.removeItem(
+      NAREHATE_SESSION_KEY
+    );
+
+  } catch (
+    error
+  ) {
+
+    console.warn(
+      '[NAREHATE] Could not clear stored session.',
+      error
+    );
+
+  }
+
+
+  APP.sessionToken =
+    null;
+
+  APP.sessionExpiresAt =
+    null;
+
+}
+
+
+/* =========================================================
+   <Finish> NAREHATE SESSION MANAGEMENT
+   ========================================================= */
+
+
+/* =========================================================
+   <Start> RESTORE NAREHATE SESSION
+   ---------------------------------------------------------
+   Saat browser reload:
+
+      localStorage
+           ↓
+      sessionToken
+           ↓
+      sessionvalidate
+           ↓
+      valid?
+        YES → restore user
+        NO  → clear session → Gate
+   ========================================================= */
+
+async function restoreNarehateSession() {
+
+  const session =
+    loadNarehateSession();
+
+
+  if (
+    !session
+  ) {
+
+    return false;
+
+  }
+
+
+  try {
+
+    const result =
+      await apiRequest(
+        'sessionvalidate',
+        {
+          sessionToken:
+            session.sessionToken
+        }
+      );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      clearNarehateSession();
+
+      return false;
+
+    }
+
+
+    /*
+     * Restore authenticated identity.
+     */
+
+    if (
+      result.user
+    ) {
+
+      APP.user =
+        result.user;
+
+    }
+
+
+    APP.identity = {
+
+      success:
+        true,
+
+      authenticated:
+        true,
+
+      registered:
+        true,
+
+      needsRegistration:
+        false,
+
+      user:
+        result.user || null
+
+    };
+
+
+    /*
+     * Backend adalah authority.
+     * Jangan percaya expiry dari localStorage
+     * sebagai satu-satunya validasi.
+     */
+
+    updateDebugPanel();
+
+
+    console.log(
+      '[NAREHATE] Existing correspondent session restored.'
+    );
+
+
+    return true;
+
+  } catch (
+    error
+  ) {
+
+    console.warn(
+      '[NAREHATE] Stored session could not be restored.',
+      error
+    );
+
+
+    clearNarehateSession();
+
+    return false;
+
+  }
+
+}
 
 
 /* =========================================================
@@ -711,10 +1015,28 @@ async function loadCurrentUser() {
    * tampilkan response mentah dari backend.
    */
 
-  console.log(
-    '[NAREHATE] AUTH RESPONSE:',
-    result
-  );
+ console.log(
+  '[NAREHATE] AUTH RESPONSE:',
+  {
+    success:
+      result &&
+      result.success === true,
+
+    authenticated:
+      result &&
+      result.authenticated === true,
+
+    registered:
+      result &&
+      result.registered === true,
+
+    hasSession:
+      !!(
+        result &&
+        result.sessionToken
+      )
+  }
+);
 
 
   /*
@@ -746,10 +1068,28 @@ async function loadCurrentUser() {
 
   }
 
+if (
+  result &&
+  result.success === true &&
+  result.sessionToken
+) {
 
+  saveNarehateSession(
+    result.sessionToken,
+    result.expiresAt
+  );
+
+}
+
+
+
+
+
+
+
+   
   /*
-   * Simpan identity hasil authentication.
-   */
+   * Simpan identity hasil authentication.*/
 
   APP.identity =
     result;
@@ -3196,6 +3536,35 @@ async function initializeApplication() {
     }
 
 
+
+
+     /* -----------------------------------------
+   RESTORE EXISTING SESSION
+   ----------------------------------------- */
+
+setLoadingStatus(
+  'Checking correspondent session...'
+);
+
+
+const sessionRestored =
+  await restoreNarehateSession();
+
+
+if (
+  sessionRestored
+) {
+
+  await enterCentralOfficeAfterCredentialLogin();
+
+  console.log(
+    '[NAREHATE] Existing session restored. Central Office opened.'
+  );
+
+  return;
+
+}
+
     /* -----------------------------------------
        VALID REGISTRATION HANDOFF
        ----------------------------------------- */
@@ -3572,16 +3941,41 @@ async function loginWithCredential(
     );
 
 
-  /*
-   * Jangan pernah log password.
-   *
-   * Response user sudah disanitasi
-   * oleh backend.
-   */
+  if (
+    result &&
+    result.success === true &&
+    result.sessionToken
+  ) {
+
+    saveNarehateSession(
+      result.sessionToken,
+      result.expiresAt
+    );
+
+  }
+
 
   console.log(
-    '[NAREHATE] CREDENTIAL LOGIN RESPONSE:',
-    result
+    '[NAREHATE] Credential login response:',
+    {
+      success:
+        result &&
+        result.success === true,
+
+      authenticated:
+        result &&
+        result.authenticated === true,
+
+      registered:
+        result &&
+        result.registered === true,
+
+      hasSession:
+        !!(
+          result &&
+          result.sessionToken
+        )
+    }
   );
 
 

@@ -937,14 +937,16 @@ body {
     </label>
 
     <input
-      type="text"
-      id="registration-name"
-      name="name"
-      autocomplete="off"
-      placeholder="What should the staff call you?..."
-      maxlength="100"
-      required
-    >
+  type="text"
+  id="registration-username"
+  name="username"
+  autocomplete="off"
+  minlength="3"
+  maxlength="24"
+  pattern="[a-z0-9_.]{3,24}"
+  placeholder="A name for the registry..."
+  required
+>
   </div>
 
 

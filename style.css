@@ -2210,6 +2210,340 @@ body {
 
 
 /* =========================================================
+   MOBILE OFFICE NAVIGATION
+   ---------------------------------------------------------
+   Desktop:
+     Hotspot based
+
+   Mobile:
+     Button based
+
+   Menu otomatis muncul pada viewport <= 700px.
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   DEFAULT
+   --------------------------------------------------------- */
+
+.mobile-office-navigation {
+
+  display:
+    none;
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+  /* -----------------------------------------
+     Disable desktop hotspot interaction
+     ----------------------------------------- */
+
+  #environment-hotspots {
+
+    pointer-events:
+      none;
+
+  }
+
+
+  .environment-hotspot {
+
+    pointer-events:
+      none;
+
+  }
+
+
+  /* -----------------------------------------
+     Mobile navigation
+     ----------------------------------------- */
+
+  .mobile-office-navigation {
+
+    position:
+      absolute;
+
+    left:
+      12px;
+
+    right:
+      12px;
+
+    bottom:
+      48px;
+
+    z-index:
+      100;
+
+    display:
+      block;
+
+    pointer-events:
+      auto;
+
+  }
+
+
+  .mobile-office-navigation-inner {
+
+    width:
+      100%;
+
+    box-sizing:
+      border-box;
+
+    padding:
+      14px;
+
+    border:
+      1px solid
+      rgba(
+        241,
+        234,
+        223,
+        0.18
+      );
+
+    background:
+      rgba(
+        23,
+        19,
+        15,
+        0.88
+      );
+
+    backdrop-filter:
+      blur(10px);
+
+    -webkit-backdrop-filter:
+      blur(10px);
+
+    box-shadow:
+      0 12px 40px
+      rgba(
+        0,
+        0,
+        0,
+        0.35
+      );
+
+  }
+
+
+  /* -----------------------------------------
+     Header
+     ----------------------------------------- */
+
+  .mobile-office-navigation-header {
+
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    gap:
+      3px;
+
+    margin-bottom:
+      12px;
+
+    padding-bottom:
+      10px;
+
+    border-bottom:
+      1px solid
+      rgba(
+        241,
+        234,
+        223,
+        0.12
+      );
+
+  }
+
+
+  .mobile-office-navigation-eyebrow {
+
+    font-family:
+      Arial,
+      sans-serif;
+
+    font-size:
+      6px;
+
+    letter-spacing:
+      2px;
+
+    text-transform:
+      uppercase;
+
+    opacity:
+      0.45;
+
+  }
+
+
+  .mobile-office-navigation-title {
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size:
+      16px;
+
+    letter-spacing:
+      0.5px;
+
+    color:
+      #f1eadf;
+
+  }
+
+
+  /* -----------------------------------------
+     Menu grid
+     ----------------------------------------- */
+
+  .mobile-office-menu {
+
+    display:
+      grid;
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap:
+      6px;
+
+  }
+
+
+  /* -----------------------------------------
+     Menu button
+     ----------------------------------------- */
+
+  .mobile-office-menu-button {
+
+    min-height:
+      42px;
+
+    padding:
+      9px 10px;
+
+    border:
+      1px solid
+      rgba(
+        241,
+        234,
+        223,
+        0.12
+      );
+
+    background:
+      rgba(
+        241,
+        234,
+        223,
+        0.04
+      );
+
+    color:
+      #f1eadf;
+
+    font-family:
+      Arial,
+      sans-serif;
+
+    font-size:
+      8px;
+
+    letter-spacing:
+      1px;
+
+    text-align:
+      left;
+
+    text-transform:
+      uppercase;
+
+    cursor:
+      pointer;
+
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+
+  }
+
+
+  .mobile-office-menu-button:active {
+
+    transform:
+      scale(
+        0.98
+      );
+
+    background:
+      rgba(
+        241,
+        234,
+        223,
+        0.12
+      );
+
+  }
+
+
+  .mobile-office-menu-button-number {
+
+    display:
+      block;
+
+    margin-bottom:
+      4px;
+
+    font-size:
+      6px;
+
+    letter-spacing:
+      1.5px;
+
+    opacity:
+      0.38;
+
+  }
+
+
+  .mobile-office-menu-button-label {
+
+    display:
+      block;
+
+    line-height:
+      1.25;
+
+  }
+
+}
+
+
+/* =========================================================
    <Start> REDUCED MOTION
    ========================================================= */
 

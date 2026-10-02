@@ -1,0 +1,1386 @@
+/* =============================================================
+   <Start> NAREHATE POSTAL SERVICE — TELLER
+   -------------------------------------------------------------
+   Room:
+   02 — Teller
+
+   Department:
+   Correspondence Department
+
+   Background:
+   /assets/environments/TELLER.webp
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> ROOT VARIABLES
+   ============================================================= */
+
+:root {
+
+  --paper:
+    #eee1ce;
+
+  --paper-soft:
+    rgba(
+      238,
+      225,
+      206,
+      0.72
+    );
+
+  --paper-faint:
+    rgba(
+      238,
+      225,
+      206,
+      0.46
+    );
+
+  --ink:
+    #211b16;
+
+  --line:
+    rgba(
+      238,
+      225,
+      206,
+      0.24
+    );
+
+  --glass:
+    rgba(
+      20,
+      16,
+      12,
+      0.48
+    );
+
+  --glass-strong:
+    rgba(
+      18,
+      14,
+      10,
+      0.72
+    );
+
+}
+
+/* =============================================================
+   <Finish> ROOT VARIABLES
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> GLOBAL RESET
+   ============================================================= */
+
+* {
+
+  box-sizing:
+    border-box;
+
+}
+
+
+html,
+body {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  margin:
+    0;
+
+}
+
+
+body {
+
+  overflow:
+    hidden;
+
+  background:
+    #120f0c;
+
+  color:
+    var(--paper);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+}
+
+
+button {
+
+  font:
+    inherit;
+
+}
+
+/* =============================================================
+   <Finish> GLOBAL RESET
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER ROOM
+   -------------------------------------------------------------
+   Root fullscreen environment.
+   ============================================================= */
+
+.teller-room {
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  height:
+    100dvh;
+
+  min-height:
+    100dvh;
+
+  overflow:
+    hidden;
+
+  isolation:
+    isolate;
+
+  background:
+    #120f0c;
+
+}
+
+/* =============================================================
+   <Finish> TELLER ROOM
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER BACKGROUND
+   -------------------------------------------------------------
+   Artwork utama Teller.
+   ============================================================= */
+
+.teller-background {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  object-position:
+    center center;
+
+  user-select:
+    none;
+
+  pointer-events:
+    none;
+
+}
+
+/* =============================================================
+   <Finish> TELLER BACKGROUND
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER ATMOSPHERE
+   -------------------------------------------------------------
+   Overlay tipis untuk menjaga keterbacaan UI.
+   ============================================================= */
+
+.teller-atmosphere {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  pointer-events:
+    none;
+
+  background:
+    linear-gradient(
+      180deg,
+
+      rgba(
+        10,
+        7,
+        5,
+        0.24
+      ) 0%,
+
+      rgba(
+        10,
+        7,
+        5,
+        0.05
+      ) 40%,
+
+      rgba(
+        10,
+        7,
+        5,
+        0.42
+      ) 100%
+    );
+
+}
+
+/* =============================================================
+   <Finish> TELLER ATMOSPHERE
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER HEADER
+   ============================================================= */
+
+.teller-header {
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  z-index:
+    20;
+
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
+
+  padding:
+    24px
+    28px;
+
+  pointer-events:
+    none;
+
+}
+
+/* =============================================================
+   <Finish> TELLER HEADER
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER IDENTITY
+   ============================================================= */
+
+.teller-identity {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    5px;
+
+}
+
+
+.teller-eyebrow {
+
+  font-size:
+    7px;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    0.32em;
+
+  text-transform:
+    uppercase;
+
+  color:
+    var(--paper-faint);
+
+}
+
+
+.teller-title {
+
+  margin:
+    0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      25px,
+      3.2vw,
+      44px
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    0.95;
+
+  letter-spacing:
+    0.015em;
+
+  text-shadow:
+    0 5px 24px
+    rgba(
+      0,
+      0,
+      0,
+      0.42
+    );
+
+}
+
+
+.teller-department {
+
+  margin-top:
+    3px;
+
+  font-size:
+    6px;
+
+  line-height:
+    1.3;
+
+  letter-spacing:
+    0.18em;
+
+  text-transform:
+    uppercase;
+
+  color:
+    var(--paper-faint);
+
+}
+
+/* =============================================================
+   <Finish> TELLER IDENTITY
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> ROOM MARK
+   ============================================================= */
+
+.room-mark {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  gap:
+    5px;
+
+  text-align:
+    right;
+
+}
+
+
+.room-number {
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    25px;
+
+  line-height:
+    1;
+
+  font-weight:
+    400;
+
+}
+
+
+.room-label {
+
+  font-size:
+    6px;
+
+  letter-spacing:
+    0.18em;
+
+  text-transform:
+    uppercase;
+
+  color:
+    var(--paper-faint);
+
+}
+
+/* =============================================================
+   <Finish> ROOM MARK
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER CONTENT
+   ============================================================= */
+
+.teller-content {
+
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  top:
+    50%;
+
+  z-index:
+    10;
+
+  width:
+    min(
+      92vw,
+      720px
+    );
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  text-align:
+    center;
+
+  animation:
+    teller-arrival
+    700ms
+    ease-out
+    both;
+
+}
+
+/* =============================================================
+   <Finish> TELLER CONTENT
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER ARRIVAL
+   ============================================================= */
+
+@keyframes teller-arrival {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      translate(
+        -50%,
+        calc(
+          -50% + 14px
+        )
+      );
+
+  }
+
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+
+  }
+
+}
+
+/* =============================================================
+   <Finish> TELLER ARRIVAL
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> COUNTER HEADING
+   ============================================================= */
+
+.counter-heading {
+
+  max-width:
+    560px;
+
+  margin:
+    0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      22px,
+      3.4vw,
+      42px
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    1.08;
+
+  letter-spacing:
+    0.01em;
+
+  text-shadow:
+    0 6px 30px
+    rgba(
+      0,
+      0,
+      0,
+      0.5
+    );
+
+}
+
+
+.counter-introduction {
+
+  width:
+    min(
+      100%,
+      430px
+    );
+
+  margin:
+    14px
+    0
+    0;
+
+  color:
+    var(--paper-soft);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.7;
+
+  text-shadow:
+    0 3px 18px
+    rgba(
+      0,
+      0,
+      0,
+      0.5
+    );
+
+}
+
+/* =============================================================
+   <Finish> COUNTER HEADING
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER SERVICES
+   ============================================================= */
+
+.teller-services {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap:
+    8px;
+
+  width:
+    min(
+      100%,
+      650px
+    );
+
+  margin-top:
+    28px;
+
+}
+
+/* =============================================================
+   <Finish> TELLER SERVICES
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER SERVICE BUTTON
+   ============================================================= */
+
+.teller-service {
+
+  min-height:
+    92px;
+
+  padding:
+    16px
+    14px;
+
+  border:
+    1px solid
+    var(--line);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(
+        28,
+        22,
+        17,
+        0.58
+      ),
+      rgba(
+        18,
+        14,
+        10,
+        0.68
+      )
+    );
+
+  color:
+    var(--paper);
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+
+  backdrop-filter:
+    blur(
+      3px
+    );
+
+  transition:
+    background
+    180ms
+    ease,
+
+    border-color
+    180ms
+    ease,
+
+    transform
+    180ms
+    ease;
+
+}
+
+
+.teller-service:hover {
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(
+        36,
+        28,
+        21,
+        0.72
+      ),
+      rgba(
+        18,
+        14,
+        10,
+        0.78
+      )
+    );
+
+  border-color:
+    rgba(
+      238,
+      225,
+      206,
+      0.42
+    );
+
+  transform:
+    translateY(
+      -2px
+    );
+
+}
+
+
+.teller-service:focus-visible {
+
+  outline:
+    1px solid
+    var(--paper);
+
+  outline-offset:
+    3px;
+
+}
+
+/* =============================================================
+   <Finish> TELLER SERVICE BUTTON
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> SERVICE NUMBER
+   ============================================================= */
+
+.service-number {
+
+  display:
+    block;
+
+  margin-bottom:
+    13px;
+
+  font-size:
+    6px;
+
+  letter-spacing:
+    0.18em;
+
+  color:
+    var(--paper-faint);
+
+}
+
+/* =============================================================
+   <Finish> SERVICE NUMBER
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> SERVICE NAME
+   ============================================================= */
+
+.service-name {
+
+  display:
+    block;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    16px;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.1;
+
+}
+
+/* =============================================================
+   <Finish> SERVICE NAME
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> SERVICE DESCRIPTION
+   ============================================================= */
+
+.service-description {
+
+  display:
+    block;
+
+  margin-top:
+    7px;
+
+  font-size:
+    8px;
+
+  line-height:
+    1.5;
+
+  color:
+    var(--paper-faint);
+
+}
+
+/* =============================================================
+   <Finish> SERVICE DESCRIPTION
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER NOTICE
+   ============================================================= */
+
+.teller-notice {
+
+  width:
+    min(
+      100%,
+      650px
+    );
+
+  margin-top:
+    12px;
+
+  padding:
+    9px
+    12px;
+
+  border-top:
+    1px solid
+    var(--line);
+
+  border-bottom:
+    1px solid
+    var(--line);
+
+  color:
+    var(--paper-faint);
+
+  font-size:
+    7px;
+
+  line-height:
+    1.5;
+
+  letter-spacing:
+    0.04em;
+
+}
+
+/* =============================================================
+   <Finish> TELLER NOTICE
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> TELLER FOOTER
+   ============================================================= */
+
+.teller-footer {
+
+  position:
+    absolute;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  bottom:
+    0;
+
+  z-index:
+    20;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  padding:
+    14px
+    24px;
+
+  pointer-events:
+    none;
+
+  background:
+    linear-gradient(
+      0deg,
+      rgba(
+        12,
+        9,
+        7,
+        0.68
+      ),
+      transparent
+    );
+
+}
+
+
+.teller-footer-copy {
+
+  font-size:
+    6px;
+
+  letter-spacing:
+    0.13em;
+
+  text-transform:
+    uppercase;
+
+  color:
+    var(--paper-faint);
+
+}
+
+/* =============================================================
+   <Finish> TELLER FOOTER
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> BACK BUTTON
+   ============================================================= */
+
+.back-button {
+
+  pointer-events:
+    auto;
+
+  border:
+    0;
+
+  padding:
+    7px
+    10px;
+
+  background:
+    transparent;
+
+  color:
+    var(--paper-soft);
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.16em;
+
+  text-transform:
+    uppercase;
+
+  cursor:
+    pointer;
+
+  transition:
+    color
+    160ms
+    ease,
+
+    opacity
+    160ms
+    ease;
+
+}
+
+
+.back-button:hover {
+
+  color:
+    var(--paper);
+
+}
+
+
+.back-button:focus-visible {
+
+  outline:
+    1px solid
+    var(--paper);
+
+  outline-offset:
+    3px;
+
+}
+
+/* =============================================================
+   <Finish> BACK BUTTON
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> MOBILE TELLER
+   ============================================================= */
+
+@media (
+  max-width: 700px
+) {
+
+
+  /* -----------------------------------------------------------
+     <Start> MOBILE BACKGROUND
+     ----------------------------------------------------------- */
+
+  .teller-background {
+
+    object-position:
+      center center;
+
+  }
+
+  /* -----------------------------------------------------------
+     <Finish> MOBILE BACKGROUND
+     ----------------------------------------------------------- */
+
+
+  /* -----------------------------------------------------------
+     <Start> MOBILE HEADER
+     ----------------------------------------------------------- */
+
+  .teller-header {
+
+    padding:
+      15px
+      16px;
+
+  }
+
+
+  .teller-eyebrow {
+
+    font-size:
+      6px;
+
+    letter-spacing:
+      0.25em;
+
+  }
+
+
+  .teller-title {
+
+    font-size:
+      24px;
+
+  }
+
+
+  .teller-department {
+
+    font-size:
+      5px;
+
+  }
+
+
+  .room-number {
+
+    font-size:
+      20px;
+
+  }
+
+
+  .room-label {
+
+    font-size:
+      5px;
+
+  }
+
+  /* -----------------------------------------------------------
+     <Finish> MOBILE HEADER
+     ----------------------------------------------------------- */
+
+
+  /* -----------------------------------------------------------
+     <Start> MOBILE CONTENT
+     ----------------------------------------------------------- */
+
+  .teller-content {
+
+    top:
+      53%;
+
+    width:
+      min(
+        calc(
+          100vw - 28px
+        ),
+        520px
+      );
+
+    max-height:
+      calc(
+        100dvh - 150px
+      );
+
+    overflow-y:
+      auto;
+
+    padding:
+      12px
+      0
+      18px;
+
+    scrollbar-width:
+      none;
+
+  }
+
+
+  .teller-content::-webkit-scrollbar {
+
+    display:
+      none;
+
+  }
+
+
+  .counter-heading {
+
+    font-size:
+      25px;
+
+  }
+
+
+  .counter-introduction {
+
+    margin-top:
+      11px;
+
+    font-size:
+      11px;
+
+    line-height:
+      1.55;
+
+  }
+
+  /* -----------------------------------------------------------
+     <Finish> MOBILE CONTENT
+     ----------------------------------------------------------- */
+
+
+  /* -----------------------------------------------------------
+     <Start> MOBILE SERVICES
+     ----------------------------------------------------------- */
+
+  .teller-services {
+
+    grid-template-columns:
+      1fr;
+
+    gap:
+      7px;
+
+    margin-top:
+      20px;
+
+  }
+
+
+  .teller-service {
+
+    min-height:
+      auto;
+
+    padding:
+      13px
+      14px;
+
+  }
+
+
+  .service-number {
+
+    margin-bottom:
+      7px;
+
+  }
+
+
+  .service-name {
+
+    font-size:
+      15px;
+
+  }
+
+
+  .service-description {
+
+    font-size:
+      7px;
+
+  }
+
+  /* -----------------------------------------------------------
+     <Finish> MOBILE SERVICES
+     ----------------------------------------------------------- */
+
+
+  /* -----------------------------------------------------------
+     <Start> MOBILE NOTICE
+     ----------------------------------------------------------- */
+
+  .teller-notice {
+
+    font-size:
+      6px;
+
+  }
+
+  /* -----------------------------------------------------------
+     <Finish> MOBILE NOTICE
+     ----------------------------------------------------------- */
+
+
+  /* -----------------------------------------------------------
+     <Start> MOBILE FOOTER
+     ----------------------------------------------------------- */
+
+  .teller-footer {
+
+    padding:
+      8px
+      12px;
+
+  }
+
+
+  .teller-footer-copy {
+
+    font-size:
+      5px;
+
+  }
+
+
+  .back-button {
+
+    font-size:
+      6px;
+
+  }
+
+  /* -----------------------------------------------------------
+     <Finish> MOBILE FOOTER
+     ----------------------------------------------------------- */
+
+}
+
+/* =============================================================
+   <Finish> MOBILE TELLER
+   ============================================================= */
+
+
+/* =============================================================
+   <Start> REDUCED MOTION
+   ============================================================= */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+
+  .teller-content {
+
+    animation:
+      none;
+
+  }
+
+
+  .teller-service {
+
+    transition:
+      none;
+
+  }
+
+}
+
+/* =============================================================
+   <Finish> REDUCED MOTION
+   ============================================================= */
+
+
+/* =============================================================
+   <Finish> NAREHATE POSTAL SERVICE — TELLER
+   ============================================================= */

@@ -1462,242 +1462,209 @@ body {
   </main>
 
 
-  <script>
+<!-- <Start> BLOCK 44 — CLEAN REGISTRATION PAGE LOGIC -->
 
-    /* ===================================================
-       <Start> REGISTRATION PAGE TEST LOGIC
-       ---------------------------------------------------
-       DEVELOPMENT ONLY
+<script>
 
-       Belum terhubung ke backend.
+/* =========================================================
+   NAREHATE REGISTRATION PAGE
+   ---------------------------------------------------------
+   Current visual registration fields:
 
-       Tujuan tahap ini:
-       - memastikan artwork
-       - memastikan posisi field
-       - memastikan query identifier
-       - memastikan validation
-       =================================================== */
+   - name
+   - username
+   - password
+   - email
+   - dob
+   - gender
+   - hobbies
+   - occupation
 
+   DEVELOPMENT:
+   Form validation + DOB display + back navigation.
 
-    const form =
-      document.getElementById(
-        'registration-form'
-      );
+   Backend registration belum dipasang pada block ini.
+   ========================================================= */
 
 
-    const status =
-      document.getElementById(
-        'registration-status'
-      );
+/* =========================================================
+   DOM ELEMENTS
+   ========================================================= */
 
+const registrationForm =
+  document.getElementById(
+    'registration-form'
+  );
 
-    const username =
-      document.getElementById(
-        'registration-username'
-      );
 
+const registrationStatus =
+  document.getElementById(
+    'registration-status'
+  );
 
-    const password =
-      document.getElementById(
-        'registration-password'
-      );
 
+const registrationName =
+  document.getElementById(
+    'registration-name'
+  );
 
-    const confirmPassword =
-      document.getElementById(
-        'registration-confirm-password'
-      );
 
+const registrationUsername =
+  document.getElementById(
+    'registration-username'
+  );
 
-    const submit =
-      document.getElementById(
-        'registration-submit'
-      );
 
+const registrationPassword =
+  document.getElementById(
+    'registration-password'
+  );
 
-    const back =
-      document.getElementById(
-        'registration-back'
-      );
 
+const registrationEmail =
+  document.getElementById(
+    'registration-email'
+  );
 
-    /* =================================================
-       PREFILL IDENTIFIER
-       -------------------------------------------------
-       Jika datang dari:
 
-       /registration.html?identifier=stefanus
-
-       username akan otomatis terisi.
-
-       Password TIDAK pernah diambil dari URL.
-       ================================================= */
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
-
-    const identifier =
-      params.get(
-        'identifier'
-      );
-
-
-    if (
-      identifier
-    ) {
-
-      username.value =
-        identifier
-          .trim()
-          .toLowerCase();
-
-    }
-
-
-    /* =================================================
-       SUBMIT TEST
-       ================================================= */
-
-    form.addEventListener(
-      'submit',
-      function(event) {
-
-        event.preventDefault();
-
-
-        status.classList.remove(
-          'is-error'
-        );
-
-
-        /* ---------------------------------------------
-           Password
-           --------------------------------------------- */
-
-        if (
-          password.value.length < 8
-        ) {
-
-          status.textContent =
-            'Password minimal 8 karakter.';
-
-          status.classList.add(
-            'is-error'
-          );
-
-          password.focus();
-
-          return;
-
-        }
-
-
-        
-
-
-        /* ---------------------------------------------
-           DEVELOPMENT STATUS
-           --------------------------------------------- */
-
-        status.textContent =
-          'Registration form ready — backend connection belum dipasang.';
-
-
-        console.log(
-          '[NAREHATE] Registration form TEST OK.',
-          {
-            name:
-              document
-                .getElementById(
-                  'registration-name'
-                )
-                .value,
-
-            username:
-              username.value,
-
-            phone:
-              document
-                .getElementById(
-                  'registration-phone'
-                )
-                .value,
-
-            email:
-              document
-                .getElementById(
-                  'registration-email'
-                )
-                .value,
-
-            age:
-              document
-                .getElementById(
-                  'registration-age'
-                )
-                .value,
-
-            gender:
-              document
-                .getElementById(
-                  'registration-gender'
-                )
-                .value,
-
-            hobbies:
-              document
-                .getElementById(
-                  'registration-hobbies'
-                )
-                .value,
-
-            occupation:
-              document
-                .getElementById(
-                  'registration-occupation'
-                )
-                .value
-          }
-        );
-
-      }
-    );
-
-
-    /* =================================================
-       BACK
-       ================================================= */
-
-    back.addEventListener(
-      'click',
-      function() {
-
-        window.location.href =
-          '/';
-
-      }
-    );
-
-
-    /* ===================================================
-       <Finish> REGISTRATION PAGE TEST LOGIC
-       =================================================== */
-
-
-/* <Start> BLOCK 43 — DOB DISPLAY & CALENDAR */
-
-/* =====================================================
-   ELEMENTS
-   ===================================================== */
-
-const dob =
+const registrationDob =
   document.getElementById(
     'registration-dob'
   );
 
+
+const registrationGender =
+  document.getElementById(
+    'registration-gender'
+  );
+
+
+const registrationHobbies =
+  document.getElementById(
+    'registration-hobbies'
+  );
+
+
+const registrationOccupation =
+  document.getElementById(
+    'registration-occupation'
+  );
+
+
+const registrationSubmit =
+  document.getElementById(
+    'registration-submit'
+  );
+
+
+const registrationBack =
+  document.getElementById(
+    'registration-back'
+  );
+
+
+/* =========================================================
+   ELEMENT VALIDATION
+   ========================================================= */
+
+if (
+  !registrationForm ||
+  !registrationStatus ||
+  !registrationName ||
+  !registrationUsername ||
+  !registrationPassword ||
+  !registrationEmail ||
+  !registrationDob ||
+  !registrationGender ||
+  !registrationHobbies ||
+  !registrationOccupation ||
+  !registrationSubmit ||
+  !registrationBack
+) {
+
+  console.error(
+    '[NAREHATE] Registration page is missing one or more required elements.'
+  );
+
+}
+
+
+/* =========================================================
+   PREFILL IDENTIFIER
+   ---------------------------------------------------------
+   Jika user datang dari Correspondence Gate:
+
+       /registration.html?identifier=stefanus
+
+   identifier akan masuk ke USERNAME.
+
+   Password TIDAK pernah dimasukkan melalui URL.
+   ========================================================= */
+
+const registrationParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+const registrationIdentifier =
+  registrationParams.get(
+    'identifier'
+  );
+
+
+if (
+  registrationIdentifier &&
+  registrationUsername
+) {
+
+  registrationUsername.value =
+    registrationIdentifier
+      .trim()
+      .toLowerCase();
+
+}
+
+
+/* =========================================================
+   REGISTRATION STATUS
+   ========================================================= */
+
+function showRegistrationStatus(
+  message,
+  isError
+) {
+
+  if (
+    !registrationStatus
+  ) {
+
+    return;
+
+  }
+
+
+  registrationStatus.textContent =
+    message;
+
+
+  registrationStatus.classList.toggle(
+    'is-error',
+    !!isError
+  );
+
+
+  registrationStatus.classList.toggle(
+    'is-success',
+    !isError
+  );
+
+}
+
+
+/* =========================================================
+   DOB DISPLAY SYSTEM
+   ========================================================= */
 
 const dobField =
   document.getElementById(
@@ -1717,15 +1684,15 @@ const dobValue =
   );
 
 
-/* =====================================================
+/* =========================================================
    FORMAT DATE
-   -----------------------------------------------------
+   ---------------------------------------------------------
    Browser value:
-   YYYY-MM-DD
+       YYYY-MM-DD
 
    Display:
-   DD Month YYYY
-   ===================================================== */
+       DD Month YYYY
+   ========================================================= */
 
 function formatDob(
   value
@@ -1756,10 +1723,12 @@ function formatDob(
   const year =
     parts[0];
 
+
   const month =
     Number(
       parts[1]
     );
+
 
   const day =
     Number(
@@ -1768,18 +1737,31 @@ function formatDob(
 
 
   const months = [
+
     'January',
+
     'February',
+
     'March',
+
     'April',
+
     'May',
+
     'June',
+
     'July',
+
     'August',
+
     'September',
+
     'October',
+
     'November',
+
     'December'
+
   ];
 
 
@@ -1799,17 +1781,29 @@ function formatDob(
     ' ' +
     year
   );
+
 }
 
 
-/* =====================================================
-   UPDATE DISPLAY
-   ===================================================== */
+/* =========================================================
+   UPDATE DOB DISPLAY
+   ========================================================= */
 
 function updateDobState() {
 
+  if (
+    !registrationDob ||
+    !dobField ||
+    !dobValue
+  ) {
+
+    return;
+
+  }
+
+
   const value =
-    dob.value;
+    registrationDob.value;
 
 
   if (
@@ -1851,69 +1845,251 @@ function updateDobState() {
     );
 
   }
+
 }
 
 
-/* =====================================================
+/* =========================================================
    OPEN CALENDAR
-   -----------------------------------------------------
-   Seluruh textbox menjadi calendar trigger.
-   ===================================================== */
+   ---------------------------------------------------------
+   Seluruh DOB textbox menjadi calendar trigger.
+   ========================================================= */
 
-dobField.addEventListener(
-  'click',
-  function() {
+if (
+  dobField &&
+  registrationDob
+) {
 
-    if (
-      typeof dob.showPicker ===
-      'function'
-    ) {
+  dobField.addEventListener(
+    'click',
+    function() {
 
-      try {
-
-        dob.showPicker();
-
-      } catch (
-        error
+      if (
+        typeof registrationDob.showPicker ===
+        'function'
       ) {
 
-        dob.focus();
+        try {
+
+          registrationDob.showPicker();
+
+        } catch (
+          error
+        ) {
+
+          registrationDob.focus();
+
+        }
+
+      } else {
+
+        registrationDob.focus();
 
       }
 
-    } else {
+    }
+  );
 
-      dob.focus();
+
+  registrationDob.addEventListener(
+    'change',
+    function() {
+
+      updateDobState();
 
     }
+  );
 
-  }
+
+  updateDobState();
+
+}
+
+
+/* =========================================================
+   FORM SUBMIT
+   ---------------------------------------------------------
+   DEVELOPMENT ONLY.
+
+   Belum mengirim data ke backend.
+   ========================================================= */
+
+if (
+  registrationForm
+) {
+
+  registrationForm.addEventListener(
+    'submit',
+    function(event) {
+
+      event.preventDefault();
+
+
+      /* -----------------------------------------------
+         HTML VALIDATION
+         ----------------------------------------------- */
+
+      if (
+        !registrationForm.checkValidity()
+      ) {
+
+        registrationForm.reportValidity();
+
+        showRegistrationStatus(
+          'Please complete the required fields.',
+          true
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------
+         USERNAME NORMALIZATION
+         ----------------------------------------------- */
+
+      const usernameValue =
+        registrationUsername.value
+          .trim()
+          .toLowerCase();
+
+
+      registrationUsername.value =
+        usernameValue;
+
+
+      /* -----------------------------------------------
+         USERNAME VALIDATION
+         ----------------------------------------------- */
+
+      const usernamePattern =
+        /^[a-z0-9_.]{3,24}$/;
+
+
+      if (
+        !usernamePattern.test(
+          usernameValue
+        )
+      ) {
+
+        showRegistrationStatus(
+          'Username must be 3–24 characters using lowercase letters, numbers, dots or underscores.',
+          true
+        );
+
+        registrationUsername.focus();
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------
+         PASSWORD VALIDATION
+         ----------------------------------------------- */
+
+      if (
+        registrationPassword.value.length <
+        8
+      ) {
+
+        showRegistrationStatus(
+          'Password must contain at least 8 characters.',
+          true
+        );
+
+        registrationPassword.focus();
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------
+         DEVELOPMENT SUCCESS
+         ----------------------------------------------- */
+
+      showRegistrationStatus(
+        'Registration form ready.',
+        false
+      );
+
+
+      console.log(
+        '[NAREHATE] REGISTRATION FORM DATA:',
+        {
+
+          name:
+            registrationName.value
+              .trim(),
+
+          username:
+            usernameValue,
+
+          password:
+            '[HIDDEN]',
+
+          email:
+            registrationEmail.value
+              .trim(),
+
+          dob:
+            registrationDob.value,
+
+          gender:
+            registrationGender.value,
+
+          hobbies:
+            registrationHobbies.value
+              .trim(),
+
+          occupation:
+            registrationOccupation.value
+              .trim()
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+if (
+  registrationBack
+) {
+
+  registrationBack.addEventListener(
+    'click',
+    function() {
+
+      window.location.href =
+        '/';
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   DEVELOPMENT READY
+   ========================================================= */
+
+console.log(
+  '[NAREHATE] Registration page logic ONLINE.'
 );
 
 
-/* =====================================================
-   DATE CHANGED
-   ===================================================== */
+/* <Finish> BLOCK 44 — CLEAN REGISTRATION PAGE LOGIC */
 
-dob.addEventListener(
-  'change',
-  function() {
-
-    updateDobState();
-
-  }
-);
-
-
-/* =====================================================
-   INITIAL STATE
-   ===================================================== */
-
-updateDobState();
-
-
-/* <Finish> BLOCK 43 */
-  </script>
+</script>
 
 
 </body>

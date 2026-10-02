@@ -1688,6 +1688,9 @@ async function prepareApplication() {
 
   bindEnvironmentHotspots();
 
+  
+initializeMobileOfficeNavigation();
+
 
   initializeApplicationHistory();
 
@@ -1701,6 +1704,183 @@ async function prepareApplication() {
   );
 
 }
+
+
+
+
+
+
+/* =========================================================
+   <Start> MOBILE OFFICE NAVIGATION
+   ---------------------------------------------------------
+   Desktop:
+     Hotspot based
+
+   Mobile:
+     Button based
+
+   Menu dibuat otomatis dari hotspot Central Office.
+   ========================================================= */
+
+function initializeMobileOfficeNavigation() {
+
+  const menu =
+    getElement(
+      'mobile-office-menu'
+    );
+
+
+  if (!menu) {
+
+    console.warn(
+      '[NAREHATE] Mobile office menu not found.'
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Ambil seluruh hotspot Central Office.
+   */
+
+  const hotspots =
+    document.querySelectorAll(
+      '#environment-hotspots .environment-hotspot'
+    );
+
+
+  if (!hotspots.length) {
+
+    console.warn(
+      '[NAREHATE] No environment hotspots found for mobile navigation.'
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Bersihkan menu sebelum generate.
+   */
+
+  menu.innerHTML =
+    '';
+
+
+  /*
+   * Buat button berdasarkan hotspot.
+   */
+
+  hotspots.forEach(
+    function(hotspot, index) {
+
+      const roomKey =
+        hotspot.dataset.room;
+
+
+      if (!roomKey) {
+
+        return;
+
+      }
+
+
+      const labelElement =
+        hotspot.querySelector(
+          '.hotspot-label'
+        );
+
+
+      const label =
+        labelElement
+          ? labelElement.textContent.trim()
+          : roomKey;
+
+
+      const button =
+        document.createElement(
+          'button'
+        );
+
+
+      button.type =
+        'button';
+
+
+      button.className =
+        'mobile-office-menu-button';
+
+
+      button.dataset.room =
+        roomKey;
+
+
+      button.innerHTML =
+
+        '<span class="mobile-office-menu-button-number">' +
+          String(
+            index + 1
+          ).padStart(
+            2,
+            '0'
+          ) +
+        '</span>' +
+
+        '<span class="mobile-office-menu-button-label">' +
+          label +
+        '</span>';
+
+
+      button.addEventListener(
+        'click',
+        function() {
+
+          const selectedRoom =
+            button.dataset.room;
+
+
+          if (!selectedRoom) {
+
+            return;
+
+          }
+
+
+          console.log(
+            '[NAREHATE] Mobile office menu selected:',
+            selectedRoom
+          );
+
+
+          openRoom(
+            selectedRoom
+          );
+
+        }
+      );
+
+
+      menu.appendChild(
+        button
+      );
+
+    }
+  );
+
+
+  console.log(
+    '[NAREHATE] Mobile office navigation ONLINE.'
+  );
+
+}
+
+
+/* =========================================================
+   <Finish> MOBILE OFFICE NAVIGATION
+   ========================================================= */
 
 
 /* =========================================================

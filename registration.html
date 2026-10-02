@@ -2876,24 +2876,29 @@ if (
         ) {
 
           sessionStorage.setItem(
-            'NAREHATE_REGISTRATION_HANDOFF',
-            JSON.stringify({
-              authenticated:
-                true,
+  'NAREHATE_REGISTRATION_HANDOFF',
+  JSON.stringify({
 
-              registered:
-                true,
+    authenticated:
+      true,
 
-              user:
-                result.user,
+    registered:
+      true,
 
-              timestamp:
-                Date.now()
-            })
-          );
+    user:
+      result.user,
 
-        }
+    sessionToken:
+      result.sessionToken,
 
+    expiresAt:
+      result.expiresAt,
+
+    timestamp:
+      Date.now()
+
+  })
+);
 
         console.log(
           '[NAREHATE] NAREHATE ACCOUNT CREATED:',

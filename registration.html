@@ -471,6 +471,156 @@ body {
 }
 
 
+
+
+  /* <Start> BLOCK 37 — DOB CUSTOM PLACEHOLDER */
+
+/* =====================================================
+   DATE OF BIRTH
+   -----------------------------------------------------
+   Custom Narehate placeholder.
+   Native browser calendar icon disembunyikan.
+   ===================================================== */
+
+#registration-dob-field {
+
+  position: absolute;
+}
+
+
+/* Custom placeholder */
+
+#registration-dob-placeholder {
+
+  position: absolute;
+
+  top: 50%;
+  left: 10px;
+
+  transform:
+    translateY(-50%);
+
+  z-index: 2;
+
+  color:
+    #eee1ce;
+
+  opacity:
+    0.78;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      12px,
+      1.05vw,
+      17px
+    );
+
+  line-height:
+    1;
+
+  white-space:
+    nowrap;
+
+  pointer-events:
+    none;
+
+  transition:
+    opacity
+    160ms
+    ease;
+}
+
+
+/* Date input */
+
+#registration-dob {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  padding:
+    0
+    10px;
+
+  border: 0;
+
+  outline: none;
+
+  background:
+    transparent;
+
+  color:
+    var(--ink);
+
+  cursor:
+    pointer;
+
+  appearance:
+    none;
+
+  -webkit-appearance:
+    none;
+}
+
+
+/* Hide native calendar icon */
+
+#registration-dob::-webkit-calendar-picker-indicator {
+
+  opacity:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  cursor:
+    pointer;
+}
+
+
+/* Empty DOB */
+
+#registration-dob.is-empty {
+
+  color:
+    transparent;
+}
+
+
+/* Selected DOB */
+
+#registration-dob:not(.is-empty) {
+
+  color:
+    var(--ink);
+}
+
+
+/* Placeholder disappears once a date exists */
+
+#registration-dob:not(.is-empty)
+~ #registration-dob-placeholder {
+
+  opacity:
+    0;
+}
+
+
+/* <Finish> BLOCK 37 */
+
+
 /* <Start> BLOCK 32 — FINAL FIELD WIDTH CALIBRATION */
 
 /* =====================================================
@@ -981,168 +1131,187 @@ body {
   </div>
 
 
-  <!-- USERNAME -->
+ <!-- <Start> BLOCK 36 — NAREHATE REGISTRATION FIELDS -->
 
-  <div
-    id="registration-username-field"
-    class="registration-field"
+<!-- USERNAME -->
+
+<div
+  id="registration-username-field"
+  class="registration-field"
+>
+  <label for="registration-username">
+    Username
+  </label>
+
+  <input
+    type="text"
+    id="registration-username"
+    name="username"
+    autocomplete="off"
+    minlength="3"
+    maxlength="24"
+    pattern="[a-z0-9_.]{3,24}"
+    placeholder="A name for the registry..."
+    required
   >
-    <label for="registration-username">
-      Username
-    </label>
-
-    <input
-      type="text"
-      id="registration-username"
-      name="username"
-      autocomplete="off"
-      minlength="3"
-      maxlength="24"
-      pattern="[a-z0-9_.]{3,24}"
-      placeholder="What name should we put in the registry?..."
-      required
-    >
-  </div>
+</div>
 
 
-  <!-- PASSWORD -->
+<!-- PASSWORD -->
 
-  <div
-    id="registration-password-field"
-    class="registration-field"
+<div
+  id="registration-password-field"
+  class="registration-field"
+>
+  <label for="registration-password">
+    Password
+  </label>
+
+  <input
+    type="password"
+    id="registration-password"
+    name="password"
+    autocomplete="off"
+    minlength="8"
+    placeholder="A secret between you and the post..."
+    required
   >
-    <label for="registration-password">
-      Password
-    </label>
-
-    <input
-      type="password"
-      id="registration-password"
-      name="password"
-      autocomplete="off"
-      minlength="8"
-      placeholder="Something only you and the post should know..."
-      required
-    >
-  </div>
+</div>
 
 
-  <!-- EMAIL -->
+<!-- EMAIL -->
 
-  <div
-    id="registration-email-field"
-    class="registration-field"
+<div
+  id="registration-email-field"
+  class="registration-field"
+>
+  <label for="registration-email">
+    Email
+  </label>
+
+  <input
+    type="email"
+    id="registration-email"
+    name="email"
+    autocomplete="email"
+    maxlength="150"
+    placeholder="Where should the post reach you?"
+    required
   >
-    <label for="registration-email">
-      Email
-    </label>
-
-    <input
-      type="email"
-      id="registration-email"
-      name="email"
-      autocomplete="email"
-      maxlength="150"
-      placeholder="Where should we send your notices?"
-      required
-    >
-  </div>
+</div>
 
 
-  <!-- DATE OF BIRTH -->
+<!-- DATE OF BIRTH -->
 
-  <div
-    id="registration-dob-field"
-    class="registration-field"
+<div
+  id="registration-dob-field"
+  class="registration-field"
+>
+
+  <label for="registration-dob">
+    Tanggal Lahir
+  </label>
+
+  <span
+    id="registration-dob-placeholder"
+    class="dob-placeholder"
   >
-    <label for="registration-dob">
-      Tanggal Lahir
-    </label>
+    When did your story begin?...
+  </span>
 
-    <input
-      type="date"
-      id="registration-dob"
-      name="dob"
-      placeholder="When did your story begin?..."
-    >
-  </div>
-
-
-  <!-- GENDER -->
-
-  <div
-    id="registration-gender-field"
-    class="registration-field"
+  <input
+    type="date"
+    id="registration-dob"
+    name="dob"
   >
-    <label for="registration-gender">
-      Jenis Kelamin
-    </label>
 
-    <select
-      id="registration-gender"
-      name="gender"
-    >
-      <option value=""></option>
-
-      <option value="MALE">
-        Laki-laki
-      </option>
-
-      <option value="FEMALE">
-        Perempuan
-      </option>
-
-      <option value="OTHER">
-        Lainnya
-      </option>
-
-      <option value="PREFER_NOT_TO_SAY">
-        Tidak ingin menyebutkan
-      </option>
-    </select>
-  </div>
+</div>
 
 
-  <!-- HOBBIES -->
+<!-- GENDER -->
 
-  <div
-    id="registration-hobbies-field"
-    class="registration-field"
+<div
+  id="registration-gender-field"
+  class="registration-field"
+>
+  <label for="registration-gender">
+    Jenis Kelamin
+  </label>
+
+  <select
+    id="registration-gender"
+    name="gender"
   >
-    <label for="registration-hobbies">
-      Hobi
-    </label>
 
-    <input
-      type="text"
-      id="registration-hobbies"
-      name="hobbies"
-      maxlength="300"
-      placeholder="What keeps you company between letters?..."
+    <option
+      value=""
+      selected
+      disabled
     >
-  </div>
+      How shall we address you?
+    </option>
+
+    <option value="MALE">
+      Laki-laki
+    </option>
+
+    <option value="FEMALE">
+      Perempuan
+    </option>
+
+    <option value="OTHER">
+      Lainnya
+    </option>
+
+    <option value="PREFER_NOT_TO_SAY">
+      Tidak ingin menyebutkan
+    </option>
+
+  </select>
+</div>
 
 
-  <!-- OCCUPATION -->
+<!-- HOBBIES -->
 
-  <div
-    id="registration-occupation-field"
-    class="registration-field"
+<div
+  id="registration-hobbies-field"
+  class="registration-field"
+>
+  <label for="registration-hobbies">
+    Hobi
+  </label>
+
+  <input
+    type="text"
+    id="registration-hobbies"
+    name="hobbies"
+    maxlength="300"
+    placeholder="What keeps you company?"
   >
-    <label for="registration-occupation">
-      Kesibukan
-    </label>
-
-    <input
-      type="text"
-      id="registration-occupation"
-      name="occupation"
-      maxlength="150"
-      placeholder="What keeps you away from the post office?..."
-    >
-  </div>
+</div>
 
 
+<!-- OCCUPATION -->
+
+<div
+  id="registration-occupation-field"
+  class="registration-field"
+>
+  <label for="registration-occupation">
+    Kesibukan
+  </label>
+
+  <input
+    type="text"
+    id="registration-occupation"
+    name="occupation"
+    maxlength="150"
+    placeholder="What keeps you away?"
+  >
+</div>
+
+
+<!-- <Finish> BLOCK 36 -->
   <!-- ACCEPT -->
 
   <button
@@ -1394,6 +1563,103 @@ body {
     /* ===================================================
        <Finish> REGISTRATION PAGE TEST LOGIC
        =================================================== */
+
+
+    /* <Start> BLOCK 38 — DOB CALENDAR BEHAVIOR */
+
+const dob =
+  document.getElementById(
+    'registration-dob'
+  );
+
+const dobField =
+  document.getElementById(
+    'registration-dob-field'
+  );
+
+
+function updateDobState() {
+
+  if (
+    dob.value
+  ) {
+
+    dob.classList.remove(
+      'is-empty'
+    );
+
+  } else {
+
+    dob.classList.add(
+      'is-empty'
+    );
+  }
+}
+
+
+/*
+   Klik di mana pun pada textbox DOB
+   langsung membuka calendar.
+*/
+
+dobField.addEventListener(
+  'click',
+  function(event) {
+
+    /*
+       Jangan trigger dua kali kalau
+       user memang sedang klik native input.
+    */
+
+    if (
+      typeof dob.showPicker ===
+      'function'
+    ) {
+
+      try {
+
+        dob.showPicker();
+
+      } catch (
+        error
+      ) {
+
+        /*
+           Browser yang tidak mendukung
+           showPicker tetap akan menggunakan
+           native date behavior.
+        */
+
+      }
+
+    } else {
+
+      dob.focus();
+
+    }
+
+  }
+);
+
+
+/*
+   Update tampilan setelah tanggal dipilih.
+*/
+
+dob.addEventListener(
+  'change',
+  updateDobState
+);
+
+
+/*
+   Initial state.
+*/
+
+updateDobState();
+
+
+/* <Finish> BLOCK 38 */
 
   </script>
 

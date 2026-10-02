@@ -1194,6 +1194,77 @@ body {
 <body>
 
 
+<!-- <Start> BLOCK 55 — REGISTRATION PAGE FADE IN -->
+
+<div
+  id="narehate-entry-transition"
+  style="
+    position: fixed;
+    inset: 0;
+    background: #000000;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 999999;
+    transition:
+      opacity 1200ms
+      cubic-bezier(0.65, 0, 0.35, 1);
+  "
+></div>
+
+<script>
+
+  window.addEventListener(
+    'load',
+    function() {
+
+      const transition =
+        document.getElementById(
+          'narehate-entry-transition'
+        );
+
+
+      if (
+        !transition
+      ) {
+
+        return;
+
+      }
+
+
+      requestAnimationFrame(
+        function() {
+
+          requestAnimationFrame(
+            function() {
+
+              transition.style.opacity =
+                '0';
+
+            }
+          );
+
+        }
+      );
+
+
+      setTimeout(
+        function() {
+
+          transition.remove();
+
+        },
+        1400
+      );
+
+    }
+  );
+
+</script>
+
+<!-- <Finish> BLOCK 55 — REGISTRATION PAGE FADE IN -->
+
+
   <main
     class="registration-page"
   >

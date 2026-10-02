@@ -473,22 +473,20 @@ body {
 
 
 
-  /* <Start> BLOCK 37 — DOB CUSTOM PLACEHOLDER */
+/* <Start> BLOCK 39 — FIX DOB CUSTOM PLACEHOLDER */
 
 /* =====================================================
    DATE OF BIRTH
-   -----------------------------------------------------
-   Custom Narehate placeholder.
-   Native browser calendar icon disembunyikan.
    ===================================================== */
 
 #registration-dob-field {
-
   position: absolute;
 }
 
 
-/* Custom placeholder */
+/* -----------------------------------------------------
+   CUSTOM PLACEHOLDER
+   ----------------------------------------------------- */
 
 #registration-dob-placeholder {
 
@@ -536,7 +534,9 @@ body {
 }
 
 
-/* Date input */
+/* -----------------------------------------------------
+   DATE INPUT
+   ----------------------------------------------------- */
 
 #registration-dob {
 
@@ -572,7 +572,9 @@ body {
 }
 
 
-/* Hide native calendar icon */
+/* -----------------------------------------------------
+   NATIVE CALENDAR ICON
+   ----------------------------------------------------- */
 
 #registration-dob::-webkit-calendar-picker-indicator {
 
@@ -590,35 +592,51 @@ body {
 }
 
 
-/* Empty DOB */
+/* -----------------------------------------------------
+   EMPTY STATE
+   ----------------------------------------------------- */
 
-#registration-dob.is-empty {
+#registration-dob-field.is-empty
+#registration-dob {
 
   color:
     transparent;
 }
 
 
-/* Selected DOB */
+/* -----------------------------------------------------
+   PLACEHOLDER VISIBLE
+   ----------------------------------------------------- */
 
-#registration-dob:not(.is-empty) {
+#registration-dob-field.is-empty
+#registration-dob-placeholder {
+
+  opacity:
+    0.50;
+}
+
+
+/* -----------------------------------------------------
+   DATE SELECTED
+   ----------------------------------------------------- */
+
+#registration-dob-field.has-value
+#registration-dob {
 
   color:
     var(--ink);
 }
 
 
-/* Placeholder disappears once a date exists */
-
-#registration-dob:not(.is-empty)
-~ #registration-dob-placeholder {
+#registration-dob-field.has-value
+#registration-dob-placeholder {
 
   opacity:
     0;
 }
 
 
-/* <Finish> BLOCK 37 */
+/* <Finish> BLOCK 39 */
 
 
 /* <Start> BLOCK 32 — FINAL FIELD WIDTH CALIBRATION */

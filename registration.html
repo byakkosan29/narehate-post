@@ -137,14 +137,19 @@ body {
 }
 
 
-/* =====================================================
-   BACKGROUND ARTWORK
-   -----------------------------------------------------
-   Artwork ratio: 16 : 9
+/* <Start> LOCKED REGISTRATION CANVAS */
 
-   Kita sengaja memakai tinggi viewport sebagai acuan.
-   Dengan begitu artwork dan HTML overlay selalu
-   menggunakan canvas yang sama.
+/* =====================================================
+   REGISTRATION CANVAS
+   -----------------------------------------------------
+   Background + form overlay selalu menggunakan
+   canvas 16:9 yang sama.
+
+   Desktop:
+   mengikuti lebar viewport
+
+   Mobile:
+   tetap mempertahankan rasio artwork
    ===================================================== */
 
 .registration-background {
@@ -167,11 +172,14 @@ body {
       177.7777778vh
     );
 
+  aspect-ratio:
+    16 / 9;
+
   height:
-    min(
-      100vh,
-      56.25vw
-    );
+    auto;
+
+  z-index:
+    0;
 
   background-image:
     url(
@@ -182,30 +190,51 @@ body {
     no-repeat;
 
   background-position:
-    center
     center;
 
   background-size:
-    100%
-    100%;
-
-  z-index:
-    0;
+    100% 100%;
 
   pointer-events:
     none;
+
 }
 
 
 /* =====================================================
    FORM LAYER
-   -----------------------------------------------------
-   IMPORTANT:
-   Form canvas harus memiliki ukuran yang sama persis
-   dengan artwork.
    ===================================================== */
 
 .registration-layer {
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  z-index:
+    10;
+
+  pointer-events:
+    none;
+
+}
+
+
+/* =====================================================
+   FORM CANVAS
+   -----------------------------------------------------
+   HARUS IDENTIK dengan background canvas.
+   ===================================================== */
+
+.registration-form {
 
   position:
     fixed;
@@ -225,37 +254,11 @@ body {
       177.7777778vh
     );
 
-  height:
-    min(
-      100vh,
-      56.25vw
-    );
-
-  z-index:
-    10;
-
-  pointer-events:
-    none;
-}
-
-
-/* =====================================================
-   FORM
-   ===================================================== */
-
-.registration-form {
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  width:
-    100%;
+  aspect-ratio:
+    16 / 9;
 
   height:
-    100%;
+    auto;
 
   margin:
     0;
@@ -263,13 +266,17 @@ body {
   padding:
     0;
 
+  z-index:
+    20;
+
   pointer-events:
     none;
+
 }
 
 
 /* =====================================================
-   FIELD CONTAINER
+   FIELD
    ===================================================== */
 
 .registration-field {
@@ -279,8 +286,11 @@ body {
 
   pointer-events:
     auto;
+
 }
 
+
+/* <Finish> LOCKED REGISTRATION CANVAS */
 
 /* =====================================================
    ACCESSIBILITY LABEL
@@ -1206,25 +1216,23 @@ body {
 
   <!-- NAME -->
 
-  <div
-    id="registration-name-field"
-    class="registration-field"
-  >
-    <label for="registration-name">
-      Nama
-    </label>
-
-    <input
-  type="text"
-  id="registration-username"
-  name="username"
-  autocomplete="off"
-  minlength="3"
-  maxlength="24"
-  pattern="[a-z0-9_.]{3,24}"
-  placeholder="A name for the registry..."
-  required
+ <div
+  id="registration-name-field"
+  class="registration-field"
 >
+  <label for="registration-name">
+    Nama
+  </label>
+
+  <input
+    type="text"
+    id="registration-name"
+    name="name"
+    autocomplete="name"
+    maxlength="100"
+    placeholder="A Name For The Registry"
+    required
+  >
   </div>
 
 

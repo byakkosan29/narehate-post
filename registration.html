@@ -473,32 +473,37 @@ body {
 
 
 
-/* <Start> BLOCK 39 — FIX DOB CUSTOM PLACEHOLDER */
+/* <Start> BLOCK 42 — DOB DISPLAY SYSTEM */
 
-/* =====================================================
-   DATE OF BIRTH
-   ===================================================== */
+/* ==================================================== DOB FIELD ===================================================== */
 
 #registration-dob-field {
-  position: absolute;
+
+  position:
+    absolute;
 }
 
 
-/* -----------------------------------------------------
+/* =====================================================
    CUSTOM PLACEHOLDER
-   ----------------------------------------------------- */
+   ===================================================== */
 
 #registration-dob-placeholder {
 
-  position: absolute;
+  position:
+    absolute;
 
-  top: 50%;
-  left: 10px;
+  top:
+    50%;
+
+  left:
+    10px;
 
   transform:
     translateY(-50%);
 
-  z-index: 2;
+  z-index:
+    3;
 
   color:
     #eee1ce;
@@ -534,32 +539,134 @@ body {
 }
 
 
-/* -----------------------------------------------------
-   DATE INPUT
-   ----------------------------------------------------- */
+/* =====================================================
+   CUSTOM SELECTED DATE
+   ===================================================== */
+
+#registration-dob-value {
+
+  position:
+    absolute;
+
+  top:
+    50%;
+
+  left:
+    10px;
+
+  transform:
+    translateY(-50%);
+
+  z-index:
+    3;
+
+  color:
+    var(--ink);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      12px,
+      1.05vw,
+      17px
+    );
+
+  line-height:
+    1;
+
+  white-space:
+    nowrap;
+
+  pointer-events:
+    none;
+
+  opacity:
+    0;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+   ===================================================== */
+
+#registration-dob-field.is-empty
+#registration-dob-placeholder {
+
+  opacity:
+    0.78;
+}
+
+
+#registration-dob-field.is-empty
+#registration-dob-value {
+
+  opacity:
+    0;
+}
+
+
+/* =====================================================
+   HAS VALUE
+   ===================================================== */
+
+#registration-dob-field.has-value
+#registration-dob-placeholder {
+
+  opacity:
+    0;
+}
+
+
+#registration-dob-field.has-value
+#registration-dob-value {
+
+  opacity:
+    1;
+}
+
+
+/* =====================================================
+   NATIVE DATE INPUT
+   -----------------------------------------------------
+   Input tetap aktif sebagai calendar trigger,
+   tetapi visual tanggal native disembunyikan.
+   ===================================================== */
 
 #registration-dob {
 
-  position: absolute;
+  position:
+    absolute;
 
-  inset: 0;
+  inset:
+    0;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
+
+  height:
+    100%;
 
   padding:
-    0
-    10px;
+    0;
 
-  border: 0;
+  margin:
+    0;
 
-  outline: none;
+  border:
+    0;
+
+  outline:
+    none;
 
   background:
     transparent;
 
   color:
-    var(--ink);
+    transparent;
 
   cursor:
     pointer;
@@ -569,12 +676,18 @@ body {
 
   -webkit-appearance:
     none;
+
+  opacity:
+    0;
+
+  z-index:
+    5;
 }
 
 
-/* -----------------------------------------------------
-   NATIVE CALENDAR ICON
-   ----------------------------------------------------- */
+/* =====================================================
+   CHROME CALENDAR INDICATOR
+   ===================================================== */
 
 #registration-dob::-webkit-calendar-picker-indicator {
 
@@ -592,52 +705,7 @@ body {
 }
 
 
-/* -----------------------------------------------------
-   EMPTY STATE
-   ----------------------------------------------------- */
-
-#registration-dob-field.is-empty
-#registration-dob {
-
-  color:
-    transparent;
-}
-
-
-/* -----------------------------------------------------
-   PLACEHOLDER VISIBLE
-   ----------------------------------------------------- */
-
-#registration-dob-field.is-empty
-#registration-dob-placeholder {
-
-  opacity:
-    0.50;
-}
-
-
-/* -----------------------------------------------------
-   DATE SELECTED
-   ----------------------------------------------------- */
-
-#registration-dob-field.has-value
-#registration-dob {
-
-  color:
-    var(--ink);
-}
-
-
-#registration-dob-field.has-value
-#registration-dob-placeholder {
-
-  opacity:
-    0;
-}
-
-
-/* <Finish> BLOCK 39 */
-
+/* <Finish> BLOCK 42 */
 
 /* <Start> BLOCK 32 — FINAL FIELD WIDTH CALIBRATION */
 
@@ -1117,7 +1185,7 @@ body {
     ></div>
 
 
-    <!-- <Start> BLOCK 23 — REGISTRATION FORM -->
+    <!---------------------------------------------------------- <Start> BLOCK 23 — REGISTRATION FORM ----------------------------------------------------------->
 
 <form
   id="registration-form"
@@ -1169,7 +1237,7 @@ body {
     minlength="3"
     maxlength="24"
     pattern="[a-z0-9_.]{3,24}"
-    placeholder="A name for the registry..."
+    placeholder="A name for us to call you..."
     required
   >
 </div>
@@ -1219,16 +1287,19 @@ body {
 </div>
 
 
-<!-- DATE OF BIRTH -->
+<!-- <Start> — DOB FIELD -->
 
 <div
   id="registration-dob-field"
-  class="registration-field"
+  class="registration-field is-empty"
 >
 
   <label for="registration-dob">
     Tanggal Lahir
   </label>
+
+
+  <!-- Custom placeholder -->
 
   <span
     id="registration-dob-placeholder"
@@ -1237,6 +1308,17 @@ body {
     When did your story begin?...
   </span>
 
+
+  <!-- Custom selected date -->
+
+  <span
+    id="registration-dob-value"
+    class="dob-value"
+  ></span>
+
+
+  <!-- Native date picker -->
+
   <input
     type="date"
     id="registration-dob"
@@ -1244,6 +1326,8 @@ body {
   >
 
 </div>
+
+
 
 
 <!-- GENDER -->
@@ -1583,7 +1667,11 @@ body {
        =================================================== */
 
 
-/* <Start> BLOCK 40 — FIX DOB CALENDAR BEHAVIOR */
+/* <Start> BLOCK 43 — DOB DISPLAY & CALENDAR */
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
 
 const dob =
   document.getElementById(
@@ -1597,19 +1685,131 @@ const dobField =
   );
 
 
-/* -----------------------------------------------------
-   UPDATE DOB VISUAL STATE
-   ----------------------------------------------------- */
+const dobPlaceholder =
+  document.getElementById(
+    'registration-dob-placeholder'
+  );
+
+
+const dobValue =
+  document.getElementById(
+    'registration-dob-value'
+  );
+
+
+/* =====================================================
+   FORMAT DATE
+   -----------------------------------------------------
+   Browser value:
+   YYYY-MM-DD
+
+   Display:
+   DD Month YYYY
+   ===================================================== */
+
+function formatDob(
+  value
+) {
+
+  if (
+    !value
+  ) {
+
+    return '';
+
+  }
+
+
+  const parts =
+    value.split('-');
+
+
+  if (
+    parts.length !== 3
+  ) {
+
+    return '';
+
+  }
+
+
+  const year =
+    parts[0];
+
+  const month =
+    Number(
+      parts[1]
+    );
+
+  const day =
+    Number(
+      parts[2]
+    );
+
+
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+
+  if (
+    !months[month - 1]
+  ) {
+
+    return '';
+
+  }
+
+
+  return (
+    day +
+    ' ' +
+    months[month - 1] +
+    ' ' +
+    year
+  );
+}
+
+
+/* =====================================================
+   UPDATE DISPLAY
+   ===================================================== */
 
 function updateDobState() {
 
+  const value =
+    dob.value;
+
+
   if (
-    dob.value
+    value
   ) {
+
+    const formatted =
+      formatDob(
+        value
+      );
+
+
+    dobValue.textContent =
+      formatted;
+
 
     dobField.classList.remove(
       'is-empty'
     );
+
 
     dobField.classList.add(
       'has-value'
@@ -1617,9 +1817,14 @@ function updateDobState() {
 
   } else {
 
+    dobValue.textContent =
+      '';
+
+
     dobField.classList.remove(
       'has-value'
     );
+
 
     dobField.classList.add(
       'is-empty'
@@ -1629,9 +1834,11 @@ function updateDobState() {
 }
 
 
-/* -----------------------------------------------------
+/* =====================================================
    OPEN CALENDAR
-   ----------------------------------------------------- */
+   -----------------------------------------------------
+   Seluruh textbox menjadi calendar trigger.
+   ===================================================== */
 
 dobField.addEventListener(
   'click',
@@ -1664,9 +1871,9 @@ dobField.addEventListener(
 );
 
 
-/* -----------------------------------------------------
+/* =====================================================
    DATE CHANGED
-   ----------------------------------------------------- */
+   ===================================================== */
 
 dob.addEventListener(
   'change',
@@ -1678,15 +1885,14 @@ dob.addEventListener(
 );
 
 
-/* -----------------------------------------------------
+/* =====================================================
    INITIAL STATE
-   ----------------------------------------------------- */
+   ===================================================== */
 
 updateDobState();
 
 
-/* <Finish> BLOCK 40 */
-
+/* <Finish> BLOCK 43 */
   </script>
 
 

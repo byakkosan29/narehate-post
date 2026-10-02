@@ -3566,76 +3566,96 @@ if (
 }
 
     /* -----------------------------------------
-       VALID REGISTRATION HANDOFF
-       ----------------------------------------- */
+   VALID REGISTRATION HANDOFF
+   ----------------------------------------- */
 
-    if (
-      registrationHandoff &&
-      registrationHandoff.authenticated === true &&
-      registrationHandoff.registered === true &&
-      registrationHandoff.user
-    ) {
+if (
+  registrationHandoff &&
+  registrationHandoff.authenticated === true &&
+  registrationHandoff.registered === true &&
+  registrationHandoff.user &&
+  registrationHandoff.sessionToken &&
+  registrationHandoff.expiresAt
+) {
 
-      console.log(
-        '[NAREHATE] Registration handoff detected.'
-      );
-
-
-      /* ---------------------------------------
-         RESTORE IDENTITY
-         --------------------------------------- */
-
-      APP.identity = {
-
-        success:
-          true,
-
-        authenticated:
-          true,
-
-        registered:
-          true,
-
-        needsRegistration:
-          false,
-
-        user:
-          registrationHandoff.user
-
-      };
+  console.log(
+    '[NAREHATE] Registration handoff detected.'
+  );
 
 
-      APP.user =
-        registrationHandoff.user;
+  /* ---------------------------------------
+     SAVE SESSION FROM HANDOFF
+     --------------------------------------- */
+
+  const sessionSaved =
+    saveNarehateSession(
+      registrationHandoff.sessionToken,
+      registrationHandoff.expiresAt
+    );
 
 
-      /* ---------------------------------------
-         HANDOFF SUDAH DIPAKAI
-         --------------------------------------- */
+  if (!sessionSaved) {
 
-      sessionStorage.removeItem(
-        'NAREHATE_REGISTRATION_HANDOFF'
-      );
+    sessionStorage.removeItem(
+      'NAREHATE_REGISTRATION_HANDOFF'
+    );
 
+    showCorrespondenceGate();
 
-      updateDebugPanel();
+    return;
 
-
-      /* ---------------------------------------
-         OPEN CENTRAL OFFICE
-         --------------------------------------- */
-
-      await enterCentralOfficeAfterCredentialLogin();
+  }
 
 
-      console.log(
-        '[NAREHATE] Registration handoff completed.'
-      );
+  /* ---------------------------------------
+     VALIDATE SESSION WITH BACKEND
+     --------------------------------------- */
+
+  const handoffSessionRestored =
+    await restoreNarehateSession();
 
 
-      return;
+  if (!handoffSessionRestored) {
 
-    }
+    clearNarehateSession();
+
+    sessionStorage.removeItem(
+      'NAREHATE_REGISTRATION_HANDOFF'
+    );
+
+    showCorrespondenceGate();
+
+    return;
+
+  }
+
+
+  /* ---------------------------------------
+     HANDOFF SUDAH DIPAKAI
+     --------------------------------------- */
+
+  sessionStorage.removeItem(
+    'NAREHATE_REGISTRATION_HANDOFF'
+  );
+
+
+  updateDebugPanel();
+
+
+  /* ---------------------------------------
+     OPEN CENTRAL OFFICE
+     --------------------------------------- */
+
+  await enterCentralOfficeAfterCredentialLogin();
+
+
+  console.log(
+    '[NAREHATE] Registration handoff completed.'
+  );
+
+  return;
+
+}
 
 
     /* -----------------------------------------

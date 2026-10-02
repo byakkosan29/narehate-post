@@ -3552,6 +3552,8 @@ async function loginWithCredential(
    Password TIDAK pernah dimasukkan ke URL.
    ========================================================= */
 
+/* <Start> BLOCK 54 — GATE TO REGISTRATION TRANSITION */
+
 function openCredentialRegistration(
   identifier
 ) {
@@ -3567,11 +3569,90 @@ function openCredentialRegistration(
       : '';
 
 
-  window.location.href =
-    '/registration.html' +
-    query;
+  /* -----------------------------------------
+     CREATE BLACKOUT OVERLAY
+     ----------------------------------------- */
+
+  let transition =
+    document.getElementById(
+      'narehate-page-transition'
+    );
+
+
+  if (
+    !transition
+  ) {
+
+    transition =
+      document.createElement(
+        'div'
+      );
+
+    transition.id =
+      'narehate-page-transition';
+
+
+    transition.style.position =
+      'fixed';
+
+    transition.style.inset =
+      '0';
+
+    transition.style.background =
+      '#000000';
+
+    transition.style.opacity =
+      '0';
+
+    transition.style.pointerEvents =
+      'none';
+
+    transition.style.zIndex =
+      '999999';
+
+    transition.style.transition =
+      'opacity 850ms cubic-bezier(0.65, 0, 0.35, 1)';
+
+
+    document.body.appendChild(
+      transition
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     START BLACKOUT
+     ----------------------------------------- */
+
+  requestAnimationFrame(
+    function() {
+
+      transition.style.opacity =
+        '1';
+
+    }
+  );
+
+
+  /* -----------------------------------------
+     WAIT UNTIL FULL BLACK
+     ----------------------------------------- */
+
+  setTimeout(
+    function() {
+
+      window.location.href =
+        '/registration.html' +
+        query;
+
+    },
+    900
+  );
 
 }
+
+/* <Finish> BLOCK 54 — GATE TO REGISTRATION TRANSITION */
 
 
 /* <Start> BLOCK 52 — ENTER CENTRAL OFFICE AFTER AUTHENTICATION */

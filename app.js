@@ -3049,15 +3049,15 @@ function bindEvents() {
    secara terpisah setelah user memilih account.
    ========================================================= */
 
+/* <Start> BLOCK 53 — APPLICATION INITIALIZATION + REGISTRATION HANDOFF */
+
 async function initializeApplication() {
 
   try {
 
-    /*
-     * -----------------------------------------
-     * PUBLIC CONFIG
-     * -----------------------------------------
-     */
+    /* -----------------------------------------
+       PUBLIC CONFIG
+       ----------------------------------------- */
 
     setLoadingStatus(
       'Reading postal configuration...'
@@ -3067,11 +3067,9 @@ async function initializeApplication() {
     await loadPublicConfig();
 
 
-    /*
-     * -----------------------------------------
-     * SERVER STATUS
-     * -----------------------------------------
-     */
+    /* -----------------------------------------
+       SERVER STATUS
+       ----------------------------------------- */
 
     setLoadingStatus(
       'Contacting central office...'
@@ -3081,13 +3079,9 @@ async function initializeApplication() {
     await loadServerStatus();
 
 
-    /*
-     * -----------------------------------------
-     * NATIVE CREDENTIAL EVENTS
-     * -----------------------------------------
-     *
-     * Bind sebelum Gate ditampilkan.
-     */
+    /* -----------------------------------------
+       NATIVE CREDENTIAL EVENTS
+       ----------------------------------------- */
 
     setLoadingStatus(
       'Preparing correspondent registry...'
@@ -3097,15 +3091,9 @@ async function initializeApplication() {
     bindCredentialAuthenticationEvents();
 
 
-    /*
-     * -----------------------------------------
-     * GOOGLE IDENTITY SERVICES
-     * -----------------------------------------
-     *
-     * Hanya initialize Google.
-     *
-     * Jangan menunggu user login.
-     */
+    /* -----------------------------------------
+       GOOGLE IDENTITY SERVICES
+       ----------------------------------------- */
 
     setLoadingStatus(
       'Preparing identity service...'
@@ -3115,26 +3103,130 @@ async function initializeApplication() {
     await initializeGoogleIdentity();
 
 
-    /*
-     * -----------------------------------------
-     * CORRESPONDENCE GATE
-     * -----------------------------------------
-     *
-     * Pada titik ini authentication service
-     * sudah siap.
-     *
-     * User sekarang memilih sendiri metode
-     * authentication.
-     */
+    /* -----------------------------------------
+       CHECK REGISTRATION HANDOFF
+       -----------------------------------------
+
+       registration.html menyimpan handoff
+       setelah account berhasil dibuat.
+
+       Password TIDAK pernah disimpan.
+       ----------------------------------------- */
+
+    let registrationHandoff =
+      null;
+
+
+    try {
+
+      const rawHandoff =
+        sessionStorage.getItem(
+          'NAREHATE_REGISTRATION_HANDOFF'
+        );
+
+
+      if (
+        rawHandoff
+      ) {
+
+        registrationHandoff =
+          JSON.parse(
+            rawHandoff
+          );
+
+      }
+
+    } catch (
+      handoffError
+    ) {
+
+      console.warn(
+        '[NAREHATE] Invalid registration handoff.',
+        handoffError
+      );
+
+    }
+
+
+    /* -----------------------------------------
+       VALID REGISTRATION HANDOFF
+       ----------------------------------------- */
+
+    if (
+      registrationHandoff &&
+      registrationHandoff.authenticated === true &&
+      registrationHandoff.registered === true &&
+      registrationHandoff.user
+    ) {
+
+      console.log(
+        '[NAREHATE] Registration handoff detected.'
+      );
+
+
+      /* ---------------------------------------
+         RESTORE IDENTITY
+         --------------------------------------- */
+
+      APP.identity = {
+
+        success:
+          true,
+
+        authenticated:
+          true,
+
+        registered:
+          true,
+
+        needsRegistration:
+          false,
+
+        user:
+          registrationHandoff.user
+
+      };
+
+
+      APP.user =
+        registrationHandoff.user;
+
+
+      /* ---------------------------------------
+         HANDOFF SUDAH DIPAKAI
+         --------------------------------------- */
+
+      sessionStorage.removeItem(
+        'NAREHATE_REGISTRATION_HANDOFF'
+      );
+
+
+      updateDebugPanel();
+
+
+      /* ---------------------------------------
+         OPEN CENTRAL OFFICE
+         --------------------------------------- */
+
+      await enterCentralOfficeAfterCredentialLogin();
+
+
+      console.log(
+        '[NAREHATE] Registration handoff completed.'
+      );
+
+
+      return;
+
+    }
+
+
+    /* -----------------------------------------
+       NORMAL VISITOR FLOW
+       ----------------------------------------- */
 
     showCorrespondenceGate();
 
-
-    /*
-     * -----------------------------------------
-     * FINAL STATUS
-     * -----------------------------------------
-     */
 
     setLoadingStatus(
       'Correspondence Gate ready.'
@@ -3164,6 +3256,7 @@ async function initializeApplication() {
 
 }
 
+/* <Finish> BLOCK 53 — APPLICATION INITIALIZATION + REGISTRATION HANDOFF */
 
 
 /* =========================================================
@@ -3481,20 +3574,7 @@ function openCredentialRegistration(
 }
 
 
-/* =========================================================
-   <Start> ENTER CENTRAL OFFICE AFTER CREDENTIAL LOGIN
-   ---------------------------------------------------------
-   Credential login yang berhasil tidak perlu melewati
-   Door karena user sudah authenticated + registered.
-
-   Flow:
-
-   Correspondence Gate
-          ↓
-   Credential Login
-          ↓
-   Central Office
-   ========================================================= */
+/* <Start> BLOCK 52 — ENTER CENTRAL OFFICE AFTER AUTHENTICATION */
 
 async function enterCentralOfficeAfterCredentialLogin() {
 
@@ -3504,19 +3584,24 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 
   /* -----------------------------------------
-     Persiapkan application
+     PREPARE APPLICATION
      ----------------------------------------- */
 
   await prepareApplication();
 
 
   /* -----------------------------------------
-     Ambil environment
+     GET ENVIRONMENTS
      ----------------------------------------- */
 
   const loading =
     getElement(
       'loading-screen'
+    );
+
+  const mainApp =
+    getElement(
+      'main-app'
     );
 
   const gate =
@@ -3541,10 +3626,12 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 
   /* -----------------------------------------
-     Sembunyikan loading
+     HIDE LOADING
      ----------------------------------------- */
 
-  if (loading) {
+  if (
+    loading
+  ) {
 
     loading.classList.add(
       'is-hidden'
@@ -3554,10 +3641,27 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 
   /* -----------------------------------------
-     Sembunyikan Correspondence Gate
+     SHOW MAIN APPLICATION
      ----------------------------------------- */
 
-  if (gate) {
+  if (
+    mainApp
+  ) {
+
+    mainApp.classList.remove(
+      'is-hidden'
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     HIDE CORRESPONDENCE GATE
+     ----------------------------------------- */
+
+  if (
+    gate
+  ) {
 
     gate.classList.add(
       'is-hidden'
@@ -3567,10 +3671,12 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 
   /* -----------------------------------------
-     Sembunyikan Door
+     HIDE DOOR
      ----------------------------------------- */
 
-  if (door) {
+  if (
+    door
+  ) {
 
     door.classList.add(
       'is-hidden'
@@ -3580,10 +3686,12 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 
   /* -----------------------------------------
-     Sembunyikan Registration
+     HIDE REGISTRATION
      ----------------------------------------- */
 
-  if (registration) {
+  if (
+    registration
+  ) {
 
     registration.classList.add(
       'is-hidden'
@@ -3593,10 +3701,12 @@ async function enterCentralOfficeAfterCredentialLogin() {
 
 
   /* -----------------------------------------
-     Tampilkan Central Office
+     SHOW CENTRAL OFFICE
      ----------------------------------------- */
 
-  if (office) {
+  if (
+    office
+  ) {
 
     office.classList.remove(
       'is-hidden'
@@ -3609,11 +3719,16 @@ async function enterCentralOfficeAfterCredentialLogin() {
     'office';
 
 
+  initializeApplicationHistory();
+
+
   console.log(
     '[NAREHATE] Credential correspondent entered Central Office.'
   );
 
 }
+
+/* <Finish> BLOCK 52 — ENTER CENTRAL OFFICE AFTER AUTHENTICATION */
 
 
 /* =========================================================

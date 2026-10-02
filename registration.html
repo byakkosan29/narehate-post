@@ -2724,8 +2724,45 @@ if (
         }
 
 
-        const result =
-          await response.json();
+        /* <Start> BLOCK 50 — SAFE API RESPONSE PARSER */
+
+const responseText =
+  await response.text();
+
+let result;
+
+try {
+
+  result =
+    JSON.parse(
+      responseText
+    );
+
+} catch (parseError) {
+
+  console.error(
+    '[NAREHATE] API RETURNED NON-JSON:',
+    responseText
+  );
+
+  throw new Error(
+    'The postal server returned an unexpected response.'
+  );
+
+}
+
+
+if (
+  !result
+) {
+
+  throw new Error(
+    'The postal server returned an empty response.'
+  );
+
+}
+
+/* <Finish> BLOCK 50 — SAFE API RESPONSE PARSER */
 
 
         console.log(

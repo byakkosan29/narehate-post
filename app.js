@@ -3077,6 +3077,9 @@ const ROOMS = {
 
     description:
       'Where letters are received, registered and dispatched.'
+       
+   path:
+  '/rooms/teller/teller.html'
 
   },
 
@@ -3176,6 +3179,17 @@ const ROOMS = {
    <Start> OPEN ROOM
    ---------------------------------------------------------
    Membuka room berdasarkan room key.
+
+   Room yang memiliki `path` akan dimuat sebagai
+   external room environment melalui iframe.
+
+   Contoh:
+
+       Teller
+          ↓
+       /rooms/teller/teller.html
+          ↓
+       teller.css
    ========================================================= */
 
 function openRoom(
@@ -3190,7 +3204,7 @@ function openRoom(
   if (!room) {
 
     console.warn(
-      'Unknown room:',
+      '[NAREHATE] Unknown room:',
       roomKey
     );
 
@@ -3198,7 +3212,12 @@ function openRoom(
 
   }
 
-   if (
+
+  /* =======================================================
+     <Start> ROOM HISTORY
+     ======================================================= */
+
+  if (
     pushHistory
   ) {
 
@@ -3208,74 +3227,188 @@ function openRoom(
 
   }
 
+  /* =======================================================
+     <Finish> ROOM HISTORY
+     ======================================================= */
 
+
+  /* =======================================================
+     <Start> GET ROOM ELEMENTS
+     ======================================================= */
 
   const office =
-    getElement('central-office');
+    getElement(
+      'environment-view'
+    );
 
   const roomView =
-    getElement('room-view');
+    getElement(
+      'room-view'
+    );
 
-
-  const roomNumber =
-    getElement('room-number');
-
-  const roomTitle =
-    getElement('room-title');
-
-  const roomDescription =
-    getElement('room-description');
-
-  const roomStatus =
-    getElement('room-status');
+  const roomContent =
+    getElement(
+      'room-content'
+    );
 
 
   if (
     !office ||
-    !roomView
+    !roomView ||
+    !roomContent
   ) {
+
+    console.error(
+      '[NAREHATE] Room view elements are incomplete.'
+    );
 
     return;
 
   }
 
-
-  // -----------------------------------------
-  // Populate room
-  // -----------------------------------------
-
-  roomNumber.textContent =
-    room.number;
-
-  roomTitle.textContent =
-    room.title;
-
-  roomDescription.textContent =
-    room.description;
-
-  roomStatus.textContent =
-    room.status;
+  /* =======================================================
+     <Finish> GET ROOM ELEMENTS
+     ======================================================= */
 
 
-  // -----------------------------------------
-  // Switch view
-  // -----------------------------------------
+  /* =======================================================
+     <Start> CLEAR PREVIOUS ROOM
+     ======================================================= */
+
+  roomContent.innerHTML =
+    '';
+
+  /* =======================================================
+     <Finish> CLEAR PREVIOUS ROOM
+     ======================================================= */
+
+
+  /* =======================================================
+     <Start> LOAD EXTERNAL ROOM
+     ======================================================= */
+
+  if (
+    room.path
+  ) {
+
+    const iframe =
+      document.createElement(
+        'iframe'
+      );
+
+
+    iframe.className =
+      'room-frame';
+
+
+    iframe.src =
+      room.path;
+
+
+    iframe.title =
+      room.title;
+
+
+    iframe.setAttribute(
+      'frameborder',
+      '0'
+    );
+
+
+    iframe.setAttribute(
+      'allowfullscreen',
+      ''
+    );
+
+
+    iframe.setAttribute(
+      'loading',
+      'eager'
+    );
+
+
+    roomContent.appendChild(
+      iframe
+    );
+
+
+    console.log(
+      '[NAREHATE] External room loaded:',
+      roomKey,
+      room.path
+    );
+
+  }
+
+  /* =======================================================
+     <Finish> LOAD EXTERNAL ROOM
+     ======================================================= */
+
+
+  /* =======================================================
+     <Start> FALLBACK ROOM
+     -------------------------------------------------------
+     Kalau room belum memiliki external HTML,
+     tampilkan placeholder sementara.
+     ======================================================= */
+
+  else {
+
+    roomContent.innerHTML =
+
+      '<div class="room-placeholder">' +
+
+        '<div class="placeholder-mark">' +
+          'N' +
+        '</div>' +
+
+        '<div class="placeholder-label">' +
+          'DEPARTMENT UNDER PREPARATION' +
+        '</div>' +
+
+        '<p>' +
+          'The room exists. ' +
+          'Its correspondence has not yet arrived.' +
+        '</p>' +
+
+      '</div>';
+
+  }
+
+  /* =======================================================
+     <Finish> FALLBACK ROOM
+     ======================================================= */
+
+
+  /* =======================================================
+     <Start> SWITCH VIEW
+     ======================================================= */
 
   office.classList.add(
     'is-hidden'
   );
+
 
   roomView.classList.remove(
     'is-hidden'
   );
 
 
+  APP.currentView =
+    'room';
+
+
   console.log(
-    'Opened room:',
+    '[NAREHATE] Opened room:',
     roomKey
   );
 
+  /* =======================================================
+     <Finish> SWITCH VIEW
+     ======================================================= */
+
 }
+
 
 /* =========================================================
    <Finish> OPEN ROOM

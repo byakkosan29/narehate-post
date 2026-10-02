@@ -1149,95 +1149,67 @@
 </section>
 
 <!-- ===================================================
-     <Finish> CENTRAL OFFICE ENVIRONMENT
+     <Start> ROOM VIEW
+     ---------------------------------------------------
+     External room environment.
+     
+     Setiap room dapat memiliki HTML/CSS/JS sendiri
+     di dalam folder rooms/.
      =================================================== -->
 
-<Finish>
+<section
+  id="room-view"
+  class="room-view is-hidden"
+>
 
+  <!-- =================================================
+       <Start> ROOM TOPBAR
+       ================================================= -->
 
-  <!-- ===================================================
-       <Start> ROOM VIEW
-       ---------------------------------------------------
-       Room view tetap dipertahankan sebagai layer
-       transisi berikutnya.
-       =================================================== -->
+  <div class="room-topbar">
 
-  <section
-    id="room-view"
-    class="room-view is-hidden"
-  >
+    <button
+      type="button"
+      id="back-to-office"
+      class="back-button"
+    >
+      ← Central Office
+    </button>
 
-    <div class="room-topbar">
-
-      <button
-        type="button"
-        id="back-to-office"
-        class="back-button"
-      >
-        ← Central Office
-      </button>
-
-      <div
-        id="room-status"
-        class="room-status"
-      >
-        ROOM
-      </div>
-
+    <div
+      id="room-status"
+      class="room-status"
+    >
+      ROOM
     </div>
 
+  </div>
 
-    <div class="room-content">
-
-      <div
-        id="room-number"
-        class="room-view-number"
-      >
-        00
-      </div>
-
-      <div
-        id="room-title"
-        class="room-view-title"
-      >
-        Room
-      </div>
-
-      <div
-        id="room-description"
-        class="room-view-description"
-      >
-        —
-      </div>
+  <!-- =================================================
+       <Finish> ROOM TOPBAR
+       ================================================= -->
 
 
-      <div
-        id="room-placeholder"
-        class="room-placeholder"
-      >
+  <!-- =================================================
+       <Start> EXTERNAL ROOM CONTENT
+       -------------------------------------------------
+       Room HTML akan dimuat ke dalam iframe ini.
+       ================================================= -->
 
-        <div class="placeholder-mark">
-          N
-        </div>
+  <div
+    id="room-content"
+    class="room-content"
+  ></div>
 
-        <div class="placeholder-label">
-          DEPARTMENT UNDER PREPARATION
-        </div>
+  <!-- =================================================
+       <Finish> EXTERNAL ROOM CONTENT
+       ================================================= -->
 
-        <p>
-          The room exists.
-          Its correspondence has not yet arrived.
-        </p>
+</section>
 
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- ===================================================
-       <Finish> ROOM VIEW
-       =================================================== -->
+<!-- ===================================================
+     <Finish> ROOM VIEW
+     ================================================= -->
 
 
   <!-- ===================================================
